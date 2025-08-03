@@ -1,0 +1,30 @@
+{
+    "name": "WhiteWorld.AppMain",
+    "rootNamespace": "WhiteWorld.AppMain",
+    "references": [
+        "GUID:f78693fd48ee48e478e0bdea141dd36f",
+        "GUID:55c7c98e5fedb4e45950058dbb4ec1b4",
+        "GUID:7ddc44962e578ab489791080fbdb0cc9",
+        "GUID:0f696f26088a15c419477ce61754b562",
+        "GUID:2294a65d721f9974ca66d13b434e6b7b",
+        "GUID:efc2a641101a7344c94eba357a0793e8",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:6f90813ade8de4143a85265463f8071f",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Utils.BackPort.dll",
+        "Utils.Core.dll",
+        "R3.dll",
+        "ZLinq.dll",
+        "RapidEnum.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

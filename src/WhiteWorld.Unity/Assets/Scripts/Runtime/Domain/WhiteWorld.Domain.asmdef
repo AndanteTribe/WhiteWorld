@@ -1,0 +1,24 @@
+{
+    "name": "WhiteWorld.Domain",
+    "rootNamespace": "WhiteWorld.Domain",
+    "references": [
+        "GUID:f78693fd48ee48e478e0bdea141dd36f",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:6f90813ade8de4143a85265463f8071f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Utils.BackPort.dll",
+        "Utils.Core.dll",
+        "R3.dll",
+        "ZLinq.dll",
+        "RapidEnum.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

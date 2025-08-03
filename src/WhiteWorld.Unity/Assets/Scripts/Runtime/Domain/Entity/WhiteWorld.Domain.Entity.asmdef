@@ -1,0 +1,20 @@
+{
+    "name": "WhiteWorld.Domain.Entity",
+    "rootNamespace": "WhiteWorld.Domain.Entity",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Utils.BackPort.dll",
+        "Utils.Core.dll",
+        "R3.dll",
+        "ZLinq.dll",
+        "RapidEnum.Core.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}
