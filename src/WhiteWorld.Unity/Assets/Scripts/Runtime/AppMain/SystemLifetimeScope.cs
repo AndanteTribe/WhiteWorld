@@ -1,6 +1,8 @@
 using AndanteTribe.Utils.Unity.VContainer;
 using VContainer;
 using VContainer.Unity;
+using WhiteWorld.Domain;
+using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
 {
@@ -12,6 +14,7 @@ namespace WhiteWorld.AppMain
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<DebugViewer>();
+            builder.Register<ISceneController, DefaultSceneController>(Lifetime.Singleton);
         }
     }
 }
