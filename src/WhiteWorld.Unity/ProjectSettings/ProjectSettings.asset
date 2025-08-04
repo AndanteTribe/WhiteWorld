@@ -821,8 +821,10 @@ PlayerSettings:
   webWasm2023: 1
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
+    Standalone: ENABLE_DEBUGTOOLKIT
     WebGL: ENABLE_DEBUGTOOLKIT
   additionalCompilerArguments:
+    Standalone: []
     WebGL:
     - -nullable:enable
   platformArchitecture: {}
