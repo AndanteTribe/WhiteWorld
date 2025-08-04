@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using R3;
 
 namespace CardSelectFlow.Interface
@@ -19,8 +20,9 @@ namespace CardSelectFlow.Interface
         public Observable<Unit> OnEndAppearCardFlow { get; }
         /// <summary>
         /// カードが選択されたときに発火されるイベント
+        /// カード情報を持つ
         /// </summary>
-        public Observable<Unit> OnCardSelected { get; }
+        public Observable<CardInfo> OnCardSelected { get; }
         /// <summary>
         /// カードが消えるアニメーションが始まった時に発火されるイベント
         /// </summary>
@@ -33,5 +35,7 @@ namespace CardSelectFlow.Interface
         /// フロウが終わったときに発火されるイベント
         /// </summary>
         public Observable<Unit> OnEndCardSelectFlow { get; }
+
+        public UniTask Flow();
     }
 }

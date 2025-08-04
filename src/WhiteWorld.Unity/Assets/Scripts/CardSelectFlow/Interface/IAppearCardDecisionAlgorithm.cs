@@ -5,6 +5,6 @@ namespace CardSelectFlow.Interface
 {
     public interface IAppearCardDecisionAlgorithm
     {
-        List<int> GetAppearCards();
+        List<CardInfo> GetAppearCards();
     }
 }

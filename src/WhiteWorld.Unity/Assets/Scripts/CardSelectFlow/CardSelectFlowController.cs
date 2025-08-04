@@ -1,9 +1,12 @@
 using System;
 using System.Threading;
+using CardSelectFlow;
 using CardSelectFlow.Interface;
 using Cysharp.Threading.Tasks;
 using R3;
 using UnityEngine;
+using VContainer;
+
 /// <summary>
 /// カード選択フロウの状態を管理するクラス
 /// </summary>
@@ -23,8 +26,9 @@ public class CardSelectFlowController : ICardSelectFlowController
     public Observable<Unit> OnEndAppearCardFlow => _onEndAppearCardFlow;
     /// <summary>
     /// カードが選択されたときに発火されるイベント
+    /// カード情報を持つ
     /// </summary>
-    public Observable<Unit> OnCardSelected => _onCardSelected;
+    public Observable<CardInfo> OnCardSelected => _onCardSelected;
     /// <summary>
     /// カードが消えるアニメーションが始まった時に発火されるイベント
     /// </summary>
@@ -41,15 +45,19 @@ public class CardSelectFlowController : ICardSelectFlowController
     private readonly Subject<Unit> _onStartCardSelectFlow = new();
     private readonly Subject<Unit> _onStartAppearCardFlow = new();
     private readonly Subject<Unit> _onEndAppearCardFlow = new();
-    private readonly Subject<Unit> _onCardSelected = new();
+    private readonly Subject<CardInfo> _onCardSelected = new();
     private readonly Subject<Unit> _onStartCardDisappearAnimation = new();
     private readonly Subject<Unit> _onEndCardDisappearAnimation = new();
     private readonly Subject<Unit> _onEndCardSelectFlow = new();
 
-    //TODO Inject
-    private ICardStateController _stateController;
+    [Inject]
+    private ICardAppearAnimation _appearAnimation;
+    [Inject]
+    private ICardDisAppearAnimation _disAppearAnimation;
+    [Inject]
+    private ICardObjectManager _cardObjectManager;
 
-    private async UniTask Flow()
+    public async UniTask Flow()
     {
         //トークン発行
         var cts = new CancellationTokenSource();
@@ -76,8 +84,8 @@ public class CardSelectFlowController : ICardSelectFlowController
         //出現処理の開始を通知
         _onStartAppearCardFlow.OnNext(Unit.Default);
 
-        await _stateController.OnEndCardAppear
-            .FirstAsync(token);
+        //アニメーションの終了を待つ
+        await _appearAnimation.Appear();
 
         //出現処理の終了を通知
         _onEndAppearCardFlow.OnNext(Unit.Default);
@@ -85,11 +93,11 @@ public class CardSelectFlowController : ICardSelectFlowController
 
     private async UniTask WaitCardSelected(CancellationToken token)
     {
-        await UniTask.Delay(100);
+        //カードが選択されるのを待つ
+        var info = await _cardObjectManager.OnSelected
+            .FirstAsync(token);
 
-        //選択が完了したことを通知
-        //TODO これうまくやって選択されたカードを保持したいね
-        _onCardSelected.OnNext(Unit.Default);
+        _onCardSelected.OnNext(info);
     }
 
     private async UniTask WaitCardDisAppearFlow(CancellationToken token)
@@ -97,8 +105,8 @@ public class CardSelectFlowController : ICardSelectFlowController
         //カードを非表示にするアニメーションの開始を通知
         _onStartCardDisappearAnimation.OnNext(Unit.Default);
 
-        //TODO
-        await UniTask.Delay(100);
+        //アニメーションの終了を待つ
+        await _disAppearAnimation.DisAppear();
 
         //カードを非表示にするアニメーションの終了を通知
         _onEndCardDisappearAnimation.OnNext(Unit.Default);

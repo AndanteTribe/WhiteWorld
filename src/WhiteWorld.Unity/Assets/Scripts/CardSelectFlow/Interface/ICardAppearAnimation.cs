@@ -5,6 +5,6 @@ namespace CardSelectFlow.Interface
 {
     public interface ICardAppearAnimation
     {
-        UniTask Appear(List<int> cardNumbers);
+        public UniTask Appear();
     }
 }

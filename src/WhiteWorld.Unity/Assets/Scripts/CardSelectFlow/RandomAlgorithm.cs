@@ -13,15 +13,15 @@ namespace CardSelectFlow
         /// <summary>
         /// 1~6までの値の内３つをランダムに返すクラス
         /// </summary>
-        public List<int> GetAppearCards()
+        public List<CardInfo> GetAppearCards()
         {
             List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
-            List<int> result = new();
+            List<CardInfo> result = new();
 
             for (var i = 0; i < 3; i++)
             {
                 var index = Random.Range(0, numbers.Count);
-                result.Add(numbers[index]);
+                result.Add(new CardInfo(numbers[index]));
                 numbers.RemoveAt(index);
             }
 
