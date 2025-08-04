@@ -20,12 +20,6 @@ namespace WhiteWorld.AppMain
             _controller = GetComponent<CharacterController>();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         void FixedUpdate()
         {
             Move(_mMoveValue);
