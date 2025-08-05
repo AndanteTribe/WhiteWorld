@@ -28,7 +28,7 @@ namespace WhiteWorld.Data.Runtime.Data
         [SerializeField] private string _writeBinaryFileName;
 
         private const string NameSpacePath = "WhiteWorld.Data.Runtime.Data.";
-        private const string WriteBinaryPath = "Assets/Downloads/BynaryData/";
+        private const string WriteBinaryPath = "Assets/Downloads/BinaryData/";
 
         [Button]
         public void BuildBinaryData()
