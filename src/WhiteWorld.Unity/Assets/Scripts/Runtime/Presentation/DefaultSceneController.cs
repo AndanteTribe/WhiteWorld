@@ -12,9 +12,9 @@ namespace WhiteWorld.Presentation
     public class DefaultSceneController : ISceneController
     {
         private const string DefaultSceneName = "System";
-        
+
         private readonly Stack<SceneName> _sceneStack = new();
-        
+
         /// <inheritdoc/>
         public SceneName CurrentScene { get; private set; }
 
@@ -22,7 +22,7 @@ namespace WhiteWorld.Presentation
         public async UniTask LoadAsync(SceneName sceneName, CancellationToken cancellationToken)
         {
             // TODO: あとでデバッグ用のシーン遷移実装追加する.
-            
+
             if (sceneName == SceneName.Invalid)
             {
                 throw new System.ArgumentException("Invalid scene name.", nameof(sceneName));
@@ -31,11 +31,17 @@ namespace WhiteWorld.Presentation
             int count = default;
             foreach (var memberValue in SceneNameEnumExtensions.GetValues())
             {
+                if (memberValue == SceneName.Invalid)
+                {
+                    continue;
+                }
+
                 if (sceneName.HasBitFlags(memberValue))
                 {
                     count++;
                     if (!_sceneStack.Contains(memberValue))
                     {
+                        var name = memberValue.GetEnumMemberValue();
                         await SceneManager.LoadSceneAsync(memberValue.GetEnumMemberValue(), LoadSceneMode.Additive)!.WithCancellation(cancellationToken);
                         _sceneStack.Push(memberValue);
                     }

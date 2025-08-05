@@ -100,3 +100,12 @@ InitTestScene*.unity*
 
 /Packages/nuget-packages/InstalledPackages/
 Packages/nuget-packages/InstalledPackages.meta
+
+# Visual Studio cache directory
+.vs/
+
+# Visual Studio Code cache directory
+.vscode/
+
+# JetBrains Rider cache directory
+.idea/
