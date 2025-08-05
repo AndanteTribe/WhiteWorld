@@ -17,18 +17,5 @@ namespace WhiteWorld.AppMain
             MWhiteWorldActions.Player.Move.performed += context => mPlayerMove.ReadMoveValue(context);
             MWhiteWorldActions.Player.Move.canceled += context => mPlayerMove.ReadMoveValue(context);
         }
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
-
     }
 }
