@@ -32,6 +32,16 @@ namespace WhiteWorld.AppMain
 
             _sceneController.LoadAsync(SceneName.Title, CancellationToken.None).Forget();
 
+            //Openingシーンに遷移するボタンを作成
+            var openingWindow = root.AddWindow("Opening");
+            var buttonToOpening = new Button();
+            buttonToOpening.text = "Shift to Opening";
+            buttonToOpening.clicked += UniTask.Action(async () =>
+            {
+                await _sceneController.UnloadAllAsync(CancellationToken.None);
+                await _sceneController.LoadAsync(SceneName.Opening, CancellationToken.None);
+            });
+            openingWindow.Add(buttonToOpening);
             return root;
         }
     }
