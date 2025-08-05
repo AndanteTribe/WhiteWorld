@@ -20,14 +20,6 @@ namespace WhiteWorld.AppMain
             //Debug
             builder.Register<IAppearCardDecisionAlgorithm, RandomSelectAlgorithm>(Lifetime.Singleton);
             Debug.Log("後");
-
-
-            builder.RegisterDisposeCallback(container =>
-            {
-                Debug.Log("Resolve");
-                var sequence = container.Resolve<CardSelectionSequence>();
-                var alg = container.Resolve<IAppearCardDecisionAlgorithm>();
-            });
         }
     }
 }

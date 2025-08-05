@@ -17,10 +17,10 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
 
         private AutoResetUniTaskCompletionSource<SpaceAmount> _source;
 
-        public CardSelectionSequence(ISceneController controller)
-        {
-            _controller = controller;
-        }
+        // public CardSelectionSequence(ISceneController controller)
+        // {
+        //     _controller = controller;
+        // }
 
         public async UniTask<SpaceAmount> RunAsync(CancellationToken cancellationToken)
         {

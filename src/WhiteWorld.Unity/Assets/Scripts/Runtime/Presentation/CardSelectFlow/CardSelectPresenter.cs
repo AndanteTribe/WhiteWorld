@@ -3,6 +3,7 @@ using System.Threading;
 using CardSelectFlow;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VContainer;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame.Sequences;
 
@@ -16,12 +17,8 @@ namespace WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences
         [SerializeField] private CardAnimationManager _animation;
         [SerializeField] private CardObjectManager _manager;
 
-        private readonly CardSelectionSequence _sequence;
-
-        public CardSelectPresenter(CardSelectionSequence sequence)
-        {
-            _sequence = sequence;
-        }
+        [Inject]
+        public CardSelectionSequence Sequence;
 
         private void Start()
         {
@@ -47,7 +44,7 @@ namespace WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences
             //カードを消すアニメーション
             await _animation.DisAppear();
 
-            _sequence.FinishCardSelect(spaceAmount);
+            Sequence.FinishCardSelect(spaceAmount);
         }
     }
 }
