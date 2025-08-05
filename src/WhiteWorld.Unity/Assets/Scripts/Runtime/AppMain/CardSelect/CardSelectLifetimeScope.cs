@@ -5,26 +5,29 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 using WhiteWorld.Domain.LifeGame.Sequences;
-using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
 {
     public class CardSelectLifetimeScope : LifetimeScopeBase
     {
-        [SerializeField]
-        private CardAnimationManager _animation;
-        [SerializeField]
-        private CardObjectManager _manager;
-
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<CardSelectionSequence>(Lifetime.Singleton);
-            builder.RegisterComponent(_animation).AsImplementedInterfaces();
-            builder.RegisterComponent(_manager).AsImplementedInterfaces();
+            base.Configure(builder);
 
+            builder.Register<CardSelectionSequence>(Lifetime.Singleton);
+
+            Debug.Log("前");
             //Debug
-            builder.RegisterEntryPoint<DebugInitializer>();
             builder.Register<IAppearCardDecisionAlgorithm, RandomSelectAlgorithm>(Lifetime.Singleton);
+            Debug.Log("後");
+
+
+            builder.RegisterDisposeCallback(container =>
+            {
+                Debug.Log("Resolve");
+                var sequence = container.Resolve<CardSelectionSequence>();
+                var alg = container.Resolve<IAppearCardDecisionAlgorithm>();
+            });
         }
     }
 }

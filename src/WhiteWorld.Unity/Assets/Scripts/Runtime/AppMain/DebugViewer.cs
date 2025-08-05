@@ -10,12 +10,15 @@ using UnityEngine.UIElements;
 using VContainer.Unity;
 using WhiteWorld.Domain;
 using WhiteWorld.Domain.Entity;
+using WhiteWorld.Domain.LifeGame.Sequences;
+using WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences;
 
 namespace WhiteWorld.AppMain
 {
     public class DebugViewer : DebugViewerBase, IStartable
     {
         private readonly ISceneController _sceneController;
+        private readonly CardSelectionSequence _cardSelectionSequence;
         private CardObjectManager _cardObjectManager;
 
         /// <summary>
@@ -30,6 +33,8 @@ namespace WhiteWorld.AppMain
         protected override VisualElement CreateViewGUI()
         {
             var root = base.CreateViewGUI();
+
+            // _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
 
             //Scene遷移部分
             var sceneWindow = root.AddWindow("Scene遷移");

@@ -10,6 +10,11 @@ namespace CardSelectFlow
     /// </summary>
     public class RandomSelectAlgorithm : IAppearCardDecisionAlgorithm
     {
+
+        public RandomSelectAlgorithm()
+        {
+            Debug.Log("あるがリズム");
+        }
         /// <summary>
         /// 1~6までの値の内３つをランダムに返すクラス
         /// </summary>

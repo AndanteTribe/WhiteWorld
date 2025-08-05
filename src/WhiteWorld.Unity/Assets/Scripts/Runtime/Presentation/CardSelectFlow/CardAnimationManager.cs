@@ -8,7 +8,7 @@ namespace CardSelectFlow
     /// <summary>
     /// カードのアニメーションを管理するクラス
     /// </summary>
-    public class CardAnimationManager : MonoBehaviour,ICardAnimation
+    public class CardAnimationManager : MonoBehaviour
     {
         [SerializeField] private float _turnDuration;
         [SerializeField] private GameObject[] _cardObjs;

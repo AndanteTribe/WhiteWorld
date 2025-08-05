@@ -9,16 +9,14 @@ using WhiteWorld.Domain.Entity;
 
 namespace CardSelectFlow
 {
-    public class CardObjectManager : MonoBehaviour,ICardObjectManager
+    public class CardObjectManager : MonoBehaviour
     {
         //カードオブジェクト
         [SerializeField] private CardObject[] _cardObjs;
 
         //出すカードを決定するアルゴリズム
         [Inject]
-        private IAppearCardDecisionAlgorithm _algorithm;
-
-        private ICardObjectManager _cardObjectManagerImplementation;
+        public IAppearCardDecisionAlgorithm Algorithm;
 
         public async UniTask<SpaceAmount> WaitPlayerSelectAsync(CancellationToken token)
         {
@@ -47,7 +45,7 @@ namespace CardSelectFlow
         /// </summary>
         public void UpdateAlgorithm(IAppearCardDecisionAlgorithm algorithm)
         {
-            _algorithm = algorithm;
+            Algorithm = algorithm;
         }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace CardSelectFlow
         /// </summary>
         private void SetSpaceAmount()
         {
-             var infos = _algorithm.GetAppearCards();
+             var infos = Algorithm.GetAppearCards();
 
              if (infos.Count != _cardObjs.Length)
                  throw new Exception("カード情報とScene上のカードの数がことなっています");
