@@ -5,6 +5,8 @@ using AndanteTribe.Utils.Unity;
 using MasterMemory;
 using UnityEditor;
 
+#if UNITY_EDITOR
+
 namespace WhiteWorld.Data.Runtime.Data
 {
     /// <summary>
@@ -54,3 +56,5 @@ namespace WhiteWorld.Data.Runtime.Data
         }
     }
 }
+
+# endif
