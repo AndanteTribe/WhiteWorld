@@ -1,11 +1,11 @@
+#if UNITY_EDITOR
+
 using System;
 using System.IO;
 using UnityEngine;
 using AndanteTribe.Utils.Unity;
 using MasterMemory;
 using UnityEditor;
-
-#if UNITY_EDITOR
 
 namespace WhiteWorld.Data.Runtime.Data
 {

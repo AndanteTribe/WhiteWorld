@@ -2,9 +2,9 @@ using System;
 using Csv;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using MasterMemory;
+using ZLinq;
 
 namespace WhiteWorld.Data.Runtime.Data
 {
@@ -20,7 +20,9 @@ namespace WhiteWorld.Data.Runtime.Data
         {
             // Deserialize<T> メソッドをリフレクションで取得
             var deserializeMethod = typeof(CsvSerializer).GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .FirstOrDefault(m =>
+                .AsValueEnumerable()
+                .FirstOrDefault
+                (m =>
                     m.Name == "Deserialize" &&
                     m.IsGenericMethodDefinition &&
                     m.GetParameters().Length >= 1 &&
