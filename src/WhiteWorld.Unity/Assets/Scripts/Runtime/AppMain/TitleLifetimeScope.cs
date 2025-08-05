@@ -12,6 +12,7 @@ namespace WhiteWorld.AppMain
         /// <inheritdoc/>
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterEntryPoint<TitleDebugViewer>();
         }
     }
 }

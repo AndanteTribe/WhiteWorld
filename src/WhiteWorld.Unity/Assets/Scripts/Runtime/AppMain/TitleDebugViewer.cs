@@ -1,4 +1,4 @@
-﻿#if ENABLE_DEBUGTOOLKIT
+#if ENABLE_DEBUGTOOLKIT
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -10,7 +10,7 @@ using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.AppMain
 {
-    public class DebugViewer : DebugViewerBase, IStartable
+    public class TitleDebugViewer : DebugViewerBase, IStartable
     {
         private readonly ISceneController _sceneController;
 
@@ -18,7 +18,7 @@ namespace WhiteWorld.AppMain
         /// Initializes a new instance of the <see cref="DebugViewer"/> class.
         /// </summary>
         /// <param name="sceneController"></param>
-        public DebugViewer(ISceneController sceneController)
+        public TitleDebugViewer(ISceneController sceneController)
         {
             _sceneController = sceneController;
         }
@@ -27,11 +27,17 @@ namespace WhiteWorld.AppMain
         {
             var root = base.CreateViewGUI();
 
-            var firstWindow = root.AddWindow("デバッグメニュー");
-            firstWindow.AddProfileInfoLabel();
+            var firstWindow = root.AddWindow("Scene遷移");
 
-            // _sceneController.LoadAsync(SceneName.Title, CancellationToken.None).Forget();
-
+            Button button = new Button
+            {
+                text = "CardSelectScene"
+            };
+            button.clicked += () =>
+            {
+                _sceneController.LoadAsync(SceneName.CardSelectEdit, CancellationToken.None).Forget();
+            };
+            firstWindow.Add(button);
             return root;
         }
     }
