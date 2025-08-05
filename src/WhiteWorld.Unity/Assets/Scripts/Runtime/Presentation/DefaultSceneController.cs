@@ -58,7 +58,7 @@ namespace WhiteWorld.Presentation
         public async UniTask UnloadAllAsync(CancellationToken cancellationToken)
         {
             var array = ArrayPool<UniTask>.Shared.Rent(_sceneStack.Count);
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < _sceneStack.Count; i++)
             {
                 SceneName sceneName = _sceneStack.Pop();
                 array[i] = UniTask.Defer((name: sceneName.GetEnumMemberValue(), token: cancellationToken),
