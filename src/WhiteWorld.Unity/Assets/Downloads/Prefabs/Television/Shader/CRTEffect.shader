@@ -3,11 +3,14 @@ Shader "Unlit/CRTEffect"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Distortion ("Distortion", Float) = 0.2
-        _ScanlineIntensity ("Scanline Intensity", Float) = 0.75
-        _ScanlineFrequency ("Scanline Frequency", Float) = 1000.0
-        _NoiseAmount ("Noise Amount", Float) = 0.05
-        _ScanLineSpeed("ScanLine Speed", Float) = 10.0
+        _Distortion ("端っこのゆがみ", Float) = 0.2
+        _ScanlineIntensity ("走査線の太さ", Float) = 0.75
+        _ScanlineFrequency ("走査線の数", Float) = 1000.0
+        _ScanLineSpeed("走査線の早さ", Float) = 10.0
+        _NoiseAmount ("ノイズの強さ", Float) = 0.05
+        _Brightness ("画面の明るさ", Float) = 1.0
+        [MaterialToggle] _ScreenOn ("テレビの電源", Int) = 1
+        _OffColor ("オフ時画面の色", Color) = (0.08, 0.08, 0.16, 1.0)
     }
     SubShader
     {
@@ -41,6 +44,9 @@ Shader "Unlit/CRTEffect"
             float _ScanlineFrequency;
             float _NoiseAmount;
             float _ScanLineSpeed;
+            float _Brightness;
+            int _ScreenOn;
+            float4 _OffColor;
 
             float2 distort(float2 uv)
             {
@@ -65,7 +71,7 @@ Shader "Unlit/CRTEffect"
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 distortedUV = distort(i.uv);
-                
+
                 fixed4 col = tex2D(_MainTex, distortedUV);
 
                 float timeOffset = _Time.y * _ScanLineSpeed;
@@ -77,13 +83,19 @@ Shader "Unlit/CRTEffect"
 
                 float noise = (random(i.uv + _Time.y) - 0.5) * _NoiseAmount;
                 col.rgb += noise;
-                
+
+                col.rgb *= saturate(_Brightness);
+
+                // 画面オフ時の処理
+                col.rgb *= floor(_ScreenOn);
+                col.rgb += _OffColor * vignette * (1.0 - floor(_ScreenOn));
+
                 float inBoundsX = step(0.0, distortedUV.x) * step(distortedUV.x, 1.0);
                 float inBoundsY = step(0.0, distortedUV.y) * step(distortedUV.y, 1.0);
                 float inBounds = inBoundsX * inBoundsY;
-                
+
                 col = lerp(fixed4(0, 0, 0, 1), col, inBounds);
-                
+
                 return col;
             }
             ENDCG
