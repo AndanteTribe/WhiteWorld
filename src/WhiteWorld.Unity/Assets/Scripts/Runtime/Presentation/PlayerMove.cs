@@ -39,10 +39,10 @@ namespace WhiteWorld.AppMain
 
         private void Move(Vector2 value)
         {
-            _mVelocity = Vector2.Lerp(_mOldVelocity, value, mSharpness * Time.deltaTime);
+            _mVelocity = Vector2.Lerp(_mOldVelocity, value, mSharpness * Time.fixedDeltaTime);
             _mOldVelocity = _mVelocity;
             Vector3 velocity = new Vector3(_mVelocity.x, 0, _mVelocity.y);
-            _controller.Move(velocity * mMoveSpeed * Time.deltaTime);
+            _controller.Move(velocity * mMoveSpeed * Time.fixedDeltaTime);
             if (_mVelocity.magnitude < 0.1f) return;
 
             transform.LookAt( transform.position + velocity, Vector3.up);
