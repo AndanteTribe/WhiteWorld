@@ -1,10 +1,7 @@
 using AndanteTribe.Utils.Unity.VContainer;
-using CardSelectFlow;
 using CardSelectFlow.Interface;
-using UnityEngine;
 using VContainer;
-using VContainer.Unity;
-using WhiteWorld.Domain.LifeGame.Sequences;
+using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
 {

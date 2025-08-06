@@ -3,10 +3,10 @@ using CardSelectFlow.Interface;
 using UnityEngine;
 using WhiteWorld.Domain.Entity;
 
-namespace CardSelectFlow
+namespace WhiteWorld.Presentation
 {
     /// <summary>
-    /// 1~6までの値の内３つをランダムに返すクラス
+    /// 1~6までの値の内３つをランダムに返すアルゴリズムクラス
     /// </summary>
     public class RandomSelectAlgorithm : IAppearCardDecisionAlgorithm
     {

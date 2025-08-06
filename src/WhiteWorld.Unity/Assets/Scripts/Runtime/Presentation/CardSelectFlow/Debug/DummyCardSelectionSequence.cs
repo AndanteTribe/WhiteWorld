@@ -5,8 +5,11 @@ using UnityEngine;
 using WhiteWorld.AppMain;
 using WhiteWorld.Domain.Entity;
 
-namespace WhiteWorld.Presentation.Runtime.Presentation.CardSelectFlow
+namespace WhiteWorld.Presentation
 {
+    /// <summary>
+    /// CardSelectionSequenceからScene遷移処理を除いたクラス.Debug用
+    /// </summary>
     public class DummyCardSelectionSequence : MonoBehaviour,ICardSelectionSequence
     {
         /// <inheritdoc/>

@@ -1,27 +1,32 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
-using R3;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using WhiteWorld.Domain.Entity;
 
-namespace CardSelectFlow
+namespace WhiteWorld.Presentation
 {
-    public class CardObject : MonoBehaviour
+    /// <summary>
+    /// カードオブジェクトにアタッチするクラス
+    /// ボタンの入力を受け付ける
+    /// </summary>
+    public class CardClickWaiter : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI _tmPro;
         private Button _btn;
+        private TextMeshProUGUI _tmPro;
+        private SpaceAmount _spaceAmount;
 
         private void Awake()
         {
             _btn = GetComponentInChildren<Button>();
             if(_btn == null)
                 Debug.LogError("Buttonが取得できません");
-        }
 
-        private SpaceAmount _spaceAmount;
-        private readonly Subject<SpaceAmount> _onSelected = new();
+            _tmPro = GetComponentInChildren<TextMeshProUGUI>();
+            if(_tmPro == null)
+                Debug.LogError("TextMeshが取得できません");
+        }
 
         /// <summary>
         /// カード情報を更新する
@@ -34,7 +39,7 @@ namespace CardSelectFlow
         /// <summary>
         /// ボタンのクリックを待つ
         /// </summary>
-        public async UniTask<SpaceAmount> WaitClick(CancellationToken token)
+        public async UniTask<CardInfo> WaitClick(CancellationToken token)
         {
             // UnityEventを変換
             var buttonEvent = _btn.onClick.GetAsyncEventHandler(token);
@@ -42,7 +47,15 @@ namespace CardSelectFlow
             // ボタンの入力待ち
             await buttonEvent.OnInvokeAsync();
 
-            return _spaceAmount;
+            //ボタンを押せなくする
+            _btn.enabled = false;
+
+            //自身の情報をCardInfoに代入
+            CardInfo cardInfo;
+            cardInfo.Amount = _spaceAmount;
+            cardInfo.PositionType = gameObject.GetComponent<CardSlotHolder>().CardSlot;
+
+            return cardInfo;
         }
     }
 }

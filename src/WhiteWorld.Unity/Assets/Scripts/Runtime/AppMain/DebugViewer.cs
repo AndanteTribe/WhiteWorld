@@ -1,8 +1,6 @@
 ﻿#if ENABLE_DEBUGTOOLKIT
 
 using System.Threading;
-using CardSelectFlow;
-using CardSelectFlow.Interface;
 using Cysharp.Threading.Tasks;
 using DebugToolkit;
 using UnityEngine;
@@ -11,7 +9,7 @@ using VContainer.Unity;
 using WhiteWorld.Domain;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame.Sequences;
-using WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences;
+using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
 {

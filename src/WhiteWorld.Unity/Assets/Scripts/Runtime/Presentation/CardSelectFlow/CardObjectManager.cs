@@ -5,40 +5,34 @@ using CardSelectFlow.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
-using WhiteWorld.Domain.Entity;
 
-namespace CardSelectFlow
+namespace WhiteWorld.Presentation
 {
+    /// <summary>
+    /// 複数のCardObjectを管理するクラス
+    /// </summary>
     public class CardObjectManager : MonoBehaviour
     {
         //カードオブジェクト
-        [SerializeField] private CardObject[] _cardObjs;
+        [SerializeField] private CardClickWaiter[] _waiter;
 
         //出すカードを決定するアルゴリズム
         [Inject]
         public IAppearCardDecisionAlgorithm Algorithm;
 
-        public async UniTask<SpaceAmount> WaitPlayerSelectAsync(CancellationToken token)
+        /// <summary>
+        /// プレイヤーの選択を待つ関数
+        /// </summary>
+        public async UniTask<CardInfo> WaitPlayerSelectAsync(CancellationToken token)
         {
-            var tasks = _cardObjs
+            var tasks = _waiter
                 .Select(obj => obj.WaitClick(token))
                 .ToArray();
 
-            var (_,spaceAmount) = await UniTask.WhenAny(tasks);
+            var (_,info) = await UniTask.WhenAny(tasks);
 
-            return spaceAmount;
+            return info;
         }
-
-        /// <summary>
-        /// カードを更新する
-        /// </summary>
-        public void UpdateCard()
-        {
-            //リセット
-            SetSpaceAmount();
-        }
-
-        public void UpdateAlgorithm() => throw new NotImplementedException();
 
         /// <summary>
         /// カード生成アルゴリズムの更新
@@ -49,18 +43,18 @@ namespace CardSelectFlow
         }
 
         /// <summary>
-        /// カード情報を登録する関数
+        /// カード情報を更新する関数
         /// </summary>
-        private void SetSpaceAmount()
+        public void UpdateCard()
         {
              var infos = Algorithm.GetAppearCards();
 
-             if (infos.Count != _cardObjs.Length)
+             if (infos.Count != _waiter.Length)
                  throw new Exception("カード情報とScene上のカードの数がことなっています");
 
-             for (int i = 0; i < _cardObjs.Length; i++)
+             for (int i = 0; i < _waiter.Length; i++)
              {
-                 _cardObjs[i].UpdateCardInfo(infos[i]);
+                 _waiter[i].UpdateCardInfo(infos[i]);
              }
         }
     }

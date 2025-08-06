@@ -8,7 +8,7 @@ using WhiteWorld.AppMain;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame.Sequences;
 
-namespace WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences
+namespace WhiteWorld.Presentation
 {
     /// <summary>
     /// CardSelectionのフロー実行するクラス
@@ -37,13 +37,15 @@ namespace WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences
             _manager.UpdateCard();
 
             //出現アニメーション
-            _animation.Appear().Forget();
+            _animation.AppearAsync().Forget();
 
             //Playerの選択を待ち、選択した数字を取得
-            SpaceAmount spaceAmount = await _manager.WaitPlayerSelectAsync(token);
+            var info = await _manager.WaitPlayerSelectAsync(token);
+            var spaceAmount = info.Amount;
+            var cardType = info.PositionType;
 
             //カードを消すアニメーション
-            await _animation.DisAppear();
+            await _animation.DisAppearAsync(cardType);
 
             Sequence.FinishCardSelect(spaceAmount);
         }

@@ -2,8 +2,11 @@
 using CardSelectFlow.Interface;
 using WhiteWorld.Domain.Entity;
 
-namespace CardSelectFlow
+namespace WhiteWorld.Presentation
 {
+    /// <summary>
+    /// 指定した値を３つ返すアルゴリズムクラス.Debug用
+    /// </summary>
     public class FixedValueAlgorithm : IAppearCardDecisionAlgorithm
     {
         private SpaceAmount _spaceAmount;

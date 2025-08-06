@@ -1,0 +1,118 @@
+﻿using System;
+using Cysharp.Threading.Tasks;
+using LitMotion;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace WhiteWorld.Presentation
+{
+    /// <summary>
+    /// Cardのアニメーションの処理内容が置いてあるクラス
+    /// </summary>
+    public class CardAnimation : MonoBehaviour
+    {
+        [SerializeField] private float _turnDurationSec = 0.3f;
+
+        //裏面の構成要素
+        [SerializeField] private GameObject _backSideElement;
+
+        private TextMeshProUGUI _tmPro;
+        private Button _btn;
+        private Color _defaultTextColor;
+
+        private void Awake()
+        {
+            _tmPro = GetComponentInChildren<TextMeshProUGUI>();
+            if(_tmPro == null)
+                Debug.LogError("TextMeshが取得できません");
+
+            _btn = GetComponentInChildren<Button>();
+            if(_btn == null)
+                Debug.LogError("Buttonが取得できません");
+
+            _defaultTextColor = _tmPro.color;
+
+            SwitchToBack();
+
+            _btn.enabled = false;
+        }
+
+
+        /// <summary>
+        /// ターンして表を向ける
+        /// </summary>
+        public async UniTask TurnToFrontAsync()
+        {
+            await LMotion.Create(1.0f, 0f, _turnDurationSec/2)
+                .WithEase(Ease.InSine)
+                .Bind(transform, static (x, t) =>
+                {
+                    var p = t.localScale;
+                    p.x = x;
+                    t.localScale = p;
+                }).ToUniTask();
+
+            SwitchToFront();
+
+            await LMotion.Create(0f, 1f, _turnDurationSec/2)
+                .WithEase(Ease.OutSine)
+                .Bind(transform, static (x, t) =>
+                {
+                    var p = t.localScale;
+                    p.x = x;
+                    t.localScale = p;
+                }).ToUniTask();
+
+            _btn.enabled = true;
+        }
+
+        /// <summary>
+        /// ターンして裏を向ける
+        /// </summary>
+        public async UniTask TurnToBackAsync()
+        {
+            _btn.enabled = false;
+
+            await LMotion.Create(1.0f, 0f, _turnDurationSec/2)
+                .WithEase(Ease.InSine)
+                .Bind(transform, static (x, t) =>
+                {
+                    var p = t.localScale;
+                    p.x = x;
+                    t.localScale = p;
+                }).ToUniTask();
+
+            SwitchToBack();
+
+            await LMotion.Create(0f, 1f, _turnDurationSec/2)
+                .WithEase(Ease.OutSine)
+                .Bind(transform, static (x, t) =>
+                {
+                    var p = t.localScale;
+                    p.x = x;
+                    t.localScale = p;
+                }).ToUniTask();
+        }
+
+        /// <summary>
+        /// 表示要素を表向きのものにする
+        /// </summary>
+        private void SwitchToFront()
+        {
+            _tmPro.color = _defaultTextColor;
+
+            _backSideElement.SetActive(false);
+        }
+
+        /// <summary>
+        /// 表示要素を裏向きのものにする
+        /// </summary>
+        private void SwitchToBack()
+        {
+            _tmPro.color = new Color(0, 0, 0, 0);
+
+            _backSideElement.SetActive(true);
+        }
+    }
+}

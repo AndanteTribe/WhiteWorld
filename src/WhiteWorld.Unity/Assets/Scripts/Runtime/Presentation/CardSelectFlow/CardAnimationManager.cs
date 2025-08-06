@@ -1,47 +1,50 @@
-﻿using CardSelectFlow.Interface;
+﻿using System;
 using Cysharp.Threading.Tasks;
-using LitMotion;
 using UnityEngine;
 
-namespace CardSelectFlow
+namespace WhiteWorld.Presentation
 {
     /// <summary>
     /// カードのアニメーションを管理するクラス
     /// </summary>
     public class CardAnimationManager : MonoBehaviour
     {
-        [SerializeField] private float _turnDuration;
-        [SerializeField] private GameObject[] _cardObjs;
+        [SerializeField] private float _appearDelaySec = 1f;
+        [SerializeField] private float _turnIntervalSec = 0.1f;
+        [SerializeField] private float _disappearDelaySec = 1f;
+        [SerializeField] private CardAnimation[] _animations;
 
         /// <summary>
         /// 表示アニメーション開始する
         /// </summary>
-        public async UniTask Appear()
+        public async UniTask AppearAsync()
         {
-            //一旦SetActive
-            foreach (var obj in _cardObjs)
+            await UniTask.Delay(TimeSpan.FromSeconds(_appearDelaySec));
+
+            foreach (var anim in _animations)
             {
-                obj.SetActive(true);
+                anim.TurnToFrontAsync().Forget();
+                await UniTask.Delay(TimeSpan.FromSeconds(_turnIntervalSec));
             }
-            await UniTask.Delay(100);
         }
 
         /// <summary>
         /// 非表示アニメーション開始する
         /// </summary>
-        public async UniTask DisAppear()
+        public async UniTask DisAppearAsync(CardSlot selectedSlot)
         {
-            //一旦SetActive
-            foreach (var obj in _cardObjs)
+            await UniTask.Delay(TimeSpan.FromSeconds(_disappearDelaySec));
+
+            foreach (var anim in _animations)
             {
-                obj.SetActive(false);
+                //対象のSlotを取得し、選択されたカードなら裏返さない
+                var targetSlot = anim.gameObject.GetComponent<CardSlotHolder>().CardSlot;
+                if(targetSlot == selectedSlot)
+                    continue;
+
+                //裏返すのは同時に
+                anim.TurnToBackAsync().Forget();
             }
-            await UniTask.Delay(100);
-        }
-
-        private void Turn()
-        {
-
         }
     }
 }
