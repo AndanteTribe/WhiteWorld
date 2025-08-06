@@ -14,9 +14,11 @@ namespace WhiteWorld.Presentation.Runtime.Presentation.CardSelectFlow
 
         private AutoResetUniTaskCompletionSource<SpaceAmount> _source;
 
-        private void Start()
+        private async void Start()
         {
-            RunAsync(CancellationToken.None).Forget();
+            Debug.Log("Dummy Run 開始");
+            var result = await RunAsync(CancellationToken.None);
+            Debug.Log($"Dummy Run 終了 結果 {result}");
         }
 
         public async UniTask<SpaceAmount> RunAsync(CancellationToken cancellationToken)

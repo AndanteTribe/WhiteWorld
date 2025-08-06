@@ -45,8 +45,6 @@ namespace WhiteWorld.Domain.Runtime.Domain.LifeGame.Sequences
             //カードを消すアニメーション
             await _animation.DisAppear();
 
-            Debug.Log($"選ばれたのは{spaceAmount}");
-
             Sequence.FinishCardSelect(spaceAmount);
         }
     }
