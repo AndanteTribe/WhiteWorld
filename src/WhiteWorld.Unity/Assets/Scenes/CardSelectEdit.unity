@@ -395,12 +395,12 @@ GameObject:
   - component: {fileID: 676019610}
   - component: {fileID: 676019609}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: DebugEventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &676019609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,7 +512,8 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 604447121}
   - {fileID: 1757895056}
-  _autoBindComponents: []
+  _autoBindComponents:
+  - {fileID: 160428906}
 --- !u!1001 &705474277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1118,6 +1119,6 @@ SceneRoots:
   - {fileID: 699749734}
   - {fileID: 337073445}
   - {fileID: 6088739294382987244}
-  - {fileID: 676019611}
   - {fileID: 1757895058}
   - {fileID: 160428907}
+  - {fileID: 676019611}

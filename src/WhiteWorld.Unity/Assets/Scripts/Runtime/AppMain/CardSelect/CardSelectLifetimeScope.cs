@@ -14,12 +14,11 @@ namespace WhiteWorld.AppMain
         {
             base.Configure(builder);
 
-            builder.Register<CardSelectionSequence>(Lifetime.Singleton);
+            //TODO 本番ではこっちを使う
+            // builder.Register<ICardSelectionSequence,CardSelectionSequence>(Lifetime.Singleton);
 
-            Debug.Log("前");
             //Debug
             builder.Register<IAppearCardDecisionAlgorithm, RandomSelectAlgorithm>(Lifetime.Singleton);
-            Debug.Log("後");
         }
     }
 }

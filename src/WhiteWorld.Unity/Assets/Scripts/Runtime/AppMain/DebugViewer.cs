@@ -50,8 +50,6 @@ namespace WhiteWorld.AppMain
             sceneWindow.Add(button);
 
             var window = root.AddWindow("カード番号指定");
-            Toggle myToggle = new Toggle("カード番号を指定する(トグル)");
-            window.Add(myToggle);
 
             //cardSelect部分
             IntegerField intField = new IntegerField("数値入力");
@@ -61,9 +59,6 @@ namespace WhiteWorld.AppMain
             // IntegerField 更新時のイベント
             intField.RegisterValueChangedCallback(evt =>
             {
-                if(!myToggle.value)
-                    return;
-
                 FixedValueAlgorithm fixedAlg = new FixedValueAlgorithm(new SpaceAmount(intField.value));
                 _cardObjectManager = Object.FindAnyObjectByType<CardObjectManager>();
                 _cardObjectManager.UpdateAlgorithm(fixedAlg);
