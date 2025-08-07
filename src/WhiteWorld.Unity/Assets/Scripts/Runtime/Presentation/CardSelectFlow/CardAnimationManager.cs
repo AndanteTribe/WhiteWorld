@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -19,13 +20,17 @@ namespace WhiteWorld.Presentation
         /// </summary>
         public async UniTask AppearAsync()
         {
+            var allAppearTasks = new List<UniTask>();
+
             await UniTask.Delay(TimeSpan.FromSeconds(_appearDelaySec));
 
             foreach (var anim in _animations)
             {
-                anim.TurnToFrontAsync().Forget();
+                allAppearTasks.Add(anim.TurnToFrontAsync());
                 await UniTask.Delay(TimeSpan.FromSeconds(_turnIntervalSec));
             }
+            //全ての表示が終わるまで待つ
+            await UniTask.WhenAll(allAppearTasks);
         }
 
         /// <summary>
@@ -33,6 +38,8 @@ namespace WhiteWorld.Presentation
         /// </summary>
         public async UniTask DisAppearAsync(CardSlot selectedSlot)
         {
+            var allDisappearTasks = new List<UniTask>();
+
             await UniTask.Delay(TimeSpan.FromSeconds(_disappearDelaySec));
 
             foreach (var anim in _animations)
@@ -43,8 +50,10 @@ namespace WhiteWorld.Presentation
                     continue;
 
                 //裏返すのは同時に
-                anim.TurnToBackAsync().Forget();
+                allDisappearTasks.Add(anim.TurnToBackAsync());
             }
+
+            await UniTask.WhenAll(allDisappearTasks);
         }
     }
 }

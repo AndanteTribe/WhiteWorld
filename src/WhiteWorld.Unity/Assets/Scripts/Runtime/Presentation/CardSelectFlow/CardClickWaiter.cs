@@ -13,20 +13,9 @@ namespace WhiteWorld.Presentation
     /// </summary>
     public class CardClickWaiter : MonoBehaviour
     {
-        private Button _btn;
-        private TextMeshProUGUI _tmPro;
+        [SerializeField] private Button _btn;
+        [SerializeField] private TextMeshProUGUI _tmPro;
         private SpaceAmount _spaceAmount;
-
-        private void Awake()
-        {
-            _btn = GetComponentInChildren<Button>();
-            if(_btn == null)
-                Debug.LogError("Buttonが取得できません");
-
-            _tmPro = GetComponentInChildren<TextMeshProUGUI>();
-            if(_tmPro == null)
-                Debug.LogError("TextMeshが取得できません");
-        }
 
         /// <summary>
         /// カード情報を更新する
@@ -48,7 +37,7 @@ namespace WhiteWorld.Presentation
             await buttonEvent.OnInvokeAsync();
 
             //ボタンを押せなくする
-            _btn.enabled = false;
+            SetButtonInteractableFalse();
 
             //自身の情報をCardInfoに代入
             CardInfo cardInfo;
@@ -56,6 +45,16 @@ namespace WhiteWorld.Presentation
             cardInfo.PositionType = gameObject.GetComponent<CardSlotHolder>().CardSlot;
 
             return cardInfo;
+        }
+
+        private void SetButtonInteractableFalse()
+        {
+            //interactable = falseにした後の色を設定
+            var colors = _btn.colors;
+            colors.disabledColor = colors.normalColor;
+            _btn.colors = colors;
+
+            _btn.interactable = false;
         }
     }
 }

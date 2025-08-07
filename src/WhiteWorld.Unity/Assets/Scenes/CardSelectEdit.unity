@@ -864,6 +864,18 @@ PrefabInstance:
       propertyPath: _positionType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2201694569375571469, guid: 70c99a3e505784049b6402574f10f719, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201694569375571469, guid: 70c99a3e505784049b6402574f10f719, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.764151
+      objectReference: {fileID: 0}
+    - target: {fileID: 2201694569375571469, guid: 70c99a3e505784049b6402574f10f719, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.764151
+      objectReference: {fileID: 0}
     - target: {fileID: 2616597423972699210, guid: 70c99a3e505784049b6402574f10f719, type: 3}
       propertyPath: m_Name
       value: Card_right

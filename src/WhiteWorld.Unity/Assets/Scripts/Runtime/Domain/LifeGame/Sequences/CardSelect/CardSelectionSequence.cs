@@ -8,7 +8,7 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
     /// <summary>
     /// カード選択のシーケンス.
     /// </summary>
-    public class CardSelectionSequence : ILifeGameSequence,ICardSelectionSequence
+    public class CardSelectionSequence : ICardSelectionSequence
     {
         /// <inheritdoc/>
         public LifeGameMode Mode => LifeGameMode.CardSelection;

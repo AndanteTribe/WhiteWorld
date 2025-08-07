@@ -12,30 +12,24 @@ namespace WhiteWorld.Presentation
     /// </summary>
     public class CardAnimation : MonoBehaviour
     {
+        //ターン時間
         [SerializeField] private float _turnDurationSec = 0.3f;
 
         //裏面の構成要素
         [SerializeField] private GameObject _backSideElement;
 
-        private TextMeshProUGUI _tmPro;
-        private Button _btn;
+        [SerializeField] private TextMeshProUGUI _tmPro;
+        [SerializeField] private Button _btn;
         private Color _defaultTextColor;
 
         private void Awake()
         {
-            _tmPro = GetComponentInChildren<TextMeshProUGUI>();
-            if(_tmPro == null)
-                Debug.LogError("TextMeshが取得できません");
-
-            _btn = GetComponentInChildren<Button>();
-            if(_btn == null)
-                Debug.LogError("Buttonが取得できません");
-
             _defaultTextColor = _tmPro.color;
 
             SwitchToBack();
 
-            _btn.enabled = false;
+            _btn.transition = Selectable.Transition.None;
+            _btn.interactable = false;
         }
 
 
@@ -64,7 +58,8 @@ namespace WhiteWorld.Presentation
                     t.localScale = p;
                 }).ToUniTask();
 
-            _btn.enabled = true;
+            _btn.transition = Selectable.Transition.ColorTint;
+            _btn.interactable = true;
         }
 
         /// <summary>
@@ -72,7 +67,8 @@ namespace WhiteWorld.Presentation
         /// </summary>
         public async UniTask TurnToBackAsync()
         {
-            _btn.enabled = false;
+            _btn.transition = Selectable.Transition.None;
+            _btn.interactable = false;
 
             await LMotion.Create(1.0f, 0f, _turnDurationSec/2)
                 .WithEase(Ease.InSine)
