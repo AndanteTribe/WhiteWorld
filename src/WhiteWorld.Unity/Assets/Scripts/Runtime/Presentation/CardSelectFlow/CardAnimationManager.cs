@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -10,37 +11,50 @@ namespace WhiteWorld.Presentation
     /// </summary>
     public class CardAnimationManager : MonoBehaviour
     {
+        /// <summary>
+        /// 表示アニメーション全体の遅延時間（秒）
+        /// </summary>
         [SerializeField] private float _appearDelaySec = 1f;
-        [SerializeField] private float _turnIntervalSec = 0.1f;
+        /// <summary>
+        /// カードを表示するアニメーションの始点間のインターバル時間（秒）
+        /// </summary>
+        [SerializeField] private float _turnStartIntervalSec = 0.5f;
+        /// <summary>
+        /// 非表示アニメーション全体の遅延時間（秒）
+        /// </summary>
         [SerializeField] private float _disappearDelaySec = 1f;
+
         [SerializeField] private CardAnimation[] _animations;
 
         /// <summary>
         /// 表示アニメーション開始する
         /// </summary>
-        public async UniTask AppearAsync()
+        public async UniTask AppearAsync(CancellationToken token)
         {
-            var allAppearTasks = new List<UniTask>();
+            UniTask currentTask = UniTask.CompletedTask;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_appearDelaySec));
+            await UniTask.Delay(TimeSpan.FromSeconds(_appearDelaySec), cancellationToken: token);
 
             foreach (var anim in _animations)
             {
-                allAppearTasks.Add(anim.TurnToFrontAsync());
-                await UniTask.Delay(TimeSpan.FromSeconds(_turnIntervalSec));
+                currentTask = anim.TurnToFrontAsync(token);
+
+                await UniTask.Delay(TimeSpan.FromSeconds(_turnStartIntervalSec),cancellationToken:token);
             }
-            //全ての表示が終わるまで待つ
-            await UniTask.WhenAll(allAppearTasks);
+
+            //最後のタスクを待つ
+            var lastTask = currentTask;
+            await lastTask;
         }
 
         /// <summary>
         /// 非表示アニメーション開始する
         /// </summary>
-        public async UniTask DisAppearAsync(CardSlot selectedSlot)
+        public async UniTask DisAppearAsync(CardSlot selectedSlot,CancellationToken token)
         {
-            var allDisappearTasks = new List<UniTask>();
+            UniTask currentTask = UniTask.CompletedTask;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_disappearDelaySec));
+            await UniTask.Delay(TimeSpan.FromSeconds(_disappearDelaySec),cancellationToken:token);
 
             foreach (var anim in _animations)
             {
@@ -50,10 +64,12 @@ namespace WhiteWorld.Presentation
                     continue;
 
                 //裏返すのは同時に
-                allDisappearTasks.Add(anim.TurnToBackAsync());
+                currentTask = anim.TurnToBackAsync(token);
             }
 
-            await UniTask.WhenAll(allDisappearTasks);
+            //最後のタスクを待つ
+            var lastTask = currentTask;
+            await lastTask;
         }
     }
 }

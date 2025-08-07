@@ -31,21 +31,21 @@ namespace WhiteWorld.Presentation
         /// カード表示→Playerの操作を待つ→カード非表示までの流れを実行し、
         /// 選択したSpaceAmountを返す
         /// </summary>
-        public async UniTask PlayerSelectionFlowAsync(CancellationToken token)
+        public async UniTask PlayerSelectionFlowAsync(CancellationToken cancellationToken)
         {
             //カード情報更新
             _manager.UpdateCard();
 
             //出現アニメーション
-            _animation.AppearAsync().Forget();
+            await _animation.AppearAsync(cancellationToken);
 
             //Playerの選択を待ち、選択した数字を取得
-            var info = await _manager.WaitPlayerSelectAsync(token);
+            var info = await _manager.WaitPlayerSelectAsync(cancellationToken);
             var spaceAmount = info.Amount;
             var cardType = info.PositionType;
 
             //カードを消すアニメーション
-            await _animation.DisAppearAsync(cardType);
+            await _animation.DisAppearAsync(cardType,cancellationToken);
 
             Sequence.FinishCardSelect(spaceAmount);
         }

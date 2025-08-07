@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using TMPro;
@@ -36,7 +37,7 @@ namespace WhiteWorld.Presentation
         /// <summary>
         /// ターンして表を向ける
         /// </summary>
-        public async UniTask TurnToFrontAsync()
+        public async UniTask TurnToFrontAsync(CancellationToken token)
         {
             await LMotion.Create(1.0f, 0f, _turnDurationSec/2)
                 .WithEase(Ease.InSine)
@@ -45,7 +46,7 @@ namespace WhiteWorld.Presentation
                     var p = t.localScale;
                     p.x = x;
                     t.localScale = p;
-                }).ToUniTask();
+                }).ToUniTask(token);
 
             SwitchToFront();
 
@@ -56,7 +57,7 @@ namespace WhiteWorld.Presentation
                     var p = t.localScale;
                     p.x = x;
                     t.localScale = p;
-                }).ToUniTask();
+                }).ToUniTask(token);
 
             _btn.transition = Selectable.Transition.ColorTint;
             _btn.interactable = true;
@@ -65,7 +66,7 @@ namespace WhiteWorld.Presentation
         /// <summary>
         /// ターンして裏を向ける
         /// </summary>
-        public async UniTask TurnToBackAsync()
+        public async UniTask TurnToBackAsync(CancellationToken token)
         {
             _btn.transition = Selectable.Transition.None;
             _btn.interactable = false;
@@ -77,7 +78,7 @@ namespace WhiteWorld.Presentation
                     var p = t.localScale;
                     p.x = x;
                     t.localScale = p;
-                }).ToUniTask();
+                }).ToUniTask(token);
 
             SwitchToBack();
 
@@ -88,7 +89,7 @@ namespace WhiteWorld.Presentation
                     var p = t.localScale;
                     p.x = x;
                     t.localScale = p;
-                }).ToUniTask();
+                }).ToUniTask(token);
         }
 
         /// <summary>
