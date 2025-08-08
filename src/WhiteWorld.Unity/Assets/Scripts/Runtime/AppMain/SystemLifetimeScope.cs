@@ -2,7 +2,9 @@ using AndanteTribe.Utils.Unity.VContainer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using WhiteWorld.Data.Runtime.Data;
 using WhiteWorld.Domain;
+using WhiteWorld.Domain.Entity.Runtime.Domain.Entity;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
@@ -20,6 +22,15 @@ namespace WhiteWorld.AppMain
 #if ENABLE_DEBUGTOOLKIT
             builder.RegisterEntryPoint<DebugViewer>().WithParameter(_tvPrefab);
 #endif
+            builder
+                .Register<IMasterDataRepository<DummyModel>, MasterDataRepository<DummyModel>>(Lifetime.Singleton)
+                .WithParameter("binaryPath","DummyText")
+                .WithParameter("tableName","DummyData");
+
+            builder
+                .Register<IMasterDataRepository<KeywordModel>, KeywordModelRepository>(Lifetime.Singleton)
+                .WithParameter("binaryPath", "Keyword")
+                .WithParameter("tableName", "KeywordData");
         }
     }
 }
