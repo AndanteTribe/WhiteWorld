@@ -9,6 +9,8 @@ using VContainer;
 using VContainer.Unity;
 using WhiteWorld.Domain;
 using WhiteWorld.Domain.Entity;
+using WhiteWorld.Domain.LifeGame.Sequences;
+using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
 {
@@ -17,6 +19,8 @@ namespace WhiteWorld.AppMain
         private readonly IObjectResolver _resolver;
         private readonly ISceneController _sceneController;
         private readonly GameObject _tvPrefab;
+        private readonly CardSelectionSequence _cardSelectionSequence;
+        private CardObjectManager _cardObjectManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DebugViewer"/> class.
@@ -35,10 +39,36 @@ namespace WhiteWorld.AppMain
         {
             var root = base.CreateViewGUI();
 
-            var firstWindow = root.AddWindow("デバッグメニュー");
-            firstWindow.AddProfileInfoLabel();
+            // _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
 
-            _sceneController.LoadAsync(SceneName.Title, CancellationToken.None).Forget();
+            //Scene遷移部分
+            var sceneWindow = root.AddWindow("Scene遷移");
+
+            Button button = new Button
+            {
+                text = "CardSelectScene"
+            };
+            button.clicked += () =>
+            {
+                _sceneController.LoadAsync(SceneName.CardSelectEdit, CancellationToken.None).Forget();
+            };
+            sceneWindow.Add(button);
+
+            var window = root.AddWindow("カード番号指定");
+
+            //cardSelect部分
+            IntegerField intField = new IntegerField("数値入力");
+            intField.value = 0;
+            window.Add(intField);
+
+            // IntegerField 更新時のイベント
+            intField.RegisterValueChangedCallback(evt =>
+            {
+                FixedValueAlgorithm fixedAlg = new FixedValueAlgorithm(new SpaceAmount(intField.value));
+                _cardObjectManager = Object.FindAnyObjectByType<CardObjectManager>();
+                _cardObjectManager.UpdateAlgorithm(fixedAlg);
+                _cardObjectManager.UpdateCard();
+            });
 
             //Openingシーンに遷移するボタンを作成
             var openingWindow = root.AddWindow("Opening");
