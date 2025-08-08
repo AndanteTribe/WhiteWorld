@@ -81,20 +81,21 @@ namespace WhiteWorld.AppMain
             });
             openingWindow.Add(buttonToOpening);
 
-            /*
-            // テレビ例
-            firstWindow.Add(new Label(text:"テレビ制御"));
 
-            // このようにテレビのPrefabはresolverからInstantiateしてください、Cinemachine Brainがついてるメインカメラを必ず用意すること！
-            var tv = _resolver.Instantiate(_tvPrefab, new Vector3(0, 0, 10), Quaternion.Euler(0, 180, 0));
-            var tvAnimationButton = new Button();
-            firstWindow.Add(tvAnimationButton);
-            tvAnimationButton.text = "テレビアニメーション";
-            tvAnimationButton.RegisterCallback<ClickEvent, ITVController>( (evt, tvCtr) =>
-            {
-                tvCtr.StartTVAnimation();
-            }, tv.GetComponent<ITVController>());
-            */
+          // テレビ例
+          var tvWindow = root.AddWindow("Television Control");
+          tvWindow.Add(new Label(text:"テレビ制御"));
+
+          // このようにテレビのPrefabはresolverからInstantiateしてください、Cinemachine Brainがついてるメインカメラを必ず用意すること！
+          var tv = _resolver.Instantiate(_tvPrefab, new Vector3(0, 0, 10), Quaternion.Euler(0, 180, 0));
+          var tvAnimationButton = new Button();
+          tvWindow.Add(tvAnimationButton);
+          tvAnimationButton.text = "テレビアニメーション";
+          tvAnimationButton.RegisterCallback<ClickEvent, ITVController>( (evt, tvCtr) =>
+          {
+              tvCtr.StartTVAnimation();
+          }, tv.GetComponent<ITVController>());
+              
 
             return root;
         }
