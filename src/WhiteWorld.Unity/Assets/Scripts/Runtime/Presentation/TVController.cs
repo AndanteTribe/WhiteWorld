@@ -8,8 +8,7 @@ namespace WhiteWorld.Presentation
 {
     public class TVController : MonoBehaviour, ITVController
     {
-        [SerializeField] private PlayableDirector? _startTimeline;
-        [SerializeField] private PlayableDirector? _endTimeline;
+        [SerializeField] private PlayableDirector? _timeline;
 
         private void Start()
         {
@@ -18,8 +17,8 @@ namespace WhiteWorld.Presentation
             playableDirector.SetGenericBinding(track.sourceObject, Camera.main?.GetComponent<CinemachineBrain>());
         }
 
-        public void StartTVAnimation() => _startTimeline?.Play();
+        public void StartTVAnimation() => _timeline?.Play();
 
-        public void EndTVAnimation() => _endTimeline?.Play();
+        public void EndTVAnimation() => _timeline?.Stop();
     }
 }

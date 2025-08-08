@@ -9,10 +9,10 @@ namespace WhiteWorld.AppMain
         private Vector2 _mVelocity = Vector2.zero;
         private Vector2 _mOldVelocity = Vector2.zero;
         [SerializeField]
-        private float mMoveSpeed = 5f;
+        private float _mMoveSpeed = 5f;
         /// <summary> 曲がるときの急さ </summary>
         [SerializeField]
-        private float mSharpness = 20f;
+        private float _mSharpness = 20f;
         private CharacterController _controller;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -39,10 +39,10 @@ namespace WhiteWorld.AppMain
 
         private void Move(Vector2 value)
         {
-            _mVelocity = Vector2.Lerp(_mOldVelocity, value, mSharpness * Time.fixedDeltaTime);
+            _mVelocity = Vector2.Lerp(_mOldVelocity, value, _mSharpness * Time.fixedDeltaTime);
             _mOldVelocity = _mVelocity;
             Vector3 velocity = new Vector3(_mVelocity.x, 0, _mVelocity.y);
-            _controller.Move(velocity * mMoveSpeed * Time.fixedDeltaTime);
+            _controller.Move(velocity * _mMoveSpeed * Time.fixedDeltaTime);
             if (_mVelocity.magnitude < 0.1f) return;
 
             transform.LookAt( transform.position + velocity, Vector3.up);
