@@ -7,7 +7,6 @@ namespace WhiteWorld.Presentation
     public class PlayerTVInteraction : MonoBehaviour, ISwitchToPlayerCamera
     {
         [SerializeField] private Renderer _playerRenderer;
-        [SerializeField] private CinemachineCamera _playerCamera;
         private bool _isInteracting = false;
         private ITVController? _tvController;
 
