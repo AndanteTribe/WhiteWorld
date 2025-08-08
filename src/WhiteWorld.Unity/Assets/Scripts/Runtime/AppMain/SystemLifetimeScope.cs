@@ -16,10 +16,9 @@ namespace WhiteWorld.AppMain
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<ISceneController, DefaultSceneController>(Lifetime.Singleton);
-            builder.RegisterInstance(_tvPrefab);
 
 #if ENABLE_DEBUGTOOLKIT
-            builder.RegisterEntryPoint<DebugViewer>();
+            builder.RegisterEntryPoint<DebugViewer>().WithParameter(_tvPrefab);
 #endif
         }
     }
