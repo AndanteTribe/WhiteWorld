@@ -9,7 +9,7 @@ namespace WhiteWorld.Presentation
         private readonly IObjectResolver _resolver;
         private readonly GameObject _tvPrefab;
 
-        OpeningCreator(IObjectResolver resolver, GameObject tvPrefab)
+        public OpeningCreator(IObjectResolver resolver, GameObject tvPrefab)
         {
             _resolver = resolver;
             _tvPrefab = tvPrefab;
