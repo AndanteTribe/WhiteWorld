@@ -225,6 +225,34 @@ public partial class @WhiteWorldActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Title"",
+            ""id"": ""915be888-0ff4-4b26-ab54-40a29645a7b8"",
+            ""actions"": [
+                {
+                    ""name"": ""LoadNextScene"",
+                    ""type"": ""Button"",
+                    ""id"": ""945cf0dd-0eda-4a6f-af4f-0b3aa1db6560"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""146f87fa-6591-4811-9e03-630bd87e0e40"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LoadNextScene"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -232,11 +260,15 @@ public partial class @WhiteWorldActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        // Title
+        m_Title = asset.FindActionMap("Title", throwIfNotFound: true);
+        m_Title_LoadNextScene = m_Title.FindAction("LoadNextScene", throwIfNotFound: true);
     }
 
     ~@WhiteWorldActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, WhiteWorldActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Title.enabled, "This will cause a leak and performance issues, WhiteWorldActions.Title.Disable() has not been called.");
     }
 
     /// <summary>
@@ -404,6 +436,102 @@ public partial class @WhiteWorldActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Title
+    private readonly InputActionMap m_Title;
+    private List<ITitleActions> m_TitleActionsCallbackInterfaces = new List<ITitleActions>();
+    private readonly InputAction m_Title_LoadNextScene;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Title".
+    /// </summary>
+    public struct TitleActions
+    {
+        private @WhiteWorldActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TitleActions(@WhiteWorldActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Title/LoadNextScene".
+        /// </summary>
+        public InputAction @LoadNextScene => m_Wrapper.m_Title_LoadNextScene;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Title; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TitleActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TitleActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TitleActions" />
+        public void AddCallbacks(ITitleActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TitleActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TitleActionsCallbackInterfaces.Add(instance);
+            @LoadNextScene.started += instance.OnLoadNextScene;
+            @LoadNextScene.performed += instance.OnLoadNextScene;
+            @LoadNextScene.canceled += instance.OnLoadNextScene;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TitleActions" />
+        private void UnregisterCallbacks(ITitleActions instance)
+        {
+            @LoadNextScene.started -= instance.OnLoadNextScene;
+            @LoadNextScene.performed -= instance.OnLoadNextScene;
+            @LoadNextScene.canceled -= instance.OnLoadNextScene;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TitleActions.UnregisterCallbacks(ITitleActions)" />.
+        /// </summary>
+        /// <seealso cref="TitleActions.UnregisterCallbacks(ITitleActions)" />
+        public void RemoveCallbacks(ITitleActions instance)
+        {
+            if (m_Wrapper.m_TitleActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TitleActions.AddCallbacks(ITitleActions)" />
+        /// <seealso cref="TitleActions.RemoveCallbacks(ITitleActions)" />
+        /// <seealso cref="TitleActions.UnregisterCallbacks(ITitleActions)" />
+        public void SetCallbacks(ITitleActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TitleActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TitleActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TitleActions" /> instance referencing this action map.
+    /// </summary>
+    public TitleActions @Title => new TitleActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -418,5 +546,20 @@ public partial class @WhiteWorldActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Title" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TitleActions.AddCallbacks(ITitleActions)" />
+    /// <seealso cref="TitleActions.RemoveCallbacks(ITitleActions)" />
+    public interface ITitleActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "LoadNextScene" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLoadNextScene(InputAction.CallbackContext context);
     }
 }
