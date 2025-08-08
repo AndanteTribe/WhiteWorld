@@ -29,6 +29,7 @@ namespace WhiteWorld.Presentation
 
         private async UniTaskVoid LoadSceneAsync()
         {
+            //ここthis.GetCancellationTokenOnDestroy()わたすとOpeningがLoadしません
             await _controller.UnloadAllAsync(CancellationToken.None);
             await _controller.LoadAsync(SceneName.Opening, CancellationToken.None);
         }
