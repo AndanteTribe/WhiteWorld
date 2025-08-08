@@ -11,8 +11,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
   m_Name: CinemachineShot
-  m_EditorClassIdentifier:
-  DisplayName:
+  m_EditorClassIdentifier: 
+  DisplayName: 
   VirtualCamera:
     exposedName: c72935cd858577741bf291d941735d97
     defaultValue: {fileID: 0}
@@ -27,12 +27,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d21dcc2386d650c4597f3633c75a1f98, type: 3}
   m_Name: Animation Track
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
   m_Muted: 0
-  m_CustomPlayableFullTypename:
+  m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
   m_Children: []
@@ -170,8 +170,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
   m_Name: CinemachineShot
-  m_EditorClassIdentifier:
-  DisplayName:
+  m_EditorClassIdentifier: 
+  DisplayName: 
   VirtualCamera:
     exposedName: cd9b0ac0e904b8f4396efdca59b2c2fd
     defaultValue: {fileID: 0}
@@ -186,8 +186,8 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
   m_Name: CinemachineShot
-  m_EditorClassIdentifier:
-  DisplayName:
+  m_EditorClassIdentifier: 
+  DisplayName: 
   VirtualCamera:
     exposedName: 1175b6899dbe20a44b25cd8581dc7913
     defaultValue: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
   m_Name: TelevisonTimeline
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_Version: 0
   m_Tracks:
   - {fileID: 3987627620497532770}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_Clip: {fileID: 7400000, guid: 658ac73ff7874f545a7e80b6afaeb618, type: 2}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}
@@ -246,12 +246,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05acc715f855ced458d76ee6f8ac6c61, type: 3}
   m_Name: Cinemachine Track
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
   m_Locked: 0
   m_Muted: 0
-  m_CustomPlayableFullTypename:
+  m_CustomPlayableFullTypename: 
   m_Curves: {fileID: 0}
   m_Parent: {fileID: 11400000}
   m_Children: []
@@ -431,12 +431,30 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     m_BlendInCurveMode: 1
-    m_BlendOutCurveMode: 0
+    m_BlendOutCurveMode: 1
     m_ExposedParameterNames: []
     m_AnimationCurves: {fileID: 0}
     m_Recordable: 0
@@ -459,7 +477,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 030f85c3f73729f4f976f66ffb23b875, type: 3}
   m_Name: AnimationPlayableAsset
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   m_Clip: {fileID: 7400000, guid: cc6237ef6714f3840ac205724793c7d8, type: 2}
   m_Position: {x: 0, y: 0, z: 0}
   m_EulerAngles: {x: 0, y: 0, z: 0}

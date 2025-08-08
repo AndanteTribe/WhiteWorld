@@ -19,10 +19,8 @@ namespace WhiteWorld.Presentation
 
         public void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Entered TV Controller");
             if (other.TryGetComponent(out ITVController? tvController) && !_isInteracting)
             {
-                Debug.Log("Entered TV Controller");
                 _isInteracting = true;
                 _tvController = tvController;
                 _tvController?.StartTVAnimation();
@@ -34,6 +32,7 @@ namespace WhiteWorld.Presentation
         {
             if (other.TryGetComponent(out ITVController? tvController) && _isInteracting)
             {
+                SwitchToPlayerCamera();
                 _isInteracting = false;
                 _playerRenderer.enabled = true;
             }

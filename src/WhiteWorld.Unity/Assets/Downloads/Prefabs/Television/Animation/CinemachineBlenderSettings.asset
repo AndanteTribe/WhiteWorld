@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36baaa8bdcb9d8b49b9199833965d2c3, type: 3}
   m_Name: CinemachineBlenderSettings
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   CustomBlends:
   - From: '**ANY CAMERA**'
     To: TVCam
@@ -57,11 +57,11 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 4
-  - From: PlayerCamera
+  - From: '**ANY CAMERA**'
     To: '**ANY CAMERA**'
     Blend:
       Style: 1
-      Time: 2
+      Time: 1
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
