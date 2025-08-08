@@ -9,13 +9,13 @@ namespace WhiteWorld.AppMain
     {
         public WhiteWorldActions MWhiteWorldActions { get; private set; }
         [SerializeField]
-        private PlayerMove mPlayerMove;
+        private PlayerMove _mPlayerMove;
         void Awake()
         {
             MWhiteWorldActions = new WhiteWorldActions();
             MWhiteWorldActions.Player.Enable();
-            MWhiteWorldActions.Player.Move.performed += context => mPlayerMove.ReadMoveValue(context);
-            MWhiteWorldActions.Player.Move.canceled += context => mPlayerMove.ReadMoveValue(context);
+            MWhiteWorldActions.Player.Move.performed += context => _mPlayerMove.ReadMoveValue(context);
+            MWhiteWorldActions.Player.Move.canceled += context => _mPlayerMove.ReadMoveValue(context);
         }
     }
 }

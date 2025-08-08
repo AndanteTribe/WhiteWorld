@@ -81,7 +81,7 @@ namespace WhiteWorld.AppMain
             });
             openingWindow.Add(buttonToOpening);
 
-
+        /*
           // テレビ例
           var tvWindow = root.AddWindow("Television Control");
           tvWindow.Add(new Label(text:"テレビ制御"));
@@ -95,7 +95,8 @@ namespace WhiteWorld.AppMain
           {
               tvCtr.StartTVAnimation();
           }, tv.GetComponent<ITVController>());
-              
+          */
+
 
             return root;
         }
