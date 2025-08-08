@@ -1,0 +1,6 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+</Project>
