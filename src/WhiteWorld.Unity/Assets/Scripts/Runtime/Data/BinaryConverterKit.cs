@@ -29,19 +29,22 @@ namespace WhiteWorld.Data.Runtime.Data
         /// </summary>
         [SerializeField] private string _writeBinaryFileName;
 
-        private const string NameSpacePath = "WhiteWorld.Data.Runtime.Data.";
-        private const string WriteBinaryPath = "Assets/Downloads/BinaryData/";
+        private const string NameSpacePath = "WhiteWorld.Domain.Entity.Runtime.Domain.Entity.";
+        private const string WriteBinaryPath = "Assets/Resources/";
 
         [Button]
         public void BuildBinaryData()
         {
-            var type = Type.GetType($"{NameSpacePath}{_convertClassName}");
+            var type = Type.GetType($"{NameSpacePath}{_convertClassName}, WhiteWorld.Domain.Entity");
             var csvText = File.ReadAllText(_csvFilePath);
 
             if (type == null)
             {
-                throw new ApplicationException("Typeが見つかりませんでした");
+                Debug.Log("Typeが見つかりませんでした");
+                return;
             }
+
+            Debug.Log("Typeを取得しました");
 
             var deserialize = CsvTranslator.Deserialize(csvText, type);
             var builder = new DatabaseBuilder();

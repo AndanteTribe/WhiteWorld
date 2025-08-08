@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b368c43c314d84af3d941e475e00b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _csvFilePath: Assets/Downloads/CsvData/PlayerData.csv
-  _convertClassName: PlayerRepository
+  _csvFilePath: Assets/Downloads/CsvData/DummyData.csv
+  _convertClassName: DummyModel
+  _writeBinaryFileName: DummyText
