@@ -41,25 +41,24 @@ namespace WhiteWorld.AppMain
 
             // _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
 
-            //Scene遷移部分
-            var sceneWindow = root.AddWindow("Scene遷移");
+            //CardSelectScene遷移
+            var cardSelectWindow = root.AddWindow("cardSelect");
 
             Button button = new Button
             {
-                text = "CardSelectScene"
+                text = "Shift To CardSelect"
             };
-            button.clicked += () =>
+            button.clicked += UniTask.Action(async () =>
             {
-                _sceneController.LoadAsync(SceneName.CardSelectEdit, CancellationToken.None).Forget();
-            };
-            sceneWindow.Add(button);
-
-            var window = root.AddWindow("カード番号指定");
+                await _sceneController.UnloadAllAsync(CancellationToken.None);
+                await _sceneController.LoadAsync(SceneName.CardSelectEdit, CancellationToken.None);
+            });
+            cardSelectWindow.Add(button);
 
             //cardSelect部分
-            IntegerField intField = new IntegerField("数値入力");
+            IntegerField intField = new IntegerField("カード数値入力");
             intField.value = 0;
-            window.Add(intField);
+            cardSelectWindow.Add(intField);
 
             // IntegerField 更新時のイベント
             intField.RegisterValueChangedCallback(evt =>
@@ -69,6 +68,17 @@ namespace WhiteWorld.AppMain
                 _cardObjectManager.UpdateAlgorithm(fixedAlg);
                 _cardObjectManager.UpdateCard();
             });
+
+            //タイトルシーンへ遷移
+            var titleWindow = root.AddWindow("Title");
+            var titleButton = new Button();
+            titleButton.text = "Shift to Title";
+            titleButton.clicked += UniTask.Action(async () =>
+            {
+                await _sceneController.UnloadAllAsync(CancellationToken.None);
+                await _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
+            });
+            titleWindow.Add(titleButton);
 
             //Openingシーンに遷移するボタンを作成
             var openingWindow = root.AddWindow("Opening");
