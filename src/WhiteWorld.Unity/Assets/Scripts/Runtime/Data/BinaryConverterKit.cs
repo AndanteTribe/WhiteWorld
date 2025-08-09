@@ -7,7 +7,7 @@ using AndanteTribe.Utils.Unity;
 using MasterMemory;
 using UnityEditor;
 
-namespace WhiteWorld.Data.Runtime.Data
+namespace WhiteWorld.Data
 {
     /// <summary>
     /// csvファイルをバイナリに変換するクラス

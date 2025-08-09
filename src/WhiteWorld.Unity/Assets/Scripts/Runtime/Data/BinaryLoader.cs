@@ -2,7 +2,7 @@ using System.IO;
 using MasterMemory;
 using UnityEngine;
 
-namespace WhiteWorld.Data.Runtime.Data
+namespace WhiteWorld.Data
 {
     public static class BinaryLoader
     {

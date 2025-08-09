@@ -1,13 +1,11 @@
-using System.Collections.Generic;
-using ZLinq;
-using ZLinq.Linq;
+using System;
+using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Domain
 {
     public interface IMasterDataRepository<T> where T : IIdHolder
     {
-        ValueEnumerable<FromArray<T>, T> Entities { get; }
+        ReadOnlyMemory<T> Entities { get; }
         T Find(string id);
-
     }
 }

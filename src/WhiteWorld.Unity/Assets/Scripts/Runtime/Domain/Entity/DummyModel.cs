@@ -2,7 +2,7 @@ using Csv.Annotations;
 using MasterMemory;
 using MessagePack;
 
-namespace WhiteWorld.Domain.Entity.Runtime.Domain.Entity
+namespace WhiteWorld.Domain.Entity
 {
     [CsvObject]
     [MemoryTable("DummyData"), MessagePackObject(true)]

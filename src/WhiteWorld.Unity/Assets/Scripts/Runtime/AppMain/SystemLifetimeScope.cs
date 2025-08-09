@@ -2,9 +2,9 @@ using AndanteTribe.Utils.Unity.VContainer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using WhiteWorld.Data.Runtime.Data;
+using WhiteWorld.Data;
 using WhiteWorld.Domain;
-using WhiteWorld.Domain.Entity.Runtime.Domain.Entity;
+using WhiteWorld.Domain.Entity;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
@@ -24,8 +24,8 @@ namespace WhiteWorld.AppMain
 #endif
             builder
                 .Register<IMasterDataRepository<DummyModel>, MasterDataRepository<DummyModel>>(Lifetime.Singleton)
-                .WithParameter("binaryPath","DummyText")
-                .WithParameter("tableName","DummyData");
+                .WithParameter("binaryPath", "DummyText")
+                .WithParameter("tableName", "DummyData");
 
             builder
                 .Register<IMasterDataRepository<KeywordModel>, KeywordModelRepository>(Lifetime.Singleton)

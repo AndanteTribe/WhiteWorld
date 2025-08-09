@@ -1,8 +1,9 @@
+using System;
 using Csv.Annotations;
 using MasterMemory;
 using MessagePack;
 
-namespace WhiteWorld.Domain.Entity.Runtime.Domain.Entity
+namespace WhiteWorld.Domain.Entity
 {
     [CsvObject]
     [MemoryTable("KeywordData"), MessagePackObject(true)]
@@ -17,6 +18,6 @@ namespace WhiteWorld.Domain.Entity.Runtime.Domain.Entity
 
         [MessagePack.IgnoreMember]
         [Csv.Annotations.IgnoreMember]
-        public DummyModel[] DummyData { get; set; }
+        public ReadOnlyMemory<DummyModel> DummyData { get; set; }
     }
 }

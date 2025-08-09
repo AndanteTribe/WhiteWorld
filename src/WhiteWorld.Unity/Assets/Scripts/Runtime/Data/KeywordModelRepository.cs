@@ -1,27 +1,19 @@
 using WhiteWorld.Domain;
-using WhiteWorld.Domain.Entity.Runtime.Domain.Entity;
-using ZLinq;
+using WhiteWorld.Domain.Entity;
 
-namespace WhiteWorld.Data.Runtime.Data
+namespace WhiteWorld.Data
 {
     public class KeywordModelRepository : MasterDataRepository<KeywordModel>
     {
-        private readonly IMasterDataRepository<DummyModel> _dummyRepository;
-
         public KeywordModelRepository(
             string binaryPath,
             string tableName,
             IMasterDataRepository<DummyModel> dummyRepository) : base(binaryPath, tableName)
         {
-            _dummyRepository = dummyRepository;
-            _entities = _entities
-                .AsValueEnumerable()
-                .Select(x =>
-                {
-                    x.DummyData = dummyRepository.Entities.ToArray();
-                    return x;
-                })
-                .ToArray();
+            foreach (var entity in Entities.Span)
+            {
+                entity.DummyData = dummyRepository.Entities;
+            }
         }
     }
 }
