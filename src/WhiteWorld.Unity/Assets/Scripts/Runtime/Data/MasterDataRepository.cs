@@ -1,20 +1,25 @@
+using System;
 using WhiteWorld.Domain;
-using ZLinq;
-using ZLinq.Linq;
+using WhiteWorld.Domain.Entity;
 
-namespace WhiteWorld.Data.Runtime.Data
+namespace WhiteWorld.Data
 {
     public class MasterDataRepository<T> : IMasterDataRepository<T> where T : class, IIdHolder
     {
-        public ValueEnumerable<FromArray<T>, T> Entities => _entities.AsValueEnumerable();
-        protected T[] _entities;
+        public ReadOnlyMemory<T> Entities { get; }
 
-        public T Find(string id) =>
-            _entities
-                .AsValueEnumerable()
-                .FirstOrDefault(x => x.Id == id);
+        public T Find(string id)
+        {
+            var entities = Entities.Span;
+            var index = Entities.Span.BinarySearch(new TempIdHolder(id));
+            return index >= 0 ? entities[index] : null;
+        }
 
         public MasterDataRepository(string binaryPath, string tableName)
-            => _entities = BinaryLoader.Load<T>(binaryPath, tableName).GetRawDataUnsafe();
+        {
+            var entities = BinaryLoader.Load<T>(binaryPath, tableName).GetRawDataUnsafe();
+            Array.Sort(entities);
+            Entities = entities;
+        }
     }
 }

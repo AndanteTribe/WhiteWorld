@@ -6,7 +6,7 @@ using System.Reflection;
 using MasterMemory;
 using ZLinq;
 
-namespace WhiteWorld.Data.Runtime.Data
+namespace WhiteWorld.Data
 {
     public static class CsvTranslator
     {
