@@ -34,7 +34,7 @@ namespace WhiteWorld.Domain.Entity
         LifeGame = 1 << 4,
 
         /// <summary> テキストアニメーションシーン. </summary>
-        [EnumMember(Value = "LifeGame")]
+        [EnumMember(Value = "TextAnimation")]
         TextAnimation = 1 << 5,
     }
 }
