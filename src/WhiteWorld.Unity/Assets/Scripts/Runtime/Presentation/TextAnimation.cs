@@ -33,7 +33,7 @@ namespace WhiteWorld.Presentation.Runtime
             _keywordTextPrefab.text = keyword;
 
             var keywordInstance = await InstantiateAsync(_keywordTextPrefab, _canvasRectTransform)
-                .WithCancellation(cancellationToken: cancellationToken );
+                .WithCancellation(cancellationToken: cancellationToken);
 
             keywordInstance[0].rectTransform.anchoredPosition = Vector2.zero;
             keywordInstance[0].gameObject.SetActive(false);
