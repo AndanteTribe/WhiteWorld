@@ -6,5 +6,7 @@ namespace WhiteWorld.Presentation.LifeGame
     {
         [SerializeField]
         private SpacePoint[] _spacePoints;
+        [SerializeField]
+        private Transform _player;
     }
 }

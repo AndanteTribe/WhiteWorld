@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CardSelectFlow.Interface;
 using UnityEngine;
+using WhiteWorld.Domain;
 using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Presentation

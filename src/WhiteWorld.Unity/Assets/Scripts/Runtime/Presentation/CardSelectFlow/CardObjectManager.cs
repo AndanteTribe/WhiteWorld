@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
-using CardSelectFlow.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
+using WhiteWorld.Domain;
 using ZLinq;
 
 namespace WhiteWorld.Presentation

@@ -12,6 +12,16 @@ namespace WhiteWorld.Domain.LifeGame
         private readonly SpaceMoveSequence _spaceMoveSequence;
         private readonly SpaceActionSequence _spaceActionSequence;
 
+        public LifeGameMainSequence(
+            CardSelectionSequence cardSelectionSequence,
+            SpaceMoveSequence spaceMoveSequence,
+            SpaceActionSequence spaceActionSequence)
+        {
+            _cardSelectionSequence = cardSelectionSequence;
+            _spaceMoveSequence = spaceMoveSequence;
+            _spaceActionSequence = spaceActionSequence;
+        }
+
         public async ValueTask InitializeAsync(CancellationToken cancellationToken)
         {
 
