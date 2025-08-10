@@ -2,7 +2,7 @@
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using WhiteWorld.Domain;
+using WhiteWorld.Domain.Opening;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
@@ -12,10 +12,14 @@ namespace WhiteWorld.AppMain
     /// </summary>
     public class OpeningLifetimeScope : LifetimeScopeBase
     {
-        [SerializeField] private GameObject _tvPrefab;
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<OpeningCreator>().WithParameter(_tvPrefab);
+            base.Configure(builder);
+
+            builder.RegisterEntryPoints(static builder =>
+            {
+                builder.Add<Opening>(true);
+            });
         }
     }
 }

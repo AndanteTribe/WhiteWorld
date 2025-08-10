@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 262430577341682921}
   - component: {fileID: 5139196557193625567}
+  - component: {fileID: 3862971078326331371}
+  - component: {fileID: 4908670114501111049}
   m_Layer: 0
   m_Name: BinaryConverter
   m_TagString: Untagged
@@ -47,3 +49,33 @@ MonoBehaviour:
   _csvFilePath: Assets/Downloads/CsvData/DummyData.csv
   _convertClassName: DummyModel
   _writeBinaryFileName: DummyText
+--- !u!114 &3862971078326331371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967953081778172844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b368c43c314d84af3d941e475e00b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _csvFilePath: Assets/Downloads/CsvData/KeywordData.csv
+  _convertClassName: KeywordModel
+  _writeBinaryFileName: Keyword
+--- !u!114 &4908670114501111049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967953081778172844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5b368c43c314d84af3d941e475e00b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _csvFilePath: Assets/Downloads/CsvData/MessageData.csv
+  _convertClassName: MessageModel
+  _writeBinaryFileName: Message

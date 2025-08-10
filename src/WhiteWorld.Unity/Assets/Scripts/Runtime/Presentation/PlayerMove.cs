@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using WhiteWorld.Domain;
 
-namespace WhiteWorld.AppMain
+namespace WhiteWorld.Presentation
 {
-    public class PlayerMove : MonoBehaviour
+    // FIXME: 命名規則大違反スクリプト
+    public class PlayerMove : MonoBehaviour, IPlayerControl
     {
         private Vector2 _mMoveValue;
         private Vector2 _mVelocity = Vector2.zero;
@@ -14,7 +16,9 @@ namespace WhiteWorld.AppMain
         [SerializeField]
         private float _mSharpness = 20f;
         private CharacterController _controller;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+        public bool CanMove { get; set; } = true;
+
         void Start()
         {
             _controller = GetComponent<CharacterController>();
@@ -22,7 +26,10 @@ namespace WhiteWorld.AppMain
 
         void FixedUpdate()
         {
-            Move(_mMoveValue);
+            if (CanMove)
+            {
+                Move(_mMoveValue);
+            }
         }
 
         public void ReadMoveValue(InputAction.CallbackContext context)

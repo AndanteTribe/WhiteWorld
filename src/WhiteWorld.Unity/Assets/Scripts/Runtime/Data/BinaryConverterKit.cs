@@ -29,7 +29,7 @@ namespace WhiteWorld.Data
         /// </summary>
         [SerializeField] private string _writeBinaryFileName;
 
-        private const string NameSpacePath = "WhiteWorld.Domain.Entity.Runtime.Domain.Entity.";
+        private const string NameSpacePath = "WhiteWorld.Domain.Entity.";
         private const string WriteBinaryPath = "Assets/Resources/";
 
         [Button]

@@ -15,7 +15,9 @@
         "Utils.Core.dll",
         "R3.dll",
         "ZLinq.dll",
-        "RapidEnum.Core.dll"
+        "RapidEnum.Core.dll",
+        "Csv.dll",
+        "Csv.Annotations.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

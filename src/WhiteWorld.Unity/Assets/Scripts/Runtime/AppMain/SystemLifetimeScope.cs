@@ -31,6 +31,16 @@ namespace WhiteWorld.AppMain
                 .Register<IMasterDataRepository<KeywordModel>, KeywordModelRepository>(Lifetime.Singleton)
                 .WithParameter("binaryPath", "Keyword")
                 .WithParameter("tableName", "KeywordData");
+
+            builder
+                .Register<IMasterDataRepository<MessageModel>, MasterDataRepository<MessageModel>>(Lifetime.Singleton)
+                .WithParameter("binaryPath", "Message")
+                .WithParameter("tableName", "MessageData");
+
+            builder.RegisterEntryPoints(static builder =>
+            {
+                builder.Add<SystemInitializer>(true);
+            });
         }
     }
 }

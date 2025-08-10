@@ -12,15 +12,24 @@ namespace WhiteWorld.Domain
         /// <summary>
         /// 現在のシーン名.
         /// </summary>
-        SceneName CurrentScene { get; }
-        
+        SceneName ActiveScene { get; }
+
         /// <summary>
         /// シーンを非同期でロードする.
         /// </summary>
         /// <param name="sceneName">読み込むシーン名.</param>
         /// <param name="cancellationToken">キャンセルトークン.</param>
         UniTask LoadAsync(SceneName sceneName, CancellationToken cancellationToken);
-        
+
+        /// <summary>
+        /// シーンを非同期でロードする
+        /// </summary>
+        /// <param name="sceneName"></param>
+        /// <param name="bindings"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        UniTask LoadAsync(SceneName sceneName, object[] bindings, CancellationToken cancellationToken);
+
         /// <summary>
         /// 表示されているシーンを非同期でアンロードする.
         /// </summary>
