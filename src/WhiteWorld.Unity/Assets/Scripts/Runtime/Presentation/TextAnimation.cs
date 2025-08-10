@@ -21,37 +21,42 @@ namespace WhiteWorld.Presentation.Runtime
         private RectTransform _canvasRectTransform;
 
         /// <summary>
-        ///
+        /// テキストアニメーションを開始する
         /// </summary>
         /// <param name="keyword">最後にキーワードを表示する</param>
         /// <param name="dummyTexts">四方から流れるダミーテキスト</param>
         public async UniTask StartTextAnimationAsync(string keyword, string[] dummyTexts)
         {
+            var cancellationToken = this.GetCancellationTokenOnDestroy();
             var canvasSize = _canvasRectTransform.sizeDelta;
 
             _keywordTextPrefab.text = keyword;
-            var keywordInstance = Instantiate(_keywordTextPrefab, _canvasRectTransform);
 
-            keywordInstance.rectTransform.anchoredPosition = Vector2.zero;
-            keywordInstance.gameObject.SetActive(false);
+            var keywordInstance = await InstantiateAsync(_keywordTextPrefab, _canvasRectTransform)
+                .WithCancellation(cancellationToken: cancellationToken );
+
+            keywordInstance[0].rectTransform.anchoredPosition = Vector2.zero;
+            keywordInstance[0].gameObject.SetActive(false);
 
             var dummyTextInstances = new List<TextMeshProUGUI>();
             var animationTasks = new List<UniTask>();
 
+            var dummyInstance = await InstantiateAsync(_dummyTextPrefab, dummyTexts.Length, _canvasRectTransform)
+                .WithCancellation(cancellationToken: cancellationToken);
+
             for (int i = 0; i < dummyTexts.Length; i++)
             {
                 var dummyString = dummyTexts[i];
-                var dummyInstance = Instantiate(_dummyTextPrefab, transform);
 
-                dummyInstance.text = dummyString;
-                dummyTextInstances.Add(dummyInstance);
+                dummyInstance[i].text = dummyString;
+                dummyTextInstances.Add(dummyInstance[i]);
 
-                dummyInstance.gameObject.SetActive(true);
-                dummyInstance.fontSize = 120f;
+                dummyInstance[i].gameObject.SetActive(true);
+                dummyInstance[i].fontSize = 120f;
 
-                dummyInstance.color = new Color(dummyInstance.color.r, dummyInstance.color.g, dummyInstance.color.b, 0f);
+                dummyInstance[i].color = new Color(1, 1, 1, 0f);
 
-                var rectTransform = dummyInstance.rectTransform;
+                var rectTransform =  dummyInstance[i].rectTransform;
                 var (startPos, endPos) = GetStartEndPositionForSide(i % 4, canvasSize);
                 rectTransform.anchoredPosition = startPos;
 
@@ -60,15 +65,15 @@ namespace WhiteWorld.Presentation.Runtime
                     .WithEase(Ease.InOutSine)
                     .WithDelay(i * 0.3f)
                     .BindToAnchoredPosition(rectTransform)
-                    .ToUniTask();
+                    .ToUniTask(cancellationToken);
                 animationTasks.Add(motionTask);
 
                 // フェードアウトのアニメーション
                 var fadeTask = LMotion.Create(1f, 0f, 2f) // 2秒かけてフェードアウト
                     .WithDelay(i * 0.3f + 1f) // 位置アニメーションより少し遅れて開始
                     .WithEase(Ease.InSine)
-                    .BindToColorA(dummyInstance)
-                    .ToUniTask();
+                    .BindToColorA( dummyInstance[i])
+                    .ToUniTask(cancellationToken);
                 animationTasks.Add(fadeTask);
             }
 
@@ -80,12 +85,12 @@ namespace WhiteWorld.Presentation.Runtime
             }
 
             // --- キーワードのアニメーション ---
-            keywordInstance.gameObject.SetActive(true);
-            var textTransform = keywordInstance.transform;
-            var originalColor = keywordInstance.color;
+            keywordInstance[0].gameObject.SetActive(true);
+            var textTransform = keywordInstance[0].transform;
+            var originalColor = keywordInstance[0].color;
 
             textTransform.localScale = Vector3.one * 2f;
-            keywordInstance.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+            keywordInstance[0].color = new Color(1, 1, 1, 0f);
 
             var scaleMotion = LMotion.Create(textTransform.localScale, Vector3.one * 1.5f, 0.6f)
                 .WithEase(Ease.OutBack)
@@ -93,19 +98,20 @@ namespace WhiteWorld.Presentation.Runtime
 
             var fadeMotion = LMotion.Create(0f, originalColor.a, 0.5f)
                 .WithEase(Ease.OutQuad)
-                .BindToColorA(keywordInstance);
+                .BindToColorA(keywordInstance[0]);
 
             await UniTask.WhenAll(
-                scaleMotion.ToUniTask(),
-                fadeMotion.ToUniTask()
+                scaleMotion.ToUniTask(cancellationToken),
+                fadeMotion.ToUniTask(cancellationToken)
             );
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1));
+            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
 
             await LMotion.Create(originalColor.a, 0f, 1f)
-                .BindToColorA(keywordInstance);
+                .BindToColorA(keywordInstance[0])
+                .ToUniTask(cancellationToken);
 
-            Destroy(keywordInstance.gameObject);
+            Destroy(keywordInstance[0].gameObject);
             keywordInstance = null;
         }
 
