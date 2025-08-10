@@ -52,7 +52,7 @@ namespace WhiteWorld.Domain.Opening
             // ノベル第一章
             using (var messages = _messageRepository.Entities
                        .AsValueEnumerable()
-                       .Where(static x => x.Id.AsSpan().Contains("novel_02_", StringComparison.Ordinal))
+                       .Where(static x => x.Id.AsSpan().Contains("novel_04_", StringComparison.Ordinal))
                        .ToArrayPool())
             {
                 var data = new MessagePlayData(messages.Memory, true);
