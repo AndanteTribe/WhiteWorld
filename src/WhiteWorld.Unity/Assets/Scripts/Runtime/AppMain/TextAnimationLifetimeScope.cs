@@ -12,8 +12,6 @@ namespace WhiteWorld.AppMain
         {
             base.Configure(builder);
 
-            builder.Register<MemoryPieceSpace>(Lifetime.Singleton);
-            builder.Register<ISceneController, DefaultSceneController>(Lifetime.Singleton);
         }
     }
 }
