@@ -119,6 +119,81 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &91722659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 91722660}
+  - component: {fileID: 91722662}
+  - component: {fileID: 91722661}
+  m_Layer: 5
+  m_Name: FadeOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &91722660
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91722659}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1749465841}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &91722661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91722659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &91722662
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91722659}
+  m_CullTransparentMesh: 1
 --- !u!1 &258643263
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,7 +342,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u300C\u306A\u3093\u3067\u30D6\u30E9\u30A6\u30F3\u7BA1\uFF1F\u300D\n\u5922\u306B\u6587\u53E5\u3092\u8A00\u3063\u3066\u3082\u3001\u3057\u3087\u3046\u304C\u306A\u3044\u304B\u3002\n\u306A\u3093\u3066\u3046\u305D\u3076\u3044\u3066\u307F\u308B\u3002"
+  m_text: "\u300C\u306A\u3093\u3067\u30D6\u30E9\u30A6\u30F3\u7BA1\uFF1F\u300D\n\u5922\u306B\u6587\u53E5\u3092\u8A00\u3063\u3066\u3082\u3001\u3057\u3087\u3046\u304C\u306A\u3044\u304B\u3042\u3002\n\u306A\u3093\u3066\u3046\u305D\u3076\u3044\u3066\u307F\u308B\u3002"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1f91f41cf7bc5a46af39f0c6a5ef4d1, type: 2}
   m_sharedMaterial: {fileID: -1393745597412214731, guid: f1f91f41cf7bc5a46af39f0c6a5ef4d1, type: 2}
@@ -743,10 +818,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e9a1b5c6ac44b3aa9f5558dc821179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fadeinMask: {fileID: 0}
+  _window: {fileID: 889812077}
   _nameText: {fileID: 1378234138}
   _messageText: {fileID: 1101781559}
   _screenBtn: {fileID: 1910347500}
+  _fadeout: {fileID: 91722661}
 --- !u!114 &1431145714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,6 +1012,9 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 2025814047625914245, guid: c9b816b0f1c85f64cb2a1d3d85d1951e, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7835091944321108648, guid: c9b816b0f1c85f64cb2a1d3d85d1951e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 91722660}
     - targetCorrespondingSourceObject: {fileID: 7835091944321108648, guid: c9b816b0f1c85f64cb2a1d3d85d1951e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 889812078}

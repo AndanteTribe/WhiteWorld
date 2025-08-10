@@ -34,15 +34,32 @@ namespace WhiteWorld.Domain.Opening
             // 一度、プレイヤーは動けないようにする
             _playerControl.CanMove = false;
             // オープニングメッセージ
-            var messages = _messageRepository.Entities
-                .AsValueEnumerable()
-                .Where(static x => x.Id.AsSpan().Contains("opening_01_", StringComparison.Ordinal))
-                .ToArray();
-            var uts = AutoResetUniTaskCompletionSource.Create();
-            await _sceneController.LoadAsync(SceneName.Opening | SceneName.MessageWindow, new object[]{ messages, uts }, cancellationToken);
-            await uts.Task;
-            await _sceneController.LoadAsync(SceneName.Opening, cancellationToken);
+            using (var messages = _messageRepository.Entities
+                       .AsValueEnumerable()
+                       .Where(static x => x.Id.AsSpan().Contains("opening_01_", StringComparison.Ordinal))
+                       .ToArrayPool())
+            {
+                var data = new MessagePlayData(messages.Memory);
+                var uts = AutoResetUniTaskCompletionSource.Create();
+                await _sceneController.LoadAsync(SceneName.Opening | SceneName.MessageWindow, new object[]{ data, uts }, cancellationToken);
+                await uts.Task;
+                await _sceneController.LoadAsync(SceneName.Opening, cancellationToken);
+            }
+
             _playerControl.CanMove = true;
+            await _tvController.WaitForAnimationPreEndAsync(cancellationToken);
+
+            // ノベル第一章
+            using (var messages = _messageRepository.Entities
+                       .AsValueEnumerable()
+                       .Where(static x => x.Id.AsSpan().Contains("novel_01_", StringComparison.Ordinal))
+                       .ToArrayPool())
+            {
+                var data = new MessagePlayData(messages.Memory, true);
+                var uts = AutoResetUniTaskCompletionSource.Create();
+                await _sceneController.LoadAsync(SceneName.Opening | SceneName.MessageWindow, new object[]{ data, uts }, cancellationToken);
+                await uts.Task;
+            }
         }
     }
 }

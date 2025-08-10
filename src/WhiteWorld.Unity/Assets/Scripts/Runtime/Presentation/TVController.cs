@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
-using R3;
 using UnityEngine;
 using UnityEngine.Playables;
 using WhiteWorld.Domain;
@@ -13,14 +13,11 @@ namespace WhiteWorld.Presentation
     {
         [SerializeField] private PlayableDirector? _timeline;
 
-        public Subject<Unit> AnimPreFinished { get; } = new Subject<Unit>();
-
         private void Start()
         {
             var playableDirector = GetComponent<PlayableDirector>();
             var track = playableDirector.playableAsset.outputs.First();
             playableDirector.SetGenericBinding(track.sourceObject, Camera.main?.GetComponent<CinemachineBrain>());
-            AnimPreFinished.AddTo(destroyCancellationToken);
         }
 
         public void StartTVAnimation()
@@ -28,16 +25,17 @@ namespace WhiteWorld.Presentation
             if (_timeline != null)
             {
                 _timeline.Play();
-                WaitForAnimationEnd().Forget();
             }
         }
 
-        private async UniTaskVoid WaitForAnimationEnd()
+        public async UniTask WaitForAnimationPreEndAsync(CancellationToken cancellationToken = default)
         {
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, destroyCancellationToken);
             if (_timeline != null)
             {
-                await UniTask.Delay(TimeSpan.FromSeconds(_timeline.duration - 3.0), cancellationToken: destroyCancellationToken);
-                AnimPreFinished.OnNext(Unit.Default);
+                // タイムラインが開始していなければ開始を待つ
+                await UniTask.WaitUntil(_timeline, static timeline => timeline.state == PlayState.Playing, cancellationToken: cts.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(_timeline.duration - 3.0), cancellationToken: cts.Token);
             }
         }
 

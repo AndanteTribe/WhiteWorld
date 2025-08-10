@@ -1,5 +1,5 @@
-﻿using System;
-using R3;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace WhiteWorld.Domain
 {
@@ -9,9 +9,9 @@ namespace WhiteWorld.Domain
     public interface ITVController
     {
         /// <summary>
-        /// テレビのアニメーションが終了する手前で発行されるイベント.
+        /// テレビのアニメーションが終了する手前まで待機.
         /// </summary>
-        Subject<Unit> AnimPreFinished { get; }
+        UniTask WaitForAnimationPreEndAsync(CancellationToken cancellationToken = default);
         /// <summary>
         /// テレビのアニメーションを開始する.
         /// </summary>
