@@ -1,22 +1,66 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AndanteTribe.Utils;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
+using ZLinq;
 
 namespace WhiteWorld.Domain.LifeGame
 {
     public class LifeGame : IInitializable
     {
+        private readonly ISceneController _sceneController;
+        private readonly IMasterDataRepository<MessageModel> _messageRepository;
         private readonly LifeGameMainSequence _mainSequence;
 
-        public LifeGame(LifeGameMainSequence mainSequence)
+        public LifeGame(
+            ISceneController sceneController,
+            LifeGameMainSequence mainSequence,
+            IMasterDataRepository<MessageModel> messageRepository)
         {
+            _sceneController = sceneController;
             _mainSequence = mainSequence;
+            _messageRepository = messageRepository;
         }
 
-        public ValueTask InitializeAsync(CancellationToken cancellationToken)
+        public async ValueTask InitializeAsync(CancellationToken cancellationToken)
         {
-            // ライフゲームの初期化処理をここに記述
-            return default;
+            // 少しディレイ
+            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
+
+            // 人生ゲームシーン読み込み直後のメッセージ再生
+            using (var messages = _messageRepository.Entities
+                       .AsValueEnumerable()
+                       .Where(static x => x.Id.AsSpan().Contains("lifegame_01_", StringComparison.Ordinal))
+                       .ToArrayPool())
+            {
+                var data = new MessagePlayData(messages.Memory);
+                var uts = AutoResetUniTaskCompletionSource.Create();
+                await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
+                    new object[] { data, uts }, cancellationToken);
+                await uts.Task;
+            }
+
+            CardSelectTutorialAsync(cancellationToken).Forget();
+            await _mainSequence.InitializeAsync(cancellationToken);
+        }
+
+        private async UniTaskVoid CardSelectTutorialAsync(CancellationToken cancellationToken)
+        {
+            // カード選択画面が表示されるまで待機
+            await UniTask.WaitUntil(_sceneController,
+                static controller => controller.ActiveScene.HasBitFlags(SceneName.CardSelectEdit), cancellationToken: cancellationToken);
+            using var messages = _messageRepository.Entities
+                .AsValueEnumerable()
+                .Where(static x => x.Id.AsSpan().Contains("lifegame_02_", StringComparison.Ordinal))
+                .ToArrayPool();
+            var data = new MessagePlayData(messages.Memory);
+            var uts = AutoResetUniTaskCompletionSource.Create();
+            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.CardSelectEdit | SceneName.MessageWindow,
+                new object[] { data, uts }, cancellationToken);
+            await uts.Task;
+            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.CardSelectEdit, cancellationToken);
         }
     }
 }

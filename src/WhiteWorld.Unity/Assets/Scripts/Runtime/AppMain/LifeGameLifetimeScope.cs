@@ -14,7 +14,7 @@ namespace WhiteWorld.AppMain
 
             // シーケンス
             builder.Register<LifeGameMainSequence>(Lifetime.Singleton);
-            builder.Register<CardSelectionSequence>(Lifetime.Singleton).As<ICardSelectionSequence>();
+            builder.Register<ICardSelectionSequence, CardSelectionSequence>(Lifetime.Singleton).AsSelf();
             builder.Register<SpaceMoveSequence>(Lifetime.Singleton);
             builder.Register<SpaceActionSequence>(Lifetime.Singleton);
 

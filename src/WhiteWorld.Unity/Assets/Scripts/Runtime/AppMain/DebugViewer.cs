@@ -91,6 +91,15 @@ namespace WhiteWorld.AppMain
             });
             openingWindow.Add(buttonToOpening);
 
+            var lifeGameWindow = root.AddWindow("LifeGame");
+            var lifeGameButton = new Button();
+            lifeGameButton.text = "Shift to LifeGame";
+            lifeGameButton.RegisterCallback<ClickEvent, ISceneController>(static (_, sceneController) =>
+            {
+                sceneController.LoadAsync(SceneName.LifeGame, Application.exitCancellationToken).Forget();
+            }, _sceneController);
+            lifeGameWindow.Add(lifeGameButton);
+
         /*
           // テレビ例
           var tvWindow = root.AddWindow("Television Control");

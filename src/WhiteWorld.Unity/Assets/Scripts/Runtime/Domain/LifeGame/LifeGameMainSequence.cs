@@ -15,17 +15,17 @@ namespace WhiteWorld.Domain.LifeGame
         public LifeGameMainSequence(
             CardSelectionSequence cardSelectionSequence,
             SpaceMoveSequence spaceMoveSequence,
-            SpaceActionSequence spaceActionSequence)
+            SpaceActionSequence spaceActionSequence
+            )
         {
             _cardSelectionSequence = cardSelectionSequence;
             _spaceMoveSequence = spaceMoveSequence;
             _spaceActionSequence = spaceActionSequence;
-        }
+          }
 
         public async ValueTask InitializeAsync(CancellationToken cancellationToken)
         {
-
-
+            var i =await _cardSelectionSequence.RunAsync(cancellationToken);
             return;
 
             while (!cancellationToken.IsCancellationRequested)

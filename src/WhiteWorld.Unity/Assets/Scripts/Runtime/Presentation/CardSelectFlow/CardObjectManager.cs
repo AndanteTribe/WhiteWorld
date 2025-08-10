@@ -25,12 +25,12 @@ namespace WhiteWorld.Presentation
         /// </summary>
         public async UniTask<CardInfo> WaitPlayerSelectAsync(CancellationToken token)
         {
-            using var tasks = _waiter
+            var tasks = _waiter
                 .AsValueEnumerable()
                 .Select(obj => obj.WaitClick(token))
-                .ToArrayPool();
+                .ToArray();
 
-            var (_,info) = await UniTask.WhenAny(tasks.Array);
+            var (_,info) = await UniTask.WhenAny(tasks);
 
             return info;
         }

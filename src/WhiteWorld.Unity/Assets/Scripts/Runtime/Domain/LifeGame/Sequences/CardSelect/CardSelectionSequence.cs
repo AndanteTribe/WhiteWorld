@@ -17,15 +17,15 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
 
         private AutoResetUniTaskCompletionSource<SpaceAmount> _source;
 
-        // public CardSelectionSequence(ISceneController controller)
-        // {
-        //     _controller = controller;
-        // }
+        public CardSelectionSequence(ISceneController controller)
+        {
+            _controller = controller;
+        }
 
         public async UniTask<SpaceAmount> RunAsync(CancellationToken cancellationToken)
         {
             //Scene遷移(事前にアンロード想定)
-            await _controller.LoadAsync(SceneName.CardSelectEdit, cancellationToken);
+            await _controller.LoadAsync(SceneName.LifeGame | SceneName.CardSelectEdit, cancellationToken);
 
             _source = AutoResetUniTaskCompletionSource<SpaceAmount>.Create();
 
