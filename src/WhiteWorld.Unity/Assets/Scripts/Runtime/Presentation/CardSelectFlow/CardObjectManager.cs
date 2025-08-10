@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using CardSelectFlow.Interface;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
+using ZLinq;
 
 namespace WhiteWorld.Presentation
 {
@@ -25,11 +25,12 @@ namespace WhiteWorld.Presentation
         /// </summary>
         public async UniTask<CardInfo> WaitPlayerSelectAsync(CancellationToken token)
         {
-            var tasks = _waiter
+            using var tasks = _waiter
+                .AsValueEnumerable()
                 .Select(obj => obj.WaitClick(token))
-                .ToArray();
+                .ToArrayPool();
 
-            var (_,info) = await UniTask.WhenAny(tasks);
+            var (_,info) = await UniTask.WhenAny(tasks.Array);
 
             return info;
         }
