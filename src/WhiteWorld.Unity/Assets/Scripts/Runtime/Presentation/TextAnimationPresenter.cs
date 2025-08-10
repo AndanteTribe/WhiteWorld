@@ -29,7 +29,7 @@ namespace WhiteWorld.Presentation.Runtime
                 .Select(x => x.DummyText)
                 .ToArray();
 
-            await _textAnimator.StartTextAnimationAsync(keyword,dummy);
+            await _textAnimator.StartTextAnimationAsync(keyword, dummy);
         }
     }
 }
