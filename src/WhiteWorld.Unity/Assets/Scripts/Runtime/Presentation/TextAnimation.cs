@@ -112,7 +112,6 @@ namespace WhiteWorld.Presentation.Runtime
                 .ToUniTask(cancellationToken);
 
             Destroy(keywordInstance[0].gameObject);
-            keywordInstance = null;
         }
 
         /// <summary>
