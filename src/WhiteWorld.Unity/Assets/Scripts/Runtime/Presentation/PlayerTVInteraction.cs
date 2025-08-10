@@ -1,12 +1,10 @@
-﻿using Unity.Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 using WhiteWorld.Domain;
 
 namespace WhiteWorld.Presentation
 {
     public class PlayerTVInteraction : MonoBehaviour, ISwitchToPlayerCamera
     {
-        private static readonly int s_color = Shader.PropertyToID("_Color");
         [SerializeField] private Renderer _playerRenderer;
         [SerializeField] private PlayerMove _player;
         private bool _isInteracting = false;

@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "1\u30DE\u30B9\u3082\u3069\u308B"
       objectReference: {fileID: 0}
+    - target: {fileID: 5080818588546745439, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
+      propertyPath: _space
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6236820448963710234, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
       propertyPath: m_Name
       value: ReturnSpace

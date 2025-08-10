@@ -52,9 +52,13 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u30D5\u30EC\u30FC\u30D0\u30FC\u30C6\u30AD\u30B9\u30C8"
       objectReference: {fileID: 0}
+    - target: {fileID: 5080818588546745439, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
+      propertyPath: _space
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6236820448963710234, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
       propertyPath: m_Name
-      value: FlavorTextSpace Variant
+      value: FlavorTextSpace
       objectReference: {fileID: 0}
     - target: {fileID: 8462566286579476378, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
       propertyPath: m_IsActive

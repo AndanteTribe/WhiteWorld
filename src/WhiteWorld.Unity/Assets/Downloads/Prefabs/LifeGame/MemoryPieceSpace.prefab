@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u8A18\u61B6\u306E\u304B\u3051\u3089"
       objectReference: {fileID: 0}
+    - target: {fileID: 5080818588546745439, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
+      propertyPath: _space
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6236820448963710234, guid: 15fa0dfc86d75f447800ea05bf3a63eb, type: 3}
       propertyPath: m_Name
       value: MemoryPieceSpace
