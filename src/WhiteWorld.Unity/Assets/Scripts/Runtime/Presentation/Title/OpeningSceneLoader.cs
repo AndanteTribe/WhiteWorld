@@ -1,4 +1,3 @@
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -13,25 +12,15 @@ namespace WhiteWorld.Presentation
         private ISceneController _controller;
         private WhiteWorldActions _whiteWorldActions;
 
-        private void Awake()
+        private async UniTaskVoid Start()
         {
             _whiteWorldActions = new WhiteWorldActions();
             _whiteWorldActions.Title.Enable();
-        }
 
-        private void Update()
-        {
-            if (_whiteWorldActions.Title.LoadNextScene.WasPressedThisFrame())
-            {
-                LoadSceneAsync().Forget();
-            }
-        }
+            await UniTask.WaitUntil(
+                _whiteWorldActions.Title.LoadNextScene, static action => action.WasPressedThisFrame(), cancellationToken: destroyCancellationToken);
 
-        private async UniTaskVoid LoadSceneAsync()
-        {
-            //ここthis.GetCancellationTokenOnDestroy()わたすとOpeningがLoadしません
-            await _controller.UnloadAllAsync(CancellationToken.None);
-            await _controller.LoadAsync(SceneName.Opening, CancellationToken.None);
+            await _controller.LoadAsync(SceneName.Opening, Application.exitCancellationToken);
         }
 
         private void OnDestroy() => _whiteWorldActions.Title.Disable();

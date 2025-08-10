@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace WhiteWorld.AppMain
+namespace WhiteWorld.Presentation
 {
     /// <summary> InputActionにメソッドを割り当てる </summary>
     public class InputActionAttach : MonoBehaviour

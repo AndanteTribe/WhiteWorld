@@ -6,15 +6,28 @@ using WhiteWorld.Domain.LifeGame.Sequences;
 
 namespace WhiteWorld.Domain.LifeGame
 {
-    public class LifeGameMainSequence : IInitializable
+    public class LifeGameMainSequence
     {
         private readonly CardSelectionSequence _cardSelectionSequence;
         private readonly SpaceMoveSequence _spaceMoveSequence;
         private readonly SpaceActionSequence _spaceActionSequence;
 
-        /// <inheritdoc/>
+        public LifeGameMainSequence(
+            CardSelectionSequence cardSelectionSequence,
+            SpaceMoveSequence spaceMoveSequence,
+            SpaceActionSequence spaceActionSequence)
+        {
+            _cardSelectionSequence = cardSelectionSequence;
+            _spaceMoveSequence = spaceMoveSequence;
+            _spaceActionSequence = spaceActionSequence;
+        }
+
         public async ValueTask InitializeAsync(CancellationToken cancellationToken)
         {
+
+
+            return;
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 var amount = await _cardSelectionSequence.RunAsync(cancellationToken);

@@ -1,6 +1,6 @@
 using AndanteTribe.Utils.Unity.VContainer;
-using CardSelectFlow.Interface;
 using VContainer;
+using WhiteWorld.Domain.LifeGame.Sequences;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
@@ -12,10 +12,10 @@ namespace WhiteWorld.AppMain
             base.Configure(builder);
 
             //TODO 本番ではこっちを使う
-            // builder.Register<ICardSelectionSequence,CardSelectionSequence>(Lifetime.Singleton);
+            //builder.Register<ICardSelectionSequence, CardSelectionSequence>(Lifetime.Singleton);
 
             //Debug
-            builder.Register<IAppearCardDecisionAlgorithm, RandomSelectAlgorithm>(Lifetime.Singleton);
+            // builder.Register<IAppearCardDecisionAlgorithm, RandomSelectAlgorithm>(Lifetime.Singleton);
         }
     }
 }

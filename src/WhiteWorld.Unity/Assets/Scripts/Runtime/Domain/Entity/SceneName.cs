@@ -24,5 +24,13 @@ namespace WhiteWorld.Domain.Entity
         /// <summary> カード選択編集シーン. </summary>
         [EnumMember(Value = "CardSelectEdit")]
         CardSelectEdit = 1 << 2,
+
+        /// <summary> メッセージウィンドウUIシーン. </summary>
+        [EnumMember(Value = "Message Window UI")]
+        MessageWindow = 1 << 3,
+
+        /// <summary> ライフゲームシーン. </summary>
+        [EnumMember(Value = "LifeGame")]
+        LifeGame = 1 << 4,
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CardSelectFlow.Interface;
+using WhiteWorld.Domain;
 using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Presentation

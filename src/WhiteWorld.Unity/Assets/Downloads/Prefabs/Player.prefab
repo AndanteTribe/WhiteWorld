@@ -289,4 +289,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerRenderer: {fileID: 5807186651311407137}
-  _playerCamera: {fileID: 6272623298123846928}
+  _player: {fileID: 3415053672462121952}

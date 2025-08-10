@@ -1,5 +1,4 @@
-﻿using Unity.Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 using WhiteWorld.Domain;
 
 namespace WhiteWorld.Presentation
@@ -7,6 +6,7 @@ namespace WhiteWorld.Presentation
     public class PlayerTVInteraction : MonoBehaviour, ISwitchToPlayerCamera
     {
         [SerializeField] private Renderer _playerRenderer;
+        [SerializeField] private PlayerMove _player;
         private bool _isInteracting = false;
         private ITVController? _tvController;
 
@@ -23,7 +23,7 @@ namespace WhiteWorld.Presentation
                 _isInteracting = true;
                 _tvController = tvController;
                 _tvController?.StartTVAnimation();
-                _playerRenderer.enabled = false;
+                _player.CanMove = false;
             }
         }
 
@@ -33,7 +33,7 @@ namespace WhiteWorld.Presentation
             {
                 SwitchToPlayerCamera();
                 _isInteracting = false;
-                _playerRenderer.enabled = true;
+                _player.CanMove = true;
             }
         }
     }

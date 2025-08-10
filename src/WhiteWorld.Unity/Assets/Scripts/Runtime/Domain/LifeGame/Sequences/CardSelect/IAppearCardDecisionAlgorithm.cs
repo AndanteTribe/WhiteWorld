@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
 
-namespace CardSelectFlow.Interface
+namespace WhiteWorld.Domain
 {
     public interface IAppearCardDecisionAlgorithm
     {
