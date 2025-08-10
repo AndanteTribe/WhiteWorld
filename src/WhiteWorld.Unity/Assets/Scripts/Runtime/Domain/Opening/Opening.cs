@@ -59,6 +59,7 @@ namespace WhiteWorld.Domain.Opening
                 var uts = AutoResetUniTaskCompletionSource.Create();
                 await _sceneController.LoadAsync(SceneName.Opening | SceneName.MessageWindow, new object[]{ data, uts }, cancellationToken);
                 await uts.Task;
+                _sceneController.LoadAsync(SceneName.LifeGame, CancellationToken.None).Forget();
             }
         }
     }

@@ -19,13 +19,16 @@ EditorBuildSettings:
     guid: 1ee3b7587effb434fb3764ad74f7e1ef
   - enabled: 1
     path: Assets/Scenes/Title.unity
-    guid: 4a313d6a7062fec4388eba7065366650
-  - enabled: 1
+    guid: 69749d7709710194daf94d6476af36ed
+  - enabled: 0
     path: Assets/Scenes/Title1.unity
     guid: bf0d23947d0c4d74db35766106eab59f
   - enabled: 1
     path: Assets/Scenes/CardSelectEdit.unity
     guid: 2a921f3dd78e546448f65d89bba3a40b
+  - enabled: 1
+    path: Assets/Scenes/LifeGame.unity
+    guid: ab4fd2190df4d394f92578f05f24c5c2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

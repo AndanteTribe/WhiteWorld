@@ -28,5 +28,9 @@ namespace WhiteWorld.Domain.Entity
         /// <summary> メッセージウィンドウUIシーン. </summary>
         [EnumMember(Value = "Message Window UI")]
         MessageWindow = 1 << 3,
+
+        /// <summary> ライフゲームシーン. </summary>
+        [EnumMember(Value = "LifeGame")]
+        LifeGame = 1 << 4,
     }
 }
