@@ -1,4 +1,6 @@
-﻿using WhiteWorld.Domain.Entity;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Domain.LifeGame
 {
@@ -15,7 +17,7 @@ namespace WhiteWorld.Domain.LifeGame
         /// <summary>
         /// 実行する.
         /// </summary>
-        /// <param name="moveCount">移動するマス目量.</param>
-        void Execute(SpaceAmount moveCount);
+        /// <param name="cancellationToken">キャンセルトークン.</param>
+        UniTask ExecuteAsync(CancellationToken cancellationToken);
     }
 }

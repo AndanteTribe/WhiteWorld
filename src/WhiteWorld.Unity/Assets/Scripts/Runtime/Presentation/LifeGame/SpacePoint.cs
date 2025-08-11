@@ -1,4 +1,5 @@
 using UnityEngine;
+using WhiteWorld.Domain;
 using Space = WhiteWorld.Domain.Entity.Space;
 
 namespace WhiteWorld.Presentation.LifeGame
@@ -7,8 +8,12 @@ namespace WhiteWorld.Presentation.LifeGame
     {
         [SerializeField]
         private Space _space = Space.Invalid;
+        [SerializeField]
+        private TVController _tvController;
 
         public Space Space => _space;
+
+        public ITVController TVController => _tvController;
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

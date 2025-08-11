@@ -32,7 +32,7 @@ namespace WhiteWorld.Domain.LifeGame
             // 人生ゲームシーン読み込み直後のメッセージ再生
             using (var messages = _messageRepository.Entities
                        .AsValueEnumerable()
-                       .Where(static x => x.Id.AsSpan().Contains("lifegame_01_", StringComparison.Ordinal))
+                       .Where(static x => x.Id.AsSpan().Contains($"lifegame_{(byte)LifeGameTutorialID.SceneStart:00}_", StringComparison.Ordinal))
                        .ToArrayPool())
             {
                 var data = new MessagePlayData(messages.Memory);
@@ -42,25 +42,8 @@ namespace WhiteWorld.Domain.LifeGame
                 await uts.Task;
             }
 
-            CardSelectTutorialAsync(cancellationToken).Forget();
             await _mainSequence.InitializeAsync(cancellationToken);
-        }
-
-        private async UniTaskVoid CardSelectTutorialAsync(CancellationToken cancellationToken)
-        {
-            // カード選択画面が表示されるまで待機
-            await UniTask.WaitUntil(_sceneController,
-                static controller => controller.ActiveScene.HasBitFlags(SceneName.CardSelectEdit), cancellationToken: cancellationToken);
-            using var messages = _messageRepository.Entities
-                .AsValueEnumerable()
-                .Where(static x => x.Id.AsSpan().Contains("lifegame_02_", StringComparison.Ordinal))
-                .ToArrayPool();
-            var data = new MessagePlayData(messages.Memory);
-            var uts = AutoResetUniTaskCompletionSource.Create();
-            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.CardSelectEdit | SceneName.MessageWindow,
-                new object[] { data, uts }, cancellationToken);
-            await uts.Task;
-            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.CardSelectEdit, cancellationToken);
+            await _mainSequence.RunLoopAsync(cancellationToken);
         }
     }
 }

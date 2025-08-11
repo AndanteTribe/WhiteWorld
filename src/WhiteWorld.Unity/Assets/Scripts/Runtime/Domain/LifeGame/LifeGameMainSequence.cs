@@ -1,8 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
 using AndanteTribe.Utils;
+using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame.Sequences;
+using ZLinq;
 
 namespace WhiteWorld.Domain.LifeGame
 {
@@ -11,29 +13,62 @@ namespace WhiteWorld.Domain.LifeGame
         private readonly CardSelectionSequence _cardSelectionSequence;
         private readonly SpaceMoveSequence _spaceMoveSequence;
         private readonly SpaceActionSequence _spaceActionSequence;
+        private readonly ISceneController _sceneController;
+        private readonly IMasterDataRepository<MessageModel> _messageRepository;
 
         public LifeGameMainSequence(
             CardSelectionSequence cardSelectionSequence,
             SpaceMoveSequence spaceMoveSequence,
-            SpaceActionSequence spaceActionSequence
-            )
+            SpaceActionSequence spaceActionSequence,
+            ISceneController sceneController,
+            IMasterDataRepository<MessageModel> messageRepository)
         {
             _cardSelectionSequence = cardSelectionSequence;
             _spaceMoveSequence = spaceMoveSequence;
             _spaceActionSequence = spaceActionSequence;
-          }
+            _sceneController = sceneController;
+            _messageRepository = messageRepository;
+        }
 
-        public async ValueTask InitializeAsync(CancellationToken cancellationToken)
+        public async UniTask InitializeAsync(CancellationToken cancellationToken)
         {
-            var i =await _cardSelectionSequence.RunAsync(cancellationToken);
-            return;
+            CardSelectTutorialAsync(cancellationToken).Forget();
+            var spaceAmount = await _cardSelectionSequence.RunAsync(cancellationToken);
+            var space = await _spaceMoveSequence.MoveAsync(spaceAmount, cancellationToken);
+            await TutorialAsync(LifeGameTutorialID.BeforeSpaceAction, cancellationToken);
+            await _spaceActionSequence.RunAsync(space, cancellationToken);
+            await TutorialAsync(LifeGameTutorialID.AfterSpaceAction, cancellationToken);
+        }
 
+        public async UniTask RunLoopAsync(CancellationToken cancellationToken)
+        {
             while (!cancellationToken.IsCancellationRequested)
             {
-                var amount = await _cardSelectionSequence.RunAsync(cancellationToken);
-                await _spaceMoveSequence.MoveAsync(amount, cancellationToken);
-                await _spaceActionSequence.RunAsync(amount, cancellationToken);
+                var spaceAmount = await _cardSelectionSequence.RunAsync(cancellationToken);
+                var space = await _spaceMoveSequence.MoveAsync(spaceAmount, cancellationToken);
+                await _spaceActionSequence.RunAsync(space, cancellationToken);
             }
+        }
+
+        private async UniTask CardSelectTutorialAsync(CancellationToken cancellationToken)
+        {
+            // カード選択画面が表示されるまで待機
+            await UniTask.WaitUntil(_sceneController, static controller => controller.ActiveScene.HasBitFlags(SceneName.CardSelectEdit), cancellationToken: cancellationToken);
+            await TutorialAsync(LifeGameTutorialID.CardSelect, cancellationToken);
+        }
+
+        private async UniTask TutorialAsync(LifeGameTutorialID tutorialId, CancellationToken cancellationToken)
+        {
+            using var messages = _messageRepository.Entities
+                .AsValueEnumerable()
+                .Where(x => x.Id.AsSpan().Contains($"lifegame_{(byte)tutorialId:00}_", StringComparison.Ordinal))
+                .ToArrayPool();
+            var data = new MessagePlayData(messages.Memory);
+            var uts = AutoResetUniTaskCompletionSource.Create();
+            var currentScene = _sceneController.ActiveScene;
+            await _sceneController.LoadAsync(currentScene | SceneName.MessageWindow, new object[] { data, uts }, cancellationToken);
+            await uts.Task;
+            await _sceneController.LoadAsync(currentScene, cancellationToken);
         }
     }
 }

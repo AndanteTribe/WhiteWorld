@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
+using ZLinq;
 
 namespace WhiteWorld.Domain.LifeGame.Sequences
 {
@@ -12,20 +14,19 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
         /// <inheritdoc/>
         public LifeGameMode Mode => LifeGameMode.SpaceAction;
 
-        private readonly ISpaceAction[] _spaceActions;
+        private readonly IReadOnlyList<ISpaceAction> _spaceActions;
 
-        public async UniTask RunAsync(SpaceAmount spaceAmount, CancellationToken cancellationToken)
+        public SpaceActionSequence(IReadOnlyList<ISpaceAction> spaceActions)
         {
-            // マス効果を実行する
-            foreach (var action in _spaceActions)
-            {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    return;
-                }
+            _spaceActions = spaceActions;
+        }
 
-                action.Execute(spaceAmount);
-            }
+        public async UniTask RunAsync(Space space, CancellationToken cancellationToken)
+        {
+            var action = _spaceActions
+                .AsValueEnumerable()
+                .FirstOrDefault(x => x.Space == space);
+            await (action?.ExecuteAsync(cancellationToken) ?? UniTask.CompletedTask);
         }
     }
 }

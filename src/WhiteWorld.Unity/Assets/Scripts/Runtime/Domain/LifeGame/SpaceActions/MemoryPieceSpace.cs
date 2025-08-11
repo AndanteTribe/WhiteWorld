@@ -24,15 +24,13 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         }
 
         /// <inheritdoc/>
-        public void Execute(SpaceAmount moveCount)
+        public async UniTask ExecuteAsync(CancellationToken cancellationToken)
         {
-            // メモリーピースの効果は、実装されていません。
-            // 必要に応じて、ここにメモリーピースの効果を実装してください。
-
-            LoadTextAnimAsync().Forget();
+            await LoadTextAnimAsync(cancellationToken);
+            await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
         }
 
-        private async UniTaskVoid LoadTextAnimAsync()
+        private async UniTask LoadTextAnimAsync(CancellationToken cancellationToken)
         {
             var messages = _masterDataRepository.Entities.AsValueEnumerable();
 
@@ -42,8 +40,14 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             var memory = new ReadOnlyMemory<KeywordModel>(arrayPool.Array,0, count);
             var uts = AutoResetUniTaskCompletionSource.Create();
 
+            cancellationToken.RegisterWithoutCaptureExecutionContext(static obj =>
+            {
+                var source = (AutoResetUniTaskCompletionSource)obj;
+                source.TrySetCanceled();
+            }, uts);
+
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.TextAnimation,
-                new object[] { memory, uts }, CancellationToken.None);
+                new object[] { memory, uts }, cancellationToken);
 
             await uts.Task;
         }

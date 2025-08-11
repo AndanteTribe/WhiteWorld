@@ -1,4 +1,6 @@
-﻿using WhiteWorld.Domain.Entity;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -11,6 +13,6 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         public Space Space => Space.Goal;
 
         /// <inheritdoc/>
-        public void Execute(SpaceAmount moveCount) => throw new System.NotImplementedException();
+        public UniTask ExecuteAsync(CancellationToken cancellationToken) => throw new System.NotImplementedException();
     }
 }

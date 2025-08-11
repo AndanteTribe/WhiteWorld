@@ -39,6 +39,7 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
             var result = await _source.Task;
 
             _source = null;
+            await _controller.LoadAsync(SceneName.LifeGame, cancellationToken);
 
             return result;
         }

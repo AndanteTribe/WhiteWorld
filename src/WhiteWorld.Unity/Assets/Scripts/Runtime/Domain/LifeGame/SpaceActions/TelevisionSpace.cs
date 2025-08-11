@@ -1,4 +1,8 @@
-﻿using WhiteWorld.Domain.Entity;
+﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
+using ZLinq;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -10,12 +14,37 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         /// <inheritdoc/>
         public Space Space => Space.Television;
 
-        /// <inheritdoc/>
-        public void Execute(SpaceAmount moveCount)
+        private readonly ISpaceTelevisionController _televisionController;
+        private readonly ISceneController _sceneController;
+        private readonly IMasterDataRepository<MessageModel> _dataRepository;
+        // オープニングの時に01は再生しているので02から
+        private int _messageIndex = 2;
+
+        public TelevisionSpace(
+            ISpaceTelevisionController televisionController,
+            ISceneController sceneController,
+            IMasterDataRepository<MessageModel> dataRepository)
         {
-            // テレビの効果は、実装されていません。
-            // 必要に応じて、ここにテレビの効果を実装してください。
-            throw new System.NotImplementedException();
+            _televisionController = televisionController;
+            _sceneController = sceneController;
+            _dataRepository = dataRepository;
+        }
+
+        /// <inheritdoc/>
+        public async UniTask ExecuteAsync(CancellationToken cancellationToken)
+        {
+            await _televisionController.ExecuteAsync(cancellationToken);
+            using var messages = _dataRepository.Entities.AsValueEnumerable()
+                .Where(x => x.Id.Contains($"novel_{_messageIndex:00}_", StringComparison.Ordinal))
+                .ToArrayPool();
+
+            var data = new MessagePlayData(messages.Memory, true);
+            var uts = AutoResetUniTaskCompletionSource.Create();
+            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
+                new object[] { data, uts }, cancellationToken);
+            await uts.Task;
+            _messageIndex++;
+            await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
         }
     }
 }

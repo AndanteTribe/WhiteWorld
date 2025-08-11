@@ -12,14 +12,23 @@ namespace WhiteWorld.Domain.LifeGame.Sequences
         /// <inheritdoc/>
         public LifeGameMode Mode => LifeGameMode.SpaceMove;
 
+        private readonly ISpaceMoveController _moveController;
+
+        public SpaceMoveSequence(ISpaceMoveController moveController)
+        {
+            _moveController = moveController;
+        }
+
         /// <summary>
         /// 移動アニメーションこみの待機.
         /// </summary>
         /// <param name="spaceAmount">移動量.</param>
         /// <param name="cancellationToken"></param>
-        public async UniTask MoveAsync(SpaceAmount spaceAmount, CancellationToken cancellationToken)
+        public async UniTask<Space> MoveAsync(SpaceAmount spaceAmount, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
+            // 実際に移動して、移動後のマス目種別を取得する
+            return await _moveController.MoveAsync(spaceAmount, cancellationToken);
         }
     }
 }

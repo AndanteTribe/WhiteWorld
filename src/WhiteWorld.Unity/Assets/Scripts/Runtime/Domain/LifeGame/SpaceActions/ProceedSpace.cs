@@ -1,4 +1,6 @@
-﻿using WhiteWorld.Domain.Entity;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -10,12 +12,27 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         /// <inheritdoc/>
         public Space Space => Space.Proceed;
 
-        /// <inheritdoc/>
-        public void Execute(SpaceAmount moveCount)
+        private readonly SpaceAmount _proceedAmount = (SpaceAmount)3;
+        private readonly ISpaceMoveController _moveController;
+        private readonly TelevisionSpace _televisionSpace;
+
+        public ProceedSpace(ISpaceMoveController moveController, TelevisionSpace televisionSpace)
         {
-            // ProceedSpaceの効果は、実装されていません。
-            // 必要に応じて、ここにProceedSpaceの効果を実装してください。
-            throw new System.NotImplementedException();
+            _moveController = moveController;
+            _televisionSpace = televisionSpace;
+        }
+
+        /// <inheritdoc/>
+        public async UniTask ExecuteAsync(CancellationToken cancellationToken)
+        {
+            await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
+            // 3マス進む
+            // 実際に移動して、移動後のマス目種別を取得する
+            var nextSpace = await _moveController.MoveAsync(_proceedAmount, cancellationToken);
+            if (nextSpace == Space.Television)
+            {
+                await _televisionSpace.ExecuteAsync(cancellationToken);
+            }
         }
     }
 }

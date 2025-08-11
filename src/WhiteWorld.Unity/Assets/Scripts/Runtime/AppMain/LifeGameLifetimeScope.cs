@@ -1,7 +1,5 @@
 using AndanteTribe.Utils.Unity.VContainer;
 using VContainer;
-using VContainer.Unity;
-using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame;
 using WhiteWorld.Domain.LifeGame.Sequences;
 using WhiteWorld.Domain.LifeGame.SpaceActions;
@@ -25,8 +23,8 @@ namespace WhiteWorld.AppMain
             builder.Register<ISpaceAction, GoalSpace>(Lifetime.Singleton);
             builder.Register<ISpaceAction, ProceedSpace>(Lifetime.Singleton);
             builder.Register<ISpaceAction, ReturnSpace>(Lifetime.Singleton);
-            builder.Register<ISpaceAction, TelevisionSpace>(Lifetime.Singleton);
-            builder.Register<ISpaceAction, MemoryPieceSpace>(Lifetime.Singleton).AsSelf();
+            builder.Register<ISpaceAction, TelevisionSpace>(Lifetime.Singleton).AsSelf();
+            builder.Register<ISpaceAction, MemoryPieceSpace>(Lifetime.Singleton);
             builder.Register<ISpaceAction, FlavorSpace>(Lifetime.Singleton);
 
             builder.RegisterEntryPoints(static builder =>

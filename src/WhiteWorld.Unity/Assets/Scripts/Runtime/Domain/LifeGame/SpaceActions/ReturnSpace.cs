@@ -1,4 +1,6 @@
-﻿using WhiteWorld.Domain.Entity;
+﻿using System.Threading;
+using Cysharp.Threading.Tasks;
+using WhiteWorld.Domain.Entity;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -10,12 +12,21 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         /// <inheritdoc/>
         public Space Space => Space.Return;
 
-        /// <inheritdoc/>
-        public void Execute(SpaceAmount moveCount)
+        private readonly SpaceAmount _proceedAmount = (SpaceAmount)(-1);
+        private readonly ISpaceMoveController _moveController;
+
+        public ReturnSpace(ISpaceMoveController moveController)
         {
-            // ReturnSpaceの効果は、実装されていません。
-            // 必要に応じて、ここにReturnSpaceの効果を実装してください。
-            throw new System.NotImplementedException();
+            _moveController = moveController;
+        }
+
+        /// <inheritdoc/>
+        public async UniTask ExecuteAsync(CancellationToken cancellationToken)
+        {
+            await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
+            // -1マス進む
+            // 実際に移動して、移動後のマス目種別を取得する
+            await _moveController.MoveAsync(_proceedAmount, cancellationToken);
         }
     }
 }

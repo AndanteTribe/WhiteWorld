@@ -21,12 +21,12 @@
         Goal,
 
         /// <summary>
-        /// xマスすすむ.
+        /// 3マスすすむ.
         /// </summary>
         Proceed,
 
         /// <summary>
-        /// xマスもどる.
+        /// 1マスもどる.
         /// </summary>
         Return,
 
