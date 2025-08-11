@@ -4,7 +4,6 @@ using UnityEngine;
 using VContainer;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
-using Random = System.Random;
 
 namespace WhiteWorld.Presentation.Runtime
 {
@@ -15,7 +14,6 @@ namespace WhiteWorld.Presentation.Runtime
 
         private ReadOnlyMemory<KeywordModel> _data;
         private AutoResetUniTaskCompletionSource _onFinish;
-        private readonly Random _random = new();
 
         [Inject]
         public void Initialize(ReadOnlyMemory<KeywordModel> data, AutoResetUniTaskCompletionSource onFinish)
@@ -26,10 +24,10 @@ namespace WhiteWorld.Presentation.Runtime
 
         private async UniTaskVoid Start()
         {
-            var r = _random.Next(0,_data.Length);
-            var data = _data.ToArray();
-            var keyword = data[r].KeywordText;
-            var dummyText = data[r].DummyData.ToArray();
+            var r = UnityEngine.Random.Range(0, _data.Length);
+            var data = _data.Span[r];
+            var keyword = data.KeywordText;
+            var dummyText = data.DummyData;
             var dummy = dummyText.AsValueEnumerable()
                 .Select(x => x.DummyText)
                 .ToArray();

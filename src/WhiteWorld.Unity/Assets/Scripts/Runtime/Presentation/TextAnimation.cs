@@ -21,7 +21,7 @@ namespace WhiteWorld.Presentation.Runtime
         private RectTransform _canvasRectTransform;
 
         /// <summary>
-        /// ダミーてテキストがフェードアウトするまでの時間(秒)
+        /// ダミーテキストがフェードアウトするまでの時間(秒)
         /// </summary>
         [Space]
         [SerializeField]
