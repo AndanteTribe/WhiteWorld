@@ -29,6 +29,11 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             // メモリーピースの効果は、実装されていません。
             // 必要に応じて、ここにメモリーピースの効果を実装してください。
 
+            LoadTextAnimAsync().Forget();
+        }
+
+        private async UniTaskVoid LoadTextAnimAsync()
+        {
             using var messages = _masterDataRepository.Entities
                 .AsValueEnumerable()
                 .Where(static x => x.Id.AsSpan().Contains("01", StringComparison.Ordinal))
@@ -36,9 +41,10 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
             var uts = AutoResetUniTaskCompletionSource.Create();
 
-            _sceneController
-                .LoadAsync(SceneName.TextAnimation, new object[]{ messages.Array, uts }, CancellationToken.None)
-                .Forget();
+            await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.TextAnimation,
+                new object[] { messages.Array, uts }, CancellationToken.None);
+
+            await uts.Task;
         }
     }
 }

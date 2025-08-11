@@ -52,7 +52,7 @@ namespace WhiteWorld.Presentation.Runtime
                 dummyTextInstances.Add(dummyInstance[i]);
 
                 dummyInstance[i].gameObject.SetActive(true);
-                dummyInstance[i].fontSize = 120f;
+                dummyInstance[i].fontSize = 250f;
 
                 dummyInstance[i].color = new Color(1, 1, 1, 0f);
 
@@ -92,9 +92,10 @@ namespace WhiteWorld.Presentation.Runtime
             textTransform.localScale = Vector3.one * 2f;
             keywordInstance[0].color = new Color(1, 1, 1, 0f);
 
-            var scaleMotion = LMotion.Create(textTransform.localScale, Vector3.one * 1.5f, 0.6f)
+            keywordInstance[0].fontStyle = FontStyles.Bold;
+            var scaleMotion = LMotion.Create(keywordInstance[0].fontSize, 300f, 0.6f)
                 .WithEase(Ease.OutBack)
-                .BindToLocalScale(textTransform);
+                .Bind(keywordInstance[0], static (size, text) => text.fontSize = size);
 
             var fadeMotion = LMotion.Create(0f, originalColor.a, 0.5f)
                 .WithEase(Ease.OutQuad)

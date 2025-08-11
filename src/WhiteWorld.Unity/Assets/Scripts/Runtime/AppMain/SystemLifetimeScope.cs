@@ -39,7 +39,7 @@ namespace WhiteWorld.AppMain
 
             builder.RegisterEntryPoints(static builder =>
             {
-                builder.Add<SystemInitializer>(true);
+                builder.RegisterEnqueue<SystemInitializer>(true);
             });
         }
     }

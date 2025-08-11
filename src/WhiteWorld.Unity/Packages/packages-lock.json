@@ -298,14 +298,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "1ed31352e3d45343b1c9ff772a21d144d1999772"
+      "hash": "ab61398e57215e03b01a0af2d054d3db545a66c9"
     },
     "jp.andantetribe.utils.core": {
       "version": "https://github.com/AndanteTribe/Utils.git?path=bin",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e87aad0e5f567f080255dcb81eeccc4f821d7d2d"
+      "hash": "61cf2849f217cb5cf5a9463dce75d4c7a21177e5"
     },
     "jp.hadashikick.vcontainer": {
       "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer",

@@ -21,7 +21,7 @@ namespace WhiteWorld.Presentation.Runtime
             _onFinish = onFinish;
         }
 
-        private async void Start()
+        private async UniTaskVoid Start()
         {
             var keyword = _data[0].KeywordText;
             var dummyText = _data[0].DummyData.ToArray();
@@ -30,6 +30,7 @@ namespace WhiteWorld.Presentation.Runtime
                 .ToArray();
 
             await _textAnimator.StartTextAnimationAsync(keyword, dummy);
+            _onFinish.TrySetResult();
         }
     }
 }
