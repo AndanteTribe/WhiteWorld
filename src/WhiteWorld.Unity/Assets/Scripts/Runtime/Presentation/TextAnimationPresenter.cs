@@ -1,8 +1,10 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
+using Random = System.Random;
 
 namespace WhiteWorld.Presentation.Runtime
 {
@@ -11,11 +13,12 @@ namespace WhiteWorld.Presentation.Runtime
         [SerializeField]
         private TextAnimator _textAnimator;
 
-        private KeywordModel[] _data;
+        private ReadOnlyMemory<KeywordModel> _data;
         private AutoResetUniTaskCompletionSource _onFinish;
+        private readonly Random _random = new();
 
         [Inject]
-        public void Initialize(KeywordModel[] data, AutoResetUniTaskCompletionSource onFinish)
+        public void Initialize(ReadOnlyMemory<KeywordModel> data, AutoResetUniTaskCompletionSource onFinish)
         {
             _data = data;
             _onFinish = onFinish;
@@ -23,8 +26,10 @@ namespace WhiteWorld.Presentation.Runtime
 
         private async UniTaskVoid Start()
         {
-            var keyword = _data[0].KeywordText;
-            var dummyText = _data[0].DummyData.ToArray();
+            var r = _random.Next(0,_data.Length);
+            var data = _data.ToArray();
+            var keyword = data[r].KeywordText;
+            var dummyText = data[r].DummyData.ToArray();
             var dummy = dummyText.AsValueEnumerable()
                 .Select(x => x.DummyText)
                 .ToArray();

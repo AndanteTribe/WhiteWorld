@@ -21,6 +21,19 @@ namespace WhiteWorld.Presentation.Runtime
         private RectTransform _canvasRectTransform;
 
         /// <summary>
+        /// ダミーてテキストがフェードアウトするまでの時間(秒)
+        /// </summary>
+        [Space]
+        [SerializeField]
+        private float _dummyTextFadeOutTime = 1.5f;
+
+        /// <summary>
+        /// ダミーテキストを画面外に生成する補正値
+        /// </summary>
+        [SerializeField]
+        private float _margin = 800;
+
+        /// <summary>
         /// テキストアニメーションを開始する
         /// </summary>
         /// <param name="keyword">最後にキーワードを表示する</param>
@@ -69,7 +82,7 @@ namespace WhiteWorld.Presentation.Runtime
                 animationTasks.Add(motionTask);
 
                 // フェードアウトのアニメーション
-                var fadeTask = LMotion.Create(1f, 0f, 2f) // 2秒かけてフェードアウト
+                var fadeTask = LMotion.Create(1f, 0f, _dummyTextFadeOutTime)
                     .WithDelay(i * 0.3f + 1f) // 位置アニメーションより少し遅れて開始
                     .WithEase(Ease.InSine)
                     .BindToColorA( dummyInstance[i])
@@ -86,17 +99,17 @@ namespace WhiteWorld.Presentation.Runtime
 
             // --- キーワードのアニメーション ---
             keywordInstance[0].gameObject.SetActive(true);
-            var textTransform = keywordInstance[0].transform;
+            keywordInstance[0].fontSize = 150;
             var originalColor = keywordInstance[0].color;
 
-            textTransform.localScale = Vector3.one * 2f;
             keywordInstance[0].color = new Color(1, 1, 1, 0f);
 
             keywordInstance[0].fontStyle = FontStyles.Bold;
-            var scaleMotion = LMotion.Create(keywordInstance[0].fontSize, 300f, 0.6f)
+            var scaleMotion = LMotion.Create(keywordInstance[0].fontSize, keywordInstance[0].fontSize * 1.5f, 0.6f)
                 .WithEase(Ease.OutBack)
                 .Bind(keywordInstance[0], static (size, text) => text.fontSize = size);
 
+            //フェードイン
             var fadeMotion = LMotion.Create(0f, originalColor.a, 0.5f)
                 .WithEase(Ease.OutQuad)
                 .BindToColorA(keywordInstance[0]);
@@ -106,8 +119,9 @@ namespace WhiteWorld.Presentation.Runtime
                 fadeMotion.ToUniTask(cancellationToken)
             );
 
-            await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
+            await UniTask.Delay(TimeSpan.FromSeconds(2), cancellationToken: cancellationToken);
 
+            //キーワードのフェードアウト
             await LMotion.Create(originalColor.a, 0f, 1f)
                 .BindToColorA(keywordInstance[0])
                 .ToUniTask(cancellationToken);
@@ -123,7 +137,6 @@ namespace WhiteWorld.Presentation.Runtime
         /// <returns></returns>
         private (Vector2 start, Vector2 end) GetStartEndPositionForSide(int side, Vector2 canvasSize)
         {
-            var margin = 150f;
             Vector2 start, end;
             float randomPos;
 
@@ -131,23 +144,23 @@ namespace WhiteWorld.Presentation.Runtime
             {
                 case 0: // 右から左へ
                     randomPos = Random.Range(-canvasSize.y / 2, canvasSize.y / 2);
-                    start = new Vector2(canvasSize.x / 2 + margin, randomPos);
-                    end = new Vector2(-canvasSize.x / 2 - margin, randomPos + Random.Range(-100, 100));
+                    start = new Vector2(canvasSize.x / 2 + _margin, randomPos);
+                    end = new Vector2(-canvasSize.x / 2 - _margin, randomPos + Random.Range(-100, 100));
                     break;
                 case 1: // 下から上へ
                     randomPos = Random.Range(-canvasSize.x / 2, canvasSize.x / 2);
-                    start = new Vector2(randomPos, -canvasSize.y / 2 - margin);
-                    end = new Vector2(randomPos + Random.Range(-100, 100), canvasSize.y / 2 + margin);
+                    start = new Vector2(randomPos, -canvasSize.y / 2 - _margin);
+                    end = new Vector2(randomPos + Random.Range(-100, 100), canvasSize.y / 2 + _margin);
                     break;
                 case 2: // 左から右へ
                     randomPos = Random.Range(-canvasSize.y / 2, canvasSize.y / 2);
-                    start = new Vector2(-canvasSize.x / 2 - margin, randomPos);
-                    end = new Vector2(canvasSize.x / 2 + margin, randomPos + Random.Range(-100, 100));
+                    start = new Vector2(-canvasSize.x / 2 - _margin, randomPos);
+                    end = new Vector2(canvasSize.x / 2 + _margin, randomPos + Random.Range(-100, 100));
                     break;
                 default: // 上から下へ (case 3)
                     randomPos = Random.Range(-canvasSize.y / 2, canvasSize.y / 2);
-                    start = new Vector2(randomPos, canvasSize.y / 2 + margin);
-                    end = new Vector2(randomPos + Random.Range(-100, 100), -canvasSize.y / 2 - margin);
+                    start = new Vector2(randomPos, canvasSize.y / 2 + _margin);
+                    end = new Vector2(randomPos + Random.Range(-100, 100), -canvasSize.y / 2 - _margin);
                     break;
             }
             return (start, end);

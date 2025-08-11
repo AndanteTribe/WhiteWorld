@@ -34,15 +34,16 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
         private async UniTaskVoid LoadTextAnimAsync()
         {
-            using var messages = _masterDataRepository.Entities
-                .AsValueEnumerable()
-                .Where(static x => x.Id.AsSpan().Contains("01", StringComparison.Ordinal))
-                .ToArrayPool();
+            var messages = _masterDataRepository.Entities.AsValueEnumerable();
 
+            using var arrayPool = messages.ToArrayPool();
+
+            var count = messages.Count();
+            var memory = new ReadOnlyMemory<KeywordModel>(arrayPool.Array,0, count);
             var uts = AutoResetUniTaskCompletionSource.Create();
 
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.TextAnimation,
-                new object[] { messages.Array, uts }, CancellationToken.None);
+                new object[] { memory, uts }, CancellationToken.None);
 
             await uts.Task;
         }

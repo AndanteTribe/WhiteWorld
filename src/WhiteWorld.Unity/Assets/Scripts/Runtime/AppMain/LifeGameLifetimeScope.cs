@@ -34,11 +34,11 @@ namespace WhiteWorld.AppMain
                 builder.RegisterEnqueue<LifeGame>(true);
             });
 
-            // TextAnimationをデバッグテストする用
-            // builder.RegisterBuildCallback(static resolver =>
-            // {
-            //     resolver.Resolve<MemoryPieceSpace>().Execute((SpaceAmount)6);
-            // });
+            //TextAnimationをデバッグテストする用
+            builder.RegisterBuildCallback(static resolver =>
+            {
+                resolver.Resolve<MemoryPieceSpace>().Execute((SpaceAmount)6);
+            });
         }
     }
 }
