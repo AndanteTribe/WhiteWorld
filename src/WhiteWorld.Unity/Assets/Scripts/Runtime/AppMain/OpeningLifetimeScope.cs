@@ -18,7 +18,7 @@ namespace WhiteWorld.AppMain
 
             builder.RegisterEntryPoints(static builder =>
             {
-                builder.RegisterEnqueue<Opening>(true);
+                builder.RegisterEnqueue<Opening>(true).AsSelf();
             });
         }
     }

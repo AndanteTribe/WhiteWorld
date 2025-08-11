@@ -31,7 +31,7 @@ namespace WhiteWorld.AppMain
 
             builder.RegisterEntryPoints(static builder =>
             {
-                builder.RegisterEnqueue<LifeGame>(true);
+                builder.RegisterEnqueue<LifeGame>(true).AsSelf();
             });
         }
     }
