@@ -35,7 +35,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         public async UniTask ExecuteAsync(CancellationToken cancellationToken)
         {
             await _televisionController.ExecuteAsync(cancellationToken);
-            using var messages = _messageTable.All.AsValueEnumerable()
+            using var messages = _messageTable.GetRawDataUnsafe().AsValueEnumerable()
                 .Where(x => x.Id.Contains($"novel_{_messageIndex:00}_", StringComparison.Ordinal))
                 .ToArrayPool();
 
