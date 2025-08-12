@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
+using MasterMemory.Tables;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -14,12 +15,12 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         /// <inheritdoc/>
         public Space Space => Space.MemoryPiece;
 
-        private readonly IMasterDataRepository<KeywordModel> _masterDataRepository;
+        private readonly KeywordModelTable _keywordTable;
         private readonly ISceneController _sceneController;
 
-        public MemoryPieceSpace(IMasterDataRepository<KeywordModel> masterDataRepository, ISceneController sceneController)
+        public MemoryPieceSpace(KeywordModelTable keywordTable, ISceneController sceneController)
         {
-            _masterDataRepository = masterDataRepository;
+            _keywordTable = keywordTable;
             _sceneController = sceneController;
         }
 
@@ -32,7 +33,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
         private async UniTask LoadTextAnimAsync(CancellationToken cancellationToken)
         {
-            var messages = _masterDataRepository.Entities.AsValueEnumerable();
+            var messages = _keywordTable.GetRawDataUnsafe().AsValueEnumerable();
 
             using var arrayPool = messages.ToArrayPool();
 

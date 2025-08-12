@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AndanteTribe.Utils;
 using Cysharp.Threading.Tasks;
+using MasterMemory.Tables;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
 
@@ -11,17 +12,17 @@ namespace WhiteWorld.Domain.LifeGame
     public class LifeGame : IInitializable
     {
         private readonly ISceneController _sceneController;
-        private readonly IMasterDataRepository<MessageModel> _messageRepository;
+        private readonly MessageModelTable _messageTable;
         private readonly LifeGameMainSequence _mainSequence;
 
         public LifeGame(
             ISceneController sceneController,
             LifeGameMainSequence mainSequence,
-            IMasterDataRepository<MessageModel> messageRepository)
+            MessageModelTable messageTable)
         {
             _sceneController = sceneController;
             _mainSequence = mainSequence;
-            _messageRepository = messageRepository;
+            _messageTable = messageTable;
         }
 
         public async ValueTask InitializeAsync(CancellationToken cancellationToken)
@@ -30,7 +31,7 @@ namespace WhiteWorld.Domain.LifeGame
             await UniTask.Delay(TimeSpan.FromSeconds(1), cancellationToken: cancellationToken);
 
             // 人生ゲームシーン読み込み直後のメッセージ再生
-            using (var messages = _messageRepository.Entities
+            using (var messages = _messageTable.GetRawDataUnsafe()
                        .AsValueEnumerable()
                        .Where(static x => x.Id.AsSpan().Contains($"lifegame_{(byte)LifeGameTutorialID.SceneStart:00}_", StringComparison.Ordinal))
                        .ToArrayPool())

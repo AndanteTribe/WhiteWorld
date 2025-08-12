@@ -6,7 +6,7 @@ using System.Reflection;
 using MasterMemory;
 using ZLinq;
 
-namespace WhiteWorld.Data
+namespace WhiteWorld.Editor
 {
     public static class CsvTranslator
     {
@@ -33,6 +33,31 @@ namespace WhiteWorld.Data
 
             // ジェネリックメソッドをCSVテキストで実行
             return genericDeserializeMethod!.Invoke(null, new object[] { csvText, null });
+        }
+
+        /// <summary>
+        /// 汎用デシアライザー
+        /// </summary>
+        /// <param name="csvBytes"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static object Deserialize(byte[] csvBytes, Type type)
+        {
+            // Deserialize<T> メソッドをリフレクションで取得
+            var deserializeMethod = typeof(CsvSerializer).GetMethods(BindingFlags.Public | BindingFlags.Static)
+                .AsValueEnumerable()
+                .FirstOrDefault
+                (m =>
+                    m.Name == "Deserialize" &&
+                    m.IsGenericMethodDefinition &&
+                    m.GetParameters().Length >= 1 &&
+                    m.GetParameters()[0].ParameterType == typeof(byte[]));
+
+            // 指定された型でジェネリックメソッドを作成
+            var genericDeserializeMethod = deserializeMethod?.MakeGenericMethod(type);
+
+            // ジェネリックメソッドをCSVバイト配列で実行
+            return genericDeserializeMethod!.Invoke(null, new object[] { csvBytes, null });
         }
 
         /// <summary>

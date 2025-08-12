@@ -1,0 +1,27 @@
+{
+    "name": "WhiteWorld.Editor",
+    "rootNamespace": "WhiteWorld.Editor",
+    "references": [
+        "GUID:7ddc44962e578ab489791080fbdb0cc9",
+        "GUID:f78693fd48ee48e478e0bdea141dd36f"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Csv.dll",
+        "Csv.Annotations.dll",
+        "MessagePack.dll",
+        "MessagePack.Annotations.dll",
+        "MasterMemory.dll",
+        "MasterMemory.Annotations.dll",
+        "ZLinq.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
+using MasterMemory.Tables;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -16,25 +17,25 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
         private readonly ISpaceTelevisionController _televisionController;
         private readonly ISceneController _sceneController;
-        private readonly IMasterDataRepository<MessageModel> _dataRepository;
+        private readonly MessageModelTable _messageTable;
         // オープニングの時に01は再生しているので02から
         private int _messageIndex = 2;
 
         public TelevisionSpace(
             ISpaceTelevisionController televisionController,
             ISceneController sceneController,
-            IMasterDataRepository<MessageModel> dataRepository)
+            MessageModelTable messageTable)
         {
             _televisionController = televisionController;
             _sceneController = sceneController;
-            _dataRepository = dataRepository;
+            _messageTable = messageTable;
         }
 
         /// <inheritdoc/>
         public async UniTask ExecuteAsync(CancellationToken cancellationToken)
         {
             await _televisionController.ExecuteAsync(cancellationToken);
-            using var messages = _dataRepository.Entities.AsValueEnumerable()
+            using var messages = _messageTable.All.AsValueEnumerable()
                 .Where(x => x.Id.Contains($"novel_{_messageIndex:00}_", StringComparison.Ordinal))
                 .ToArrayPool();
 
