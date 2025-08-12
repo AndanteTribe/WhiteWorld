@@ -3,7 +3,8 @@
     "rootNamespace": "WhiteWorld.Editor",
     "references": [
         "GUID:7ddc44962e578ab489791080fbdb0cc9",
-        "GUID:f78693fd48ee48e478e0bdea141dd36f"
+        "GUID:f78693fd48ee48e478e0bdea141dd36f",
+        "GUID:bf0b7d05fd3af8e4aa4966bcda55ac92"
     ],
     "includePlatforms": [
         "Editor"
