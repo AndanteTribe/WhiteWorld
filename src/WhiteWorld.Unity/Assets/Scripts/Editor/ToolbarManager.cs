@@ -10,13 +10,23 @@ namespace WhiteWorld.Editor
     {
         static ToolbarManager()
         {
-            UnityEditorToolbarUtils.AddCenter(false, () =>
+            UnityEditorToolbarUtils.AddCenter(false, static () =>
             {
-                var button = new Button { text = "Systemシーンをロード" };
+                var button = new Button()
+                {
+                    text = "システムシーンをロード",
+                };
                 button.RegisterCallback<ClickEvent>(static _ =>
                 {
-                    EditorSceneManager.OpenScene("Assets/Scenes/System.unity");
-                    EditorApplication.isPlaying = true;
+                    if (EditorApplication.isPlaying)
+                    {
+                        EditorApplication.isPlaying = false;
+                    }
+                    else
+                    {
+                        EditorSceneManager.OpenScene("Assets/Scenes/System.unity");
+                        EditorApplication.isPlaying = true;
+                    }
                 });
                 return button;
             });
