@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -17,11 +18,20 @@ namespace WhiteWorld.Presentation
         /// 登録したインデックスの効果音を鳴らす
         /// </summary>
         /// <param name="index"></param>
-        public async UniTask PlaySE(int index)
+        /// <param name="token"></param>
+        public async UniTask PlaySE(int index, CancellationToken token)
         {
             var se = _audioClip[index];
             _audioSource.PlayOneShot(se);
-            await UniTask.Delay(TimeSpan.FromSeconds(se.length));
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(se.length), cancellationToken: token);
+            }
+            catch (OperationCanceledException)
+            {
+                _audioSource.Stop();
+                throw;
+            }
         }
     }
 

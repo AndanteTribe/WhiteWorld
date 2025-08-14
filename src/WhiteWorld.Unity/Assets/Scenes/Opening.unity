@@ -655,6 +655,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -3346974774981926329, guid: fd729b42b59d4c44cbf9de08746ab1b1, type: 2}
     - target: {fileID: 6360113029828486793, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
+      propertyPath: m_SceneBindings.Array.data[0].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360113029828486793, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_SceneBindings.Array.data[2].value
       value: 
       objectReference: {fileID: 1590422000}
@@ -881,7 +885,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 30.371, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1910481414
 MonoBehaviour:
   m_ObjectHideFlags: 0

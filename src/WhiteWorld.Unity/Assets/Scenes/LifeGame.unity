@@ -440,7 +440,8 @@ MonoBehaviour:
   parentReference:
     TypeName: WhiteWorld.AppMain.SystemLifetimeScope
   autoRun: 1
-  autoInjectGameObjects: []
+  autoInjectGameObjects:
+  - {fileID: 207790617}
   _autoBindComponents:
   - {fileID: 207790620}
 --- !u!114 &207790620

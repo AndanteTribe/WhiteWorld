@@ -219,8 +219,8 @@ MonoBehaviour:
     m_Duration: 9.216666666666667
     m_TimeScale: 1
     m_ParentTrack: {fileID: -3346974774981926329}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 1.99
+    m_EaseInDuration: 7.2
+    m_EaseOutDuration: 2.0166666666666666
     m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
@@ -229,20 +229,47 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: 2
-        outSlope: 2
+        inSlope: 1.0467563
+        outSlope: 1.0467563
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.43590376
+      - serializedVersion: 3
+        time: 0.2874388
+        value: 0.16013768
+        inSlope: 0.74833745
+        outSlope: 0.74833745
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.5754365
+      - serializedVersion: 3
+        time: 0.3817848
+        value: 0.42447883
+        inSlope: 7.482968
+        outSlope: 7.482968
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.16716276
+        outWeight: 0.06930909
+      - serializedVersion: 3
+        time: 0.67000985
+        value: 1
+        inSlope: 0.0035777558
+        outSlope: 0.0035777558
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
         value: 1
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 34
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.33333334
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -253,8 +280,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: -0
-        outSlope: -0
+        inSlope: -2
+        outSlope: -2
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -262,8 +289,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -2
-        outSlope: -2
+        inSlope: -0
+        outSlope: -0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -338,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
   m_Name: AudioPlayableAsset
   m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 91797f1a27b464107b42566b7e3686a0, type: 3}
+  m_Clip: {fileID: 8300000, guid: 15647a54bc8eeea4aae7147199ce0303, type: 3}
   m_Loop: 1
   m_bufferingTime: 0.1
   m_ClipProperties:

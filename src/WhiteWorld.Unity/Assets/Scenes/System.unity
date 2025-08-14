@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1575035726650242721, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
+      propertyPath: _audioClip.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575035726650242721, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
+      propertyPath: '_audioClip.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ce100894a464c9498ed049e7b459251, type: 3}
     - target: {fileID: 3565250885773016934, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
       propertyPath: m_Name
       value: AudioController
