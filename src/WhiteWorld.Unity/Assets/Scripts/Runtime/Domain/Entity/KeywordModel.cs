@@ -15,9 +15,5 @@ namespace WhiteWorld.Domain.Entity
 
         [Column(1)]
         public string KeywordText { get; init; }
-
-        [MessagePack.IgnoreMember]
-        [Csv.Annotations.IgnoreMember]
-        public ReadOnlyMemory<DummyModel> DummyData { get; set; }
     }
 }

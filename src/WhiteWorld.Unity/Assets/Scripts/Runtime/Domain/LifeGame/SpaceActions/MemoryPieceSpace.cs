@@ -16,11 +16,13 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         public Space Space => Space.MemoryPiece;
 
         private readonly KeywordModelTable _keywordTable;
+        private readonly DummyModelTable _dummyTable;
         private readonly ISceneController _sceneController;
 
-        public MemoryPieceSpace(KeywordModelTable keywordTable, ISceneController sceneController)
+        public MemoryPieceSpace(KeywordModelTable keywordTable, DummyModelTable dummyTable ,ISceneController sceneController)
         {
             _keywordTable = keywordTable;
+            _dummyTable = dummyTable;
             _sceneController = sceneController;
         }
 
@@ -34,11 +36,16 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         private async UniTask LoadTextAnimAsync(CancellationToken cancellationToken)
         {
             var messages = _keywordTable.GetRawDataUnsafe().AsValueEnumerable();
+            var dummyMessage = _dummyTable.GetRawDataUnsafe().AsValueEnumerable();
 
             using var arrayPool = messages.ToArrayPool();
+            using var dummyArrayPool = dummyMessage.ToArrayPool();
 
             var count = messages.Count();
+            var dummyCount = dummyMessage.Count();
+
             var memory = new ReadOnlyMemory<KeywordModel>(arrayPool.Array,0, count);
+            var dummy = new ReadOnlyMemory<DummyModel>(dummyArrayPool.Array,0, dummyCount);
             var uts = AutoResetUniTaskCompletionSource.Create();
 
             cancellationToken.RegisterWithoutCaptureExecutionContext(static obj =>
@@ -48,7 +55,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             }, uts);
 
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.TextAnimation,
-                new object[] { memory, uts }, cancellationToken);
+                new object[] { memory, dummy, uts }, cancellationToken);
 
             await uts.Task;
         }
