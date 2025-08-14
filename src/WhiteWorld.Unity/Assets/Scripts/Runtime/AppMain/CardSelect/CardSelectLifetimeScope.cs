@@ -1,8 +1,6 @@
 using AndanteTribe.Utils.Unity.VContainer;
 using VContainer;
-using VContainer.Unity;
 using WhiteWorld.Domain;
-using WhiteWorld.Domain.LifeGame.Sequences;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
