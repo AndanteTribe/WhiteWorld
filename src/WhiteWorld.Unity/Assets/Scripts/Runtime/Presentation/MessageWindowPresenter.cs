@@ -24,14 +24,16 @@ namespace WhiteWorld.Presentation
         [SerializeField]
         private Graphic _fadeout;
 
+        private AudioController _audioController;
         private MessagePlayData _data;
         private AutoResetUniTaskCompletionSource _onFinish;
 
         [Inject]
-        public void Initialize(MessagePlayData data, AutoResetUniTaskCompletionSource onFinish)
+        public void Initialize(MessagePlayData data, AutoResetUniTaskCompletionSource onFinish, AudioController audioController)
         {
             _data = data;
             _onFinish = onFinish;
+            _audioController = audioController;
         }
 
         private async UniTaskVoid Start()
@@ -57,6 +59,8 @@ namespace WhiteWorld.Presentation
                 _messageText.text = model.Message;
 
                 await WaitNextAsync(destroyCancellationToken);
+
+                _audioController.PlaySE(0).Forget();
             }
             _onFinish.TrySetResult();
         }

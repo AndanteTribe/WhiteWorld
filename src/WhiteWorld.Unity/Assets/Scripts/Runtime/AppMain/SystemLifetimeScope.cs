@@ -14,10 +14,17 @@ namespace WhiteWorld.AppMain
     /// </summary>
     public sealed class SystemLifetimeScope : LifetimeScopeBase
     {
-        [SerializeField] private GameObject _tvPrefab;
+        [SerializeField]
+        private GameObject _tvPrefab;
+
+        [SerializeField]
+        private AudioController _audioController;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<ISceneController, DefaultSceneController>(Lifetime.Singleton);
+
+            builder.RegisterComponent(_audioController);
 
 #if ENABLE_DEBUGTOOLKIT
             builder.RegisterEntryPoint<DebugViewer>().WithParameter(_tvPrefab);
