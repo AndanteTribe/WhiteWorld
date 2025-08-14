@@ -43,7 +43,7 @@ namespace WhiteWorld.Presentation
                 currentTask = anim.TurnToFrontAsync(token);
 
                 //カードをめくる効果音を鳴らす
-                _audioController.PlaySE(1).Forget();
+                _audioController.PlaySE(1, token).Forget();
 
                 await UniTask.Delay(TimeSpan.FromSeconds(_turnStartIntervalSec),cancellationToken:token);
             }
