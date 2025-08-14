@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VContainer;
 
 namespace WhiteWorld.Presentation
 {
@@ -26,6 +27,8 @@ namespace WhiteWorld.Presentation
 
         [SerializeField] private CardAnimation[] _animations;
 
+        [Inject] private readonly AudioController _audioController;
+
         /// <summary>
         /// 表示アニメーション開始する
         /// </summary>
@@ -38,6 +41,9 @@ namespace WhiteWorld.Presentation
             foreach (var anim in _animations)
             {
                 currentTask = anim.TurnToFrontAsync(token);
+
+                //カードをめくる効果音を鳴らす
+                _audioController.Play(1).Forget();
 
                 await UniTask.Delay(TimeSpan.FromSeconds(_turnStartIntervalSec),cancellationToken:token);
             }
