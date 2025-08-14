@@ -46,8 +46,7 @@ namespace WhiteWorld.Presentation.LifeGame
                 var nextPos = spacePoint.transform.position;
                 nextPos.y = currentY; // Y座標は変えない
                 _player.position = nextPos;
-                _audioController.PlaySE(2).Forget(); //  移動効果音を鳴らす
-                await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
+                await _audioController.PlaySE(2, cancellationToken);
             }
             // テレビマスに到達しなかった場合、amount分進む
             return _spacePoints[_currentPos += (int)amount].Space;
