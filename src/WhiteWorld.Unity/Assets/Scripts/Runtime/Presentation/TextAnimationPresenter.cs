@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -12,28 +11,24 @@ namespace WhiteWorld.Presentation.Runtime
         [SerializeField]
         private TextAnimator _textAnimator;
 
-        private ReadOnlyMemory<KeywordModel> _data;
-        private ReadOnlyMemory<DummyModel> _dummyModel;
+        private TextAnimationData _data;
         private AutoResetUniTaskCompletionSource _onFinish;
 
         [Inject]
-        public void Initialize(ReadOnlyMemory<KeywordModel> data, ReadOnlyMemory<DummyModel> dummy, AutoResetUniTaskCompletionSource onFinish)
+        public void Initialize(TextAnimationData data, AutoResetUniTaskCompletionSource onFinish)
         {
             _data = data;
             _onFinish = onFinish;
-            _dummyModel = dummy;
         }
 
         private async UniTaskVoid Start()
         {
-            var r = UnityEngine.Random.Range(0, _data.Length);
-            var data = _data.Span[r];
-            var keyword = data.KeywordText;
-            var dummy = _dummyModel.AsValueEnumerable()
-                .Select(x => x.DummyText)
-                .ToArray();
+            var keyword = _data.Keyword.KeywordText;
+            using var dummy = _data.DummyModels.AsValueEnumerable()
+                .Select(static x => x.DummyText)
+                .ToArrayPool();
 
-            await _textAnimator.StartTextAnimationAsync(keyword, dummy);
+            await _textAnimator.StartTextAnimationAsync(keyword, dummy.Array);
             _onFinish.TrySetResult();
         }
     }
