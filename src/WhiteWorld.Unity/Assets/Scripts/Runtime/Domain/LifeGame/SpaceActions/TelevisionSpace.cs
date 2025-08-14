@@ -46,6 +46,8 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             await uts.Task;
             _messageIndex++;
             await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
+
+            _televisionController.BindCameraToPlayer();
         }
     }
 }

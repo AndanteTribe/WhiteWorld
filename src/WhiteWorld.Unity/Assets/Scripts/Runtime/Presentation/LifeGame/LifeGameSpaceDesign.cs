@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Unity.Cinemachine;
 using UnityEngine;
 using VContainer;
 using WhiteWorld.Domain.Entity;
@@ -15,6 +16,8 @@ namespace WhiteWorld.Presentation.LifeGame
         private SpacePoint[] _spacePoints;
         [SerializeField]
         private Transform _player;
+        [SerializeField]
+        private CinemachineBrain _cinemachineBrain;
 
         private int _currentPos;
         private AudioController _audioController;
@@ -36,6 +39,11 @@ namespace WhiteWorld.Presentation.LifeGame
                 // 実際の移動量
                 var realAmount = (int)amount >= 0 ? i : -i;
                 var spacePoint = _spacePoints[_currentPos + realAmount];
+
+                var nextPos = spacePoint.transform.position;
+                nextPos.y = currentY; // Y座標は変えない
+                _player.position = nextPos;
+
                 // テレビマスに到達したら、そこで止まる
                 if (spacePoint.Space == Space.Television)
                 {
@@ -43,9 +51,6 @@ namespace WhiteWorld.Presentation.LifeGame
                     return spacePoint.Space;
                 }
 
-                var nextPos = spacePoint.transform.position;
-                nextPos.y = currentY; // Y座標は変えない
-                _player.position = nextPos;
                 await _audioController.PlaySE(2, cancellationToken);
             }
             // テレビマスに到達しなかった場合、amount分進む
@@ -57,6 +62,15 @@ namespace WhiteWorld.Presentation.LifeGame
             var space = _spacePoints[_currentPos];
             space.TVController.StartTVAnimation();
             return space.TVController.WaitForAnimationPreEndAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Cinemachineのターゲットをプレイヤーに切り替える
+        /// </summary>
+        public void BindCameraToPlayer()
+        {
+            var space = _spacePoints[_currentPos];
+            space.TVController.EndTVAnimation();
         }
     }
 }
