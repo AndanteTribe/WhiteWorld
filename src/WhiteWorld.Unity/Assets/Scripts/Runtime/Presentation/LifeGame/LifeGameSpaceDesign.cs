@@ -51,7 +51,6 @@ namespace WhiteWorld.Presentation.LifeGame
                     return spacePoint.Space;
                 }
 
-                await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
                 await _audioController.PlaySE(2, cancellationToken);
             }
             // テレビマスに到達しなかった場合、amount分進む
