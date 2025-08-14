@@ -31,6 +31,11 @@ namespace WhiteWorld.Presentation.LifeGame
                 // 実際の移動量
                 var realAmount = (int)amount >= 0 ? i : -i;
                 var spacePoint = _spacePoints[_currentPos + realAmount];
+
+                var nextPos = spacePoint.transform.position;
+                nextPos.y = currentY; // Y座標は変えない
+                _player.position = nextPos;
+
                 // テレビマスに到達したら、そこで止まる
                 if (spacePoint.Space == Space.Television)
                 {
@@ -38,9 +43,6 @@ namespace WhiteWorld.Presentation.LifeGame
                     return spacePoint.Space;
                 }
 
-                var nextPos = spacePoint.transform.position;
-                nextPos.y = currentY; // Y座標は変えない
-                _player.position = nextPos;
                 await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
             }
             // テレビマスに到達しなかった場合、amount分進む
