@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using AndanteTribe.Utils.Unity;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -39,6 +40,7 @@ namespace WhiteWorld.Presentation
             }
         }
 
+        [Button]
         public void EndTVAnimation()
         {
             if (_timeline != null)

@@ -1,6 +1,8 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Unity.Cinemachine;
+using UnityEditor.UIElements;
 using UnityEngine;
 using VContainer;
 using WhiteWorld.Domain.Entity;
@@ -15,6 +17,8 @@ namespace WhiteWorld.Presentation.LifeGame
         private SpacePoint[] _spacePoints;
         [SerializeField]
         private Transform _player;
+        [SerializeField]
+        private CinemachineBrain _cinemachineBrain;
 
         private int _currentPos;
         private AudioController _audioController;
@@ -60,6 +64,15 @@ namespace WhiteWorld.Presentation.LifeGame
             var space = _spacePoints[_currentPos];
             space.TVController.StartTVAnimation();
             return space.TVController.WaitForAnimationPreEndAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Cinemachineのターゲットをプレイヤーに切り替える
+        /// </summary>
+        public void BindCameraToPlayer()
+        {
+            var space = _spacePoints[_currentPos];
+            space.TVController.EndTVAnimation();
         }
     }
 }
