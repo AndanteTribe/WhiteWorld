@@ -23,11 +23,14 @@ namespace WhiteWorld.Presentation
         {
             var se = _audioClip[index];
             _audioSource.PlayOneShot(se);
-            await UniTask.Delay(TimeSpan.FromSeconds(se.length), cancellationToken: token);
-
-            if (token.IsCancellationRequested)
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(se.length), cancellationToken: token);
+            }
+            catch (OperationCanceledException)
             {
                 _audioSource.Stop();
+                throw;
             }
         }
     }

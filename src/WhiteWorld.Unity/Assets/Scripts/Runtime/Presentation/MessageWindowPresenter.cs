@@ -60,7 +60,7 @@ namespace WhiteWorld.Presentation
 
                 await WaitNextAsync(destroyCancellationToken);
 
-                _audioController.PlaySE(0, destroyCancellationToken);
+                _audioController.PlaySE(0, destroyCancellationToken).Forget();
             }
             _onFinish.TrySetResult();
         }
