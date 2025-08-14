@@ -2,6 +2,7 @@
 using System.Threading;
 using AndanteTribe.Utils;
 using Cysharp.Threading.Tasks;
+using MasterMemory.Tables;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame.Sequences;
 using ZLinq;
@@ -14,20 +15,20 @@ namespace WhiteWorld.Domain.LifeGame
         private readonly SpaceMoveSequence _spaceMoveSequence;
         private readonly SpaceActionSequence _spaceActionSequence;
         private readonly ISceneController _sceneController;
-        private readonly IMasterDataRepository<MessageModel> _messageRepository;
+        private readonly MessageModelTable _messageTable;
 
         public LifeGameMainSequence(
             CardSelectionSequence cardSelectionSequence,
             SpaceMoveSequence spaceMoveSequence,
             SpaceActionSequence spaceActionSequence,
             ISceneController sceneController,
-            IMasterDataRepository<MessageModel> messageRepository)
+            MessageModelTable messageTable)
         {
             _cardSelectionSequence = cardSelectionSequence;
             _spaceMoveSequence = spaceMoveSequence;
             _spaceActionSequence = spaceActionSequence;
             _sceneController = sceneController;
-            _messageRepository = messageRepository;
+            _messageTable = messageTable;
         }
 
         public async UniTask InitializeAsync(CancellationToken cancellationToken)
@@ -59,7 +60,7 @@ namespace WhiteWorld.Domain.LifeGame
 
         private async UniTask TutorialAsync(LifeGameTutorialID tutorialId, CancellationToken cancellationToken)
         {
-            using var messages = _messageRepository.Entities
+            using var messages = _messageTable.GetRawDataUnsafe()
                 .AsValueEnumerable()
                 .Where(x => x.Id.AsSpan().Contains($"lifegame_{(byte)tutorialId:00}_", StringComparison.Ordinal))
                 .ToArrayPool();

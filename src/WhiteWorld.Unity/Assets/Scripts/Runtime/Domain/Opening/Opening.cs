@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AndanteTribe.Utils;
 using Cysharp.Threading.Tasks;
-using R3;
+using MasterMemory.Tables;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
 
@@ -14,19 +14,19 @@ namespace WhiteWorld.Domain.Opening
         private readonly ISceneController _sceneController;
         private readonly ITVController _tvController;
         private readonly IPlayerControl _playerControl;
-        private readonly IMasterDataRepository<MessageModel> _messageRepository;
+        private readonly MessageModelTable _messageTable;
 
         public Opening(
             ISceneController sceneController,
             ITVController tvController,
             IPlayerControl control,
-            IMasterDataRepository<MessageModel> messageRepository
+            MessageModelTable messageTable
             )
         {
             _sceneController = sceneController;
             _tvController = tvController;
             _playerControl = control;
-            _messageRepository = messageRepository;
+            _messageTable = messageTable;
         }
 
         public async ValueTask InitializeAsync(CancellationToken cancellationToken)
@@ -34,7 +34,7 @@ namespace WhiteWorld.Domain.Opening
             // 一度、プレイヤーは動けないようにする
             _playerControl.CanMove = false;
             // オープニングメッセージ
-            using (var messages = _messageRepository.Entities
+            using (var messages = _messageTable.GetRawDataUnsafe()
                        .AsValueEnumerable()
                        .Where(static x => x.Id.AsSpan().Contains("opening_01_", StringComparison.Ordinal))
                        .ToArrayPool())
@@ -50,7 +50,7 @@ namespace WhiteWorld.Domain.Opening
             await _tvController.WaitForAnimationPreEndAsync(cancellationToken);
 
             // ノベル第一章
-            using (var messages = _messageRepository.Entities
+            using (var messages = _messageTable.GetRawDataUnsafe()
                        .AsValueEnumerable()
                        .Where(static x => x.Id.AsSpan().Contains("novel_01_", StringComparison.Ordinal))
                        .ToArrayPool())

@@ -17,7 +17,9 @@
         "ZLinq.dll",
         "RapidEnum.Core.dll",
         "Csv.dll",
-        "Csv.Annotations.dll"
+        "Csv.Annotations.dll",
+        "MasterMemory.dll",
+        "System.Runtime.CompilerServices.Unsafe.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

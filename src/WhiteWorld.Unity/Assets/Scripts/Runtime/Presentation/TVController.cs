@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Playables;
 using WhiteWorld.Domain;
 using Unity.Cinemachine;
+using ZLinq;
 
 namespace WhiteWorld.Presentation
 {
@@ -16,7 +16,7 @@ namespace WhiteWorld.Presentation
         private void Start()
         {
             var playableDirector = GetComponent<PlayableDirector>();
-            var track = playableDirector.playableAsset.outputs.First();
+            var track = playableDirector.playableAsset.outputs.AsValueEnumerable().First();
             playableDirector.SetGenericBinding(track.sourceObject, Camera.main?.GetComponent<CinemachineBrain>());
         }
 

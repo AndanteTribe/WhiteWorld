@@ -3,6 +3,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using WhiteWorld.Domain.Entity;
 using ZLinq;
+using MasterMemory.Tables;
 
 namespace WhiteWorld.Domain.LifeGame.SpaceActions
 {
@@ -14,16 +15,16 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         /// <inheritdoc/>
         public Space Space => Space.Flavor;
 
-        private readonly IMasterDataRepository<MessageModel> _dataRepository;
+        private readonly MessageModelTable _messageTable;
         private readonly ISceneController _sceneController;
         private readonly int _maxFlavor;
         private readonly Random _random = new Random();
 
-        public FlavorSpace(IMasterDataRepository<MessageModel> dataRepository, ISceneController sceneController)
+        public FlavorSpace(MessageModelTable messageTable, ISceneController sceneController)
         {
-            _dataRepository = dataRepository;
+            _messageTable = messageTable;
             // flavor_01, flavor_02, ..., flavor_99 のようなIDを持つエンティティの数をカウント
-            _maxFlavor = dataRepository.Entities.AsValueEnumerable()
+            _maxFlavor = messageTable.GetRawDataUnsafe().AsValueEnumerable()
                 .Where(static x => x.Id.AsSpan().Contains("flavor_", StringComparison.Ordinal))
                 .Select(static x => int.Parse(x.Id.AsSpan(7, 2)))
                 .Distinct().Count();
@@ -34,7 +35,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         public async UniTask ExecuteAsync(CancellationToken cancellationToken)
         {
             var r = _random.Next(1, _maxFlavor + 1);
-            using var message = _dataRepository.Entities.AsValueEnumerable()
+            using var message = _messageTable.GetRawDataUnsafe().AsValueEnumerable()
                 .Where(x => x.Id.AsSpan().Contains($"flavor_{r:00}", StringComparison.Ordinal))
                 .ToArrayPool();
 

@@ -1,10 +1,10 @@
+using System.IO;
 using AndanteTribe.Utils.Unity.VContainer;
+using MasterMemory;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
-using WhiteWorld.Data;
 using WhiteWorld.Domain;
-using WhiteWorld.Domain.Entity;
 using WhiteWorld.Presentation;
 
 namespace WhiteWorld.AppMain
@@ -22,20 +22,12 @@ namespace WhiteWorld.AppMain
 #if ENABLE_DEBUGTOOLKIT
             builder.RegisterEntryPoint<DebugViewer>().WithParameter(_tvPrefab);
 #endif
-            builder
-                .Register<IMasterDataRepository<DummyModel>, MasterDataRepository<DummyModel>>(Lifetime.Singleton)
-                .WithParameter("binaryPath", "DummyText")
-                .WithParameter("tableName", "DummyData");
 
-            builder
-                .Register<IMasterDataRepository<KeywordModel>, KeywordModelRepository>(Lifetime.Singleton)
-                .WithParameter("binaryPath", "Keyword")
-                .WithParameter("tableName", "KeywordData");
-
-            builder
-                .Register<IMasterDataRepository<MessageModel>, MasterDataRepository<MessageModel>>(Lifetime.Singleton)
-                .WithParameter("binaryPath", "Message")
-                .WithParameter("tableName", "MessageData");
+            var data = Resources.Load("MasterData") as TextAsset;
+            var memoryDatabase = new MemoryDatabase(data?.bytes?? throw new FileNotFoundException("MasterDataが見つかりませんでした。"));
+            builder.RegisterInstance(memoryDatabase.KeywordModelTable);
+            builder.RegisterInstance(memoryDatabase.DummyModelTable);
+            builder.RegisterInstance(memoryDatabase.MessageModelTable);
 
             builder.RegisterEntryPoints(static builder =>
             {

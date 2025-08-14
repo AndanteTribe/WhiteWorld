@@ -22,7 +22,8 @@
         "R3.dll",
         "ZLinq.dll",
         "RapidEnum.Core.dll",
-        "Csv.dll"
+        "Csv.dll",
+        "MessagePack.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],
