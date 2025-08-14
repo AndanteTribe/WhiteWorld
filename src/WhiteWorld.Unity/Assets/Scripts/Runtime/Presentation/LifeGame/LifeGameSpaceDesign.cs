@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using VContainer;
 using WhiteWorld.Domain.Entity;
 using WhiteWorld.Domain.LifeGame;
 using Space = WhiteWorld.Domain.Entity.Space;
@@ -16,6 +17,10 @@ namespace WhiteWorld.Presentation.LifeGame
         private Transform _player;
 
         private int _currentPos;
+        private AudioController _audioController;
+
+        [Inject]
+        public void Initialize(AudioController audioController) => _audioController = audioController;
 
         async UniTask<Space> ISpaceMoveController.MoveAsync(SpaceAmount amount, CancellationToken cancellationToken)
         {
@@ -41,6 +46,7 @@ namespace WhiteWorld.Presentation.LifeGame
                 var nextPos = spacePoint.transform.position;
                 nextPos.y = currentY; // Y座標は変えない
                 _player.position = nextPos;
+                _audioController.PlaySE(2).Forget(); //  移動効果音を鳴らす
                 await UniTask.WaitForSeconds(1, cancellationToken: cancellationToken);
             }
             // テレビマスに到達しなかった場合、amount分進む
