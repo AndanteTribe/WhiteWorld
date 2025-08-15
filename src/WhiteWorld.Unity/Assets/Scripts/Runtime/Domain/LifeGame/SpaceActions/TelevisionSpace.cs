@@ -19,8 +19,8 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         private readonly ISceneController _sceneController;
         private readonly MessageModelTable _messageTable;
         // オープニングの時に01は再生しているので02から
-        private int _tvMessageIndex = 2;
-        private int _monologueIndex = 5;
+        private readonly int _tvMessageIndex = 2;
+        private readonly int _monologueIndex = 5;
 
         public TelevisionSpace(
             ISpaceTelevisionController televisionController,
@@ -36,6 +36,8 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         public async UniTask ExecuteAsync(CancellationToken cancellationToken)
         {
             await _televisionController.ExecuteAsync(cancellationToken);
+
+            // 第二章の再生
             using var tvMessages = _messageTable.GetRawDataUnsafe().AsValueEnumerable()
                 .Where(x => x.Id.Contains($"novel_{_tvMessageIndex:00}_", StringComparison.Ordinal))
                 .ToArrayPool();
@@ -45,7 +47,6 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);
             await uts.Task;
-            _tvMessageIndex++;
             await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
 
             _televisionController.BindCameraToPlayer();
@@ -60,7 +61,6 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);
             await uts.Task;
-            _monologueIndex++;
             await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
         }
     }
