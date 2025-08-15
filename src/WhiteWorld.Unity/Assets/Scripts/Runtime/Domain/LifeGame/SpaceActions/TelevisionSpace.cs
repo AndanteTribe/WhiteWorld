@@ -20,7 +20,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
         private readonly MessageModelTable _messageTable;
         // オープニングの時に01は再生しているので02から
         private readonly int _tvMessageIndex = 2;
-        private readonly int _monologueIndex = 5;
+        private const string MonologueIndex = "lifegame_05_";
 
         public TelevisionSpace(
             ISpaceTelevisionController televisionController,
@@ -53,7 +53,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
             // テレビマスの独白メッセージの再生
             using var monologues = _messageTable.GetRawDataUnsafe().AsValueEnumerable()
-                .Where(x => x.Id.Contains($"lifegame_{_monologueIndex:00}_", StringComparison.Ordinal))
+                .Where(x => x.Id.Contains(MonologueIndex, StringComparison.Ordinal))
                 .ToArrayPool();
 
             data = new MessagePlayData(monologues.Memory, false);
