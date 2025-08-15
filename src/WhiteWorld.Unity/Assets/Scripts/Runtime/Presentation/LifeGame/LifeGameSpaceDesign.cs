@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using AndanteTribe.Utils.Unity;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using VContainer;
@@ -15,6 +16,7 @@ namespace WhiteWorld.Presentation.LifeGame
         private SpacePoint[] _spacePoints;
         [SerializeField]
         private Transform _player;
+        private Renderer _playerRenderer;
 
         private int _currentPos;
         private AudioController _audioController;
@@ -44,6 +46,7 @@ namespace WhiteWorld.Presentation.LifeGame
                 // テレビマスに到達したら、そこで止まる
                 if (spacePoint.Space is Space.Television or Space.Goal)
                 {
+                    WaitForAnimationEndAsync(spacePoint).Forget();
                     _currentPos += realAmount;
                     return spacePoint.Space;
                 }
@@ -59,6 +62,14 @@ namespace WhiteWorld.Presentation.LifeGame
             var space = _spacePoints[_currentPos];
             space.TVController.StartTVAnimation();
             return space.TVController.WaitForAnimationPreEndAsync(cancellationToken);
+        }
+
+        private async UniTaskVoid WaitForAnimationEndAsync(SpacePoint spacePoint)
+        {
+            _playerRenderer ??= _player.SafeGetComponent<Renderer>();
+            _playerRenderer.enabled = false;
+            await spacePoint.TVController.WaitForAnimationEndAsync(destroyCancellationToken);
+            _playerRenderer.enabled = true;
         }
     }
 }

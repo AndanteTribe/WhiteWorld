@@ -3,17 +3,12 @@ using WhiteWorld.Domain;
 
 namespace WhiteWorld.Presentation
 {
-    public class PlayerTVInteraction : MonoBehaviour, ISwitchToPlayerCamera
+    public class PlayerTVInteraction : MonoBehaviour
     {
         [SerializeField] private Renderer _playerRenderer;
         [SerializeField] private PlayerMove _player;
         private bool _isInteracting = false;
         private ITVController? _tvController;
-
-        public void SwitchToPlayerCamera()
-        {
-            _playerRenderer.enabled = true;
-        }
 
         public void OnTriggerEnter(Collider other)
         {
@@ -23,6 +18,7 @@ namespace WhiteWorld.Presentation
                 _tvController = tvController;
                 _tvController?.StartTVAnimation();
                 _player.CanMove = false;
+                _playerRenderer.enabled = false;
             }
         }
 
@@ -30,9 +26,9 @@ namespace WhiteWorld.Presentation
         {
             if (other.TryGetComponent(out ITVController? tvController) && _isInteracting)
             {
-                SwitchToPlayerCamera();
                 _isInteracting = false;
                 _player.CanMove = true;
+                _playerRenderer.enabled = true;
             }
         }
     }

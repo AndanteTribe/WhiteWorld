@@ -26,18 +26,26 @@ namespace WhiteWorld.Presentation
             if (_timeline != null)
             {
                 _timeline.Play();
-                WaitForAnimationEndAsync().Forget();
+                WaitForAnimationEndAsyncInternal().Forget();
             }
         }
 
-        private async UniTaskVoid WaitForAnimationEndAsync(CancellationToken cancellationToken = default)
+        private async UniTaskVoid WaitForAnimationEndAsyncInternal()
+        {
+            await WaitForAnimationEndAsync(destroyCancellationToken);
+            if (_timeline != null)
+            {
+                _timeline.Stop();
+            }
+        }
+
+        public async UniTask WaitForAnimationEndAsync(CancellationToken cancellationToken = default)
         {
             if (_timeline != null)
             {
                 await UniTask.WaitUntil(_timeline, static timeline =>
                         timeline.state == PlayState.Playing, cancellationToken: destroyCancellationToken);
                 await UniTask.Delay(TimeSpan.FromSeconds(_timeline.duration), cancellationToken: destroyCancellationToken);
-                _timeline.Stop();
             }
         }
 
