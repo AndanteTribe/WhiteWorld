@@ -240,17 +240,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.tiny.character.controller": {
-      "version": "https://github.com/unity3d-jp/Project_TCC.git?path=Packages/com.utj.charactercontroller",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.burst": "1.8.10",
-        "com.unity.visualscripting": "1.9.1",
-        "com.unity.collections": "1.2.4"
-      },
-      "hash": "02e3eca89f9d3b956b9193676c56b72e52ede3d7"
-    },
     "com.unity.ugui": {
       "version": "2.0.0",
       "depth": 0,
@@ -260,23 +249,6 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "com.unity.visualscripting": {
-      "version": "1.9.7",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unityroom.client": {
-      "version": "https://github.com/unityroom/unityroom-sdk.git?path=src/Unityroom.Client/Assets/Unityroom.Client",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "5e3b8e55d675c8990161f8885593c2af3f0ec99c"
-    },
     "jp.andantetribe.debugtoolkit": {
       "version": "https://github.com/AndanteTribe/DebugToolkit.git?path=Packages/jp.andantetribe.debugtoolkit",
       "depth": 0,
@@ -285,13 +257,6 @@
         "com.unity.modules.uielements": "1.0.0"
       },
       "hash": "613fa7ae8ef793983882fcd73dd81f6d84a6a429"
-    },
-    "jp.andantetribe.playercontrol": {
-      "version": "https://github.com/AndanteTribe/PlayerControl.git?path=Packages/PlayerControl",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "e973b367396971b2051a4e2c1701a55300e7e96d"
     },
     "jp.andantetribe.utils": {
       "version": "https://github.com/AndanteTribe/Utils.git?path=src/Utils.Unity/Packages/jp.andantetribe.utils",
