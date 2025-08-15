@@ -70,7 +70,8 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);
             await uts.Task;
-            await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
+            // LifeGameの寿命のキャンセルトークンでは、アンロード中に死ぬのでNoneで
+            await _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
         }
     }
 }
