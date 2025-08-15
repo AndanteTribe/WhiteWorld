@@ -45,7 +45,7 @@ namespace WhiteWorld.Presentation.LifeGame
                 _player.position = nextPos;
 
                 // テレビマスに到達したら、そこで止まる
-                if (spacePoint.Space == Space.Television)
+                if (spacePoint.Space is Space.Television or Space.Goal)
                 {
                     _currentPos += realAmount;
                     return spacePoint.Space;
