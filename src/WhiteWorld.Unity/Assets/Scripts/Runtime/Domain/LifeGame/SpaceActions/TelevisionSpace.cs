@@ -53,7 +53,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
 
             // テレビマスの独白メッセージの再生
             using var monologues = _messageTable.GetRawDataUnsafe().AsValueEnumerable()
-                .Where(x => x.Id.Contains(MonologueIndex, StringComparison.Ordinal))
+                .Where(static x => x.Id.Contains(MonologueIndex, StringComparison.Ordinal))
                 .ToArrayPool();
 
             data = new MessagePlayData(monologues.Memory, false);
