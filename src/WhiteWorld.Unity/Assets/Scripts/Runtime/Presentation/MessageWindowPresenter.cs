@@ -38,7 +38,7 @@ namespace WhiteWorld.Presentation
 
         private async UniTaskVoid Start()
         {
-            if (_data.IsFadeAnim)
+            if (_data.IsFadeout)
             {
                 _window.SetActive(false);
                 await LMotion.Create(0f, 1.0f, 2)
@@ -62,6 +62,20 @@ namespace WhiteWorld.Presentation
 
                 _audioController.PlaySE(0, destroyCancellationToken).Forget();
             }
+
+            if (_data.IsFadein)
+            {
+                await LMotion.Create(1.0f, 0f, 2)
+                    .Bind(_fadeout, static (v, fadeout) =>
+                    {
+                        var color = fadeout.color;
+                        color.a = v;
+                        fadeout.color = color;
+                    })
+                    .ToUniTask(destroyCancellationToken);
+                _window.SetActive(false);
+            }
+
             _onFinish.TrySetResult();
         }
 

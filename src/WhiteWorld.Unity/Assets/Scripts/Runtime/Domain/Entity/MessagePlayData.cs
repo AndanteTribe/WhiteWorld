@@ -6,6 +6,6 @@ namespace WhiteWorld.Domain.Entity
     /// メッセージをUIに表示する際に使用するデータ群
     /// </summary>
     /// <param name="Messages"></param>
-    /// <param name="IsFadeAnim"></param>
-    public record MessagePlayData(Memory<MessageModel> Messages, bool IsFadeAnim = false);
+    /// <param name="IsFadeout"></param>
+    public record MessagePlayData(Memory<MessageModel> Messages, bool IsFadeout = false, bool IsFadein = false);
 }

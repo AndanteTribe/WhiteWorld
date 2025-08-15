@@ -39,7 +39,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
                 .Where(x => x.Id.AsSpan().Contains($"flavor_{r:00}", StringComparison.Ordinal))
                 .ToArrayPool();
 
-            var data = new MessagePlayData(message.Memory, true);
+            var data = new MessagePlayData(message.Memory, true, true);
             var uts = AutoResetUniTaskCompletionSource.Create();
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);

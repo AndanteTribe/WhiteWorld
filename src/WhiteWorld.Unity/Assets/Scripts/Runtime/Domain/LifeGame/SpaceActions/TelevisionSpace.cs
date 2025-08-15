@@ -42,14 +42,12 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
                 .Where(x => x.Id.Contains($"novel_{_tvMessageIndex:00}_", StringComparison.Ordinal))
                 .ToArrayPool();
 
-            var data = new MessagePlayData(tvMessages.Memory, true);
+            var data = new MessagePlayData(tvMessages.Memory, true, true);
             var uts = AutoResetUniTaskCompletionSource.Create();
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);
             await uts.Task;
             await _sceneController.LoadAsync(SceneName.LifeGame, cancellationToken);
-
-            _televisionController.BindCameraToPlayer();
 
             // テレビマスの独白メッセージの再生
             using var monologues = _messageTable.GetRawDataUnsafe().AsValueEnumerable()

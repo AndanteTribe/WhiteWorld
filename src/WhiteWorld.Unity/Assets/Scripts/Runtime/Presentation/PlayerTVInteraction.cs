@@ -13,7 +13,6 @@ namespace WhiteWorld.Presentation
         public void SwitchToPlayerCamera()
         {
             _playerRenderer.enabled = true;
-            _tvController?.EndTVAnimation();
         }
 
         public void OnTriggerEnter(Collider other)

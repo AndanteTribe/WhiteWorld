@@ -26,6 +26,18 @@ namespace WhiteWorld.Presentation
             if (_timeline != null)
             {
                 _timeline.Play();
+                WaitForAnimationEndAsync().Forget();
+            }
+        }
+
+        private async UniTaskVoid WaitForAnimationEndAsync(CancellationToken cancellationToken = default)
+        {
+            if (_timeline != null)
+            {
+                await UniTask.WaitUntil(_timeline, static timeline =>
+                        timeline.state == PlayState.Playing, cancellationToken: destroyCancellationToken);
+                await UniTask.Delay(TimeSpan.FromSeconds(_timeline.duration), cancellationToken: destroyCancellationToken);
+                _timeline.Stop();
             }
         }
 
@@ -37,15 +49,6 @@ namespace WhiteWorld.Presentation
                 // タイムラインが開始していなければ開始を待つ
                 await UniTask.WaitUntil(_timeline, static timeline => timeline.state == PlayState.Playing, cancellationToken: cts.Token);
                 await UniTask.Delay(TimeSpan.FromSeconds(_timeline.duration - 3.0), cancellationToken: cts.Token);
-            }
-        }
-
-        [Button]
-        public void EndTVAnimation()
-        {
-            if (_timeline != null)
-            {
-                _timeline.Stop();
             }
         }
     }

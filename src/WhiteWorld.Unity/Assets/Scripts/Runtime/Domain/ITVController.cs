@@ -16,9 +16,5 @@ namespace WhiteWorld.Domain
         /// テレビのアニメーションを開始する.
         /// </summary>
         void StartTVAnimation();
-        /// <summary>
-        /// テレビのアニメーションを終了する.
-        /// </summary>
-        void EndTVAnimation();
     }
 }
