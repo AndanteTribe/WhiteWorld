@@ -764,11 +764,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1086038861771373557, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00041599077
+      value: -0.0004159907
       objectReference: {fileID: 0}
     - target: {fileID: 1086038861771373557, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.042180225
+      value: -0.042188168
       objectReference: {fileID: 0}
     - target: {fileID: 1376449252636869222, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_Enabled
@@ -879,8 +879,12 @@ PrefabInstance:
       value: -3.1693354
       objectReference: {fileID: 0}
     - target: {fileID: 6871039002936833794, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -20.045546
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871039002936833794, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18.300861
+      value: -18.300858
       objectReference: {fileID: 0}
     - target: {fileID: 9111570716673273858, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -900,8 +904,81 @@ PrefabInstance:
     - {fileID: 785208236906458268, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
     - {fileID: 4431288828205991331, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5176351712458784503, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 644660535}
   m_SourcePrefab: {fileID: 100100000, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
+--- !u!1 &644660534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5176351712458784503, guid: 62df25b404af6de489e03990e9c71ae3, type: 3}
+  m_PrefabInstance: {fileID: 644660533}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &644660535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644660534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cc6819e64e4c44beb63ea2ef45e1a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnAwake: 1
+  animationMode: 0
+  components:
+  - rid: 6957303135491326026
+  references:
+    version: 2
+    RefIds:
+    - rid: 6957303135491326026
+      type: {class: MaterialFloatAnimation, ns: LitMotion.Animation.Components, asm: LitMotion.Animation}
+      data:
+        displayName: _ScreenOn (Float)
+        enabled: 1
+        target: {fileID: 2100000, guid: e6cb81bc8f7d6e640a595d00fd9c47a2, type: 2}
+        settings:
+          startValue: 0
+          endValue: 2
+          duration: 10
+          ease: 0
+          customEaseCurve:
+            serializedVersion: 2
+            m_Curve:
+            - serializedVersion: 3
+              time: 0
+              value: 0
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 1
+              value: 1
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            m_PreInfinity: 2
+            m_PostInfinity: 2
+            m_RotationOrder: 4
+          delay: 0
+          delayType: 0
+          loops: -1
+          loopType: 0
+          cancelOnError: 0
+          skipValuesDuringDelay: 0
+          immediateBind: 0
+          schedulerType: 0
+          additionalSettings: 0
+        relative: 0
+        propertyName: _ScreenOn
 --- !u!1001 &1195969308
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -33,6 +33,22 @@ namespace WhiteWorld.Presentation
                 throw;
             }
         }
+
+        public void PlayBGM()
+        {
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+        }
+
+        public void StopBGM()
+        {
+            if (_audioSource.isPlaying)
+            {
+                _audioSource.Stop();
+            }
+        }
     }
 
 

@@ -135,14 +135,22 @@ PrefabInstance:
       propertyPath: '_audioClip.Array.data[2]'
       value: 
       objectReference: {fileID: 8300000, guid: 0ce100894a464c9498ed049e7b459251, type: 3}
+    - target: {fileID: 1575035726650242721, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
+      propertyPath: '_audioClip.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2aee03193248225418e49b2de45f56a0, type: 3}
     - target: {fileID: 3565250885773016934, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
       propertyPath: m_Name
       value: AudioController
       objectReference: {fileID: 0}
     - target: {fileID: 6623156704158476154, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
+      propertyPath: m_Volume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6623156704158476154, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8300000, guid: 2aee03193248225418e49b2de45f56a0, type: 3}
     - target: {fileID: 9048688577490568746, guid: 4c500cf8aa7984329a59625e988f9736, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.38902

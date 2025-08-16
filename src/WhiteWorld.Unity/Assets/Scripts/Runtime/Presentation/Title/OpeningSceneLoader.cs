@@ -1,3 +1,4 @@
+using System;
 using AndanteTribe.IO;
 using Cysharp.Threading.Tasks;
 using LitMotion;
@@ -21,10 +22,14 @@ namespace WhiteWorld.Presentation
 
         [Inject]
         private ISceneController _controller;
-        private WhiteWorldActions _whiteWorldActions;
+        [Inject]
+        private AudioController _audioController;
+        private readonly Lazy<WhiteWorldActions> _whiteWorldActions = new (static () => new WhiteWorldActions());
 
         private async UniTaskVoid Start()
         {
+            _audioController.PlayBGM();
+
             if (LocalPrefs.Shared.Load<bool>(GameConst.ClearFlag))
             {
                 _linkText.enabled = true;
@@ -59,16 +64,21 @@ namespace WhiteWorld.Presentation
                 })
                 .ToUniTask(destroyCancellationToken);
             _fadeIn.enabled = false;
-
-            _whiteWorldActions = new WhiteWorldActions();
-            _whiteWorldActions.Title.Enable();
+            _whiteWorldActions.Value.Title.Enable();
 
             await UniTask.WaitUntil(
-                _whiteWorldActions.Title.LoadNextScene, static action => action.WasPressedThisFrame(), cancellationToken: destroyCancellationToken);
+                _whiteWorldActions.Value.Title.LoadNextScene, static action => action.WasPressedThisFrame(), cancellationToken: destroyCancellationToken);
 
             await _controller.LoadAsync(SceneName.Opening, Application.exitCancellationToken);
         }
 
-        private void OnDestroy() => _whiteWorldActions.Title.Disable();
+        private void OnDestroy()
+        {
+            if (_audioController != null)
+            {
+                _audioController.StopBGM();
+            }
+            _whiteWorldActions.Value.Title.Disable();
+        }
     }
 }
