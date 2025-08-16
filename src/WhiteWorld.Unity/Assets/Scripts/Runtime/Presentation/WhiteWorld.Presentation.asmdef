@@ -24,7 +24,8 @@
         "R3.dll",
         "ZLinq.dll",
         "Microsoft.Bcl.TimeProvider.dll",
-        "RapidEnum.Core.dll"
+        "RapidEnum.Core.dll",
+        "LocalPrefs.Core.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

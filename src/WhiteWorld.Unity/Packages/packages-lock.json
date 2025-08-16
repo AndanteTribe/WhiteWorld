@@ -43,6 +43,13 @@
       "dependencies": {},
       "hash": "a7c6b49a0141a5bff9b1983e38137522ef61977d"
     },
+    "com.github.messagepack-csharp": {
+      "version": "https://github.com/MessagePack-CSharp/MessagePack-CSharp.git?path=src/MessagePack.UnityClient/Assets/Scripts/MessagePack",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "44aa149acce1de32881e007f53fad0f3db7dfdab"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.8",
       "depth": 0,
@@ -257,6 +264,27 @@
         "com.unity.modules.uielements": "1.0.0"
       },
       "hash": "613fa7ae8ef793983882fcd73dd81f6d84a6a429"
+    },
+    "jp.andantetribe.localprefs": {
+      "version": "https://github.com/AndanteTribe/LocalPrefs.git?path=src/LocalPrefs.Unity/Packages/jp.andantetribe.localprefs",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6a54ae2fc5d284f1a87a97e9d7ec03910c0e2136"
+    },
+    "jp.andantetribe.localprefs.core": {
+      "version": "https://github.com/AndanteTribe/LocalPrefs.git?path=bin/LocalPrefs.Core",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6a54ae2fc5d284f1a87a97e9d7ec03910c0e2136"
+    },
+    "jp.andantetribe.localprefs.messagepack": {
+      "version": "https://github.com/AndanteTribe/LocalPrefs.git?path=bin/LocalPrefs.MessagePack",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6a54ae2fc5d284f1a87a97e9d7ec03910c0e2136"
     },
     "jp.andantetribe.utils": {
       "version": "https://github.com/AndanteTribe/Utils.git?path=src/Utils.Unity/Packages/jp.andantetribe.utils",

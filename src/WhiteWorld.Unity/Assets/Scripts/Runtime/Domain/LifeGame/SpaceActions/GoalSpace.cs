@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using AndanteTribe.IO;
 using Cysharp.Threading.Tasks;
 using MasterMemory.Tables;
 using WhiteWorld.Domain.Entity;
@@ -70,6 +71,7 @@ namespace WhiteWorld.Domain.LifeGame.SpaceActions
             await _sceneController.LoadAsync(SceneName.LifeGame | SceneName.MessageWindow,
                 new object[] { data, uts }, cancellationToken);
             await uts.Task;
+            await LocalPrefs.Shared.SaveAsync(GameConst.ClearFlag, true, cancellationToken);
             // LifeGameの寿命のキャンセルトークンでは、アンロード中に死ぬのでNoneで
             await _sceneController.LoadAsync(SceneName.Title, CancellationToken.None);
         }
