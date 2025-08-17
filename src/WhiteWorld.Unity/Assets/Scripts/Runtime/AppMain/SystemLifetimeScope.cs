@@ -36,10 +36,10 @@ namespace WhiteWorld.AppMain
             builder.RegisterInstance(memoryDatabase.DummyModelTable);
             builder.RegisterInstance(memoryDatabase.MessageModelTable);
 
-            builder.RegisterEntryPoints(static builder =>
+            using (builder.RegisterEntryPoints(out var ep))
             {
-                builder.RegisterEnqueue<SystemInitializer>(true).AsSelf();
-            });
+                ep.RegisterEnqueue<SystemInitializer>(true).AsSelf();
+            }
         }
     }
 }

@@ -16,10 +16,10 @@ namespace WhiteWorld.AppMain
         {
             base.Configure(builder);
 
-            builder.RegisterEntryPoints(static builder =>
+            using (builder.RegisterEntryPoints(out var ep))
             {
-                builder.RegisterEnqueue<Opening>(true).AsSelf();
-            });
+                ep.RegisterEnqueue<Opening>(true).AsSelf();
+            }
         }
     }
 }

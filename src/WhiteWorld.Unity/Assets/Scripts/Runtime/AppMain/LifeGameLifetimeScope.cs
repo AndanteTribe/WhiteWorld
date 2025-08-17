@@ -27,10 +27,10 @@ namespace WhiteWorld.AppMain
             builder.Register<ISpaceAction, MemoryPieceSpace>(Lifetime.Singleton);
             builder.Register<ISpaceAction, FlavorSpace>(Lifetime.Singleton);
 
-            builder.RegisterEntryPoints(static builder =>
+            using (builder.RegisterEntryPoints(out var ep))
             {
-                builder.RegisterEnqueue<LifeGame>(true).AsSelf();
-            });
+                ep.RegisterEnqueue<LifeGame>(true).AsSelf();
+            }
         }
     }
 }

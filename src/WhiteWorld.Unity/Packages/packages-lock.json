@@ -291,7 +291,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "7e24ad1350935efdab0e54472bcab3b772eaa4b6"
+      "hash": "4806f843bedf677a00566b86509fd3e5c6b98017"
     },
     "jp.andantetribe.utils.core": {
       "version": "https://github.com/AndanteTribe/Utils.git?path=bin",
