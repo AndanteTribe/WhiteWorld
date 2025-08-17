@@ -11,7 +11,7 @@ namespace WhiteWorld.Presentation
 {
     public class TVController : MonoBehaviour, ITVController
     {
-        [SerializeField] private PlayableDirector? _timeline;
+        [SerializeField] private PlayableDirector _timeline;
 
         private void Start()
         {

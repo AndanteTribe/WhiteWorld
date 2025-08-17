@@ -27,7 +27,7 @@ namespace WhiteWorld.Presentation
 
         [SerializeField] private CardAnimation[] _animations;
 
-        [Inject] private readonly AudioController _audioController;
+        [Inject] public AudioController _audioController;
 
         /// <summary>
         /// 表示アニメーション開始する

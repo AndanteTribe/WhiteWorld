@@ -8,11 +8,11 @@ namespace WhiteWorld.Presentation
         [SerializeField] private Renderer _playerRenderer;
         [SerializeField] private PlayerMove _player;
         private bool _isInteracting = false;
-        private ITVController? _tvController;
+        private ITVController _tvController;
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out ITVController? tvController) && !_isInteracting)
+            if (other.TryGetComponent(out ITVController tvController) && !_isInteracting)
             {
                 _isInteracting = true;
                 _tvController = tvController;
@@ -24,7 +24,7 @@ namespace WhiteWorld.Presentation
 
         public void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out ITVController? tvController) && _isInteracting)
+            if (other.TryGetComponent(out ITVController tvController) && _isInteracting)
             {
                 _isInteracting = false;
                 _player.CanMove = true;

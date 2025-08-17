@@ -825,8 +825,7 @@ PlayerSettings:
     WebGL: ENABLE_DEBUGTOOLKIT
   additionalCompilerArguments:
     Standalone: []
-    WebGL:
-    - -nullable:enable
+    WebGL: []
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

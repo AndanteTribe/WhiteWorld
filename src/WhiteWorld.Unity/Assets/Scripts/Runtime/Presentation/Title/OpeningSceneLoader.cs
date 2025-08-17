@@ -21,9 +21,9 @@ namespace WhiteWorld.Presentation
         private TextMeshProUGUI _linkText;
 
         [Inject]
-        private ISceneController _controller;
+        public ISceneController Controller;
         [Inject]
-        private AudioController _audioController;
+        public AudioController _audioController;
         private readonly Lazy<WhiteWorldActions> _whiteWorldActions = new (static () => new WhiteWorldActions());
 
         private async UniTaskVoid Start()
@@ -69,7 +69,7 @@ namespace WhiteWorld.Presentation
             await UniTask.WaitUntil(
                 _whiteWorldActions.Value.Title.LoadNextScene, static action => action.WasPressedThisFrame(), cancellationToken: destroyCancellationToken);
 
-            await _controller.LoadAsync(SceneName.Opening, Application.exitCancellationToken);
+            await Controller.LoadAsync(SceneName.Opening, Application.exitCancellationToken);
         }
 
         private void OnDestroy()
