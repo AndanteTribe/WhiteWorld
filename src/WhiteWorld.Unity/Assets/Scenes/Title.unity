@@ -1077,7 +1077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8125095338935084060, guid: c9b816b0f1c85f64cb2a1d3d85d1951e, type: 3}
       propertyPath: m_text
-      value: "\u767D\u3044\u4E16\u754C"
+      value: "\u767D\u3044\u5D50"
       objectReference: {fileID: 0}
     - target: {fileID: 8125095338935084060, guid: c9b816b0f1c85f64cb2a1d3d85d1951e, type: 3}
       propertyPath: m_fontStyle
@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<link=\"https://www.google.co.jp/\">\u539F\u4F5C\u5C0F\u8AAC\u306F\u3053\u3061\u3089</link>"
+  m_text: "<link=\"https://kakuyomu.jp/works/16818792438186083248\">\u539F\u4F5C\u5C0F\u8AAC\u306F\u3053\u3061\u3089</link>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1f91f41cf7bc5a46af39f0c6a5ef4d1, type: 2}
   m_sharedMaterial: {fileID: -1393745597412214731, guid: f1f91f41cf7bc5a46af39f0c6a5ef4d1, type: 2}
@@ -1318,6 +1318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fadeIn: {fileID: 1813133751}
   _linkText: {fileID: 1427995282}
+  _audioController: {fileID: 0}
 --- !u!4 &1661787842
 Transform:
   m_ObjectHideFlags: 0

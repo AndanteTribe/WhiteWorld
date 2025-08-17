@@ -13,17 +13,14 @@ namespace WhiteWorld.Presentation
     {
         [SerializeField] private PlayableDirector _timeline;
 
-        private void Start()
-        {
-            var playableDirector = GetComponent<PlayableDirector>();
-            var track = playableDirector.playableAsset.outputs.AsValueEnumerable().First();
-            playableDirector.SetGenericBinding(track.sourceObject, Camera.main?.GetComponent<CinemachineBrain>());
-        }
-
         public void StartTVAnimation()
         {
             if (_timeline != null)
             {
+                var playableDirector = GetComponent<PlayableDirector>();
+                var track = playableDirector.playableAsset.outputs.AsValueEnumerable().First();
+                playableDirector.SetGenericBinding(track.sourceObject, Camera.main?.GetComponent<CinemachineBrain>());
+
                 _timeline.Play();
                 WaitForAnimationEndAsyncInternal().Forget();
             }
